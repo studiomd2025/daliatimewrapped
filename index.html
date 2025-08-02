@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daliatime Wrapped: 2023-2025</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
+
+    <div id="app" class="w-full max-w-4xl">
+        <!-- Content will be rendered here by JavaScript -->
+    </div>
+
+    <!-- Modal for showing expanded content and links -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 items-center justify-center p-4 z-50 hidden">
+        <div class="bg-gray-800 p-8 rounded-3xl shadow-2xl max-w-sm w-full relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+            <h3 id="modal-title" class="text-xl font-bold text-white mb-4"></h3>
+            <p id="modal-message" class="text-sm text-gray-300 break-all mb-4"></p>
+            <button id="modal-close-btn" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-cyan-500">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Data for the infographic, directly embedded in the script
+        const DALIATIME_DATA = {
+          overview: {
+            start: 'December 12, 2023',
+            end: 'June 10, 2025',
+            eras: 4,
+            promoEvents: 3,
+            pmdDebuts: 2,
+            leaderAddresses: 1,
+          },
+          eras: {
+            inaugural: {
+              name: 'INAUGURAL',
+              dates: 'Dec 12, 2023 – May 12, 2024',
+              vibe: 'Melting Point & The Caralia Transition',
+              highlights: [
+                'Became transannual leader in just 21 days',
+                'Official start of daliatime amid a major transition',
+                'ZB1 Japan debut with "Yura Yura"',
+                'Era identity took shape with power pop & internet trends',
+              ],
+              notableSongs: ['SMART', 'WIFE', 'MAGNETIC', 'YURA YURA'],
+              debuts: ['TWS', 'ILLIT', 'RESCENE', 'NCT WISH'],
+              color: 'from-blue-900 to-indigo-900',
+            },
+            youHadMeAtHello: {
+              name: 'YOU HAD ME AT HELLO',
+              dates: 'May 13, 2024 – Aug 25, 2024',
+              vibe: 'The Good Life',
+              highlights: [
+                'Ceremonial start at #thegoodlife promo event',
+                'My Diaries brand re-launched with dashboard & MD Live',
+                'Allin, PMD’s 2nd boy group, debuted',
+                'First #dalia-birthday-live-2024',
+              ],
+              notableSongs: ['SUPERNOVA', 'ABCD', 'LOOP', 'FEEL THE POP'],
+              debuts: ['BAD VILLAIN', 'ARTMS', 'KATSEYE', 'ALLIN'],
+              color: 'from-rose-500 to-pink-500',
+            },
+            cinemaParadise: {
+              name: 'CINEMA PARADISE',
+              dates: 'Aug 26, 2024 – Feb 23, 2025',
+              vibe: 'Brat Summer & The Homecoming',
+              highlights: [
+                'Reboot of #forever21 with a new concept',
+                'Western pop dominated the global charts',
+                'PMD’s 1st girl group, Hi Time, debuted',
+                'Daliatime 1st Anniversary & 3rd double transannual leader',
+                'Friendship between Hwanbin and N.SSIGN members was born',
+              ],
+              notableSongs: ['CRAZY', 'DRIP', 'PSYCHO AND BEAUTIFUL', 'GOOD SO BAD'],
+              debuts: ['MEOVV', 'IZNA', 'KICKFLIP', 'MADEIN'],
+              color: 'from-orange-400 to-yellow-500',
+            },
+            blueParadise: {
+              name: 'BLUE PARADISE',
+              dates: 'Feb 24, 2025 – Aug 31, 2025',
+              vibe: 'New Paradise & Chapter 2',
+              highlights: [
+                'Ceremonial start at #allinday-music-festival',
+                'Hanbin made solo debut with Champion (SWF 3 OST)',
+                "STAY reunion, Cara's return from military service, released surprise reunion album",
+                'Allin celebrated their 1st anniversary',
+                'Launched the "rising stars channel" on Channel 3',
+              ],
+              notableSongs: ['BEBE', 'LOOSE', 'SIGN', 'I FEEL GOOD', 'BLUE'],
+              debuts: ['HEARTS2HEARTS', 'KIIIKIII', 'NOUERA', 'CLOSE YOUR EYES'],
+              color: 'from-indigo-400 to-cyan-500',
+            },
+          },
+          events: {
+            '#thegoodlife': {
+              date: '2024.5.27',
+              totalArtists: 22,
+              firstTimers: 8,
+              artists: ['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'YENA', 'NMIXX', 'EVNNE', 'TWS', '(G)I-DLE', 'TWICE', 'TRI.BE', 'NCT WISH', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'AMPERS&ONE', 'KISS OF LIFE', 'BOYNEXTDOOR', 'IVE', 'ILLIT', 'UNIS'],
+            },
+            '#forever21-the-homecoming': {
+              date: '2024.8.21 & 26',
+              totalArtists: 21,
+              firstTimers: 9,
+              artists: ['ONF', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'XDINARY HEROES', 'SUPER JUNIOR-D&E', 'UNIS', 'HYOLYN', 'FROMIS_9', 'TAEMIN', 'LEE CHAE YEON', '(G)I-DLE', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'PLAVE', 'YOUNG POSSE', 'KATSEYE', 'ARRC'],
+            },
+            '#allinday-music-festival': {
+              date: '2025.2.24',
+              totalArtists: 23,
+              firstTimers: 11,
+              artists: ['ATEEZ', 'ENHYPEN', 'RIIZE', 'NCT WISH', 'TWS', 'XIKERS', 'ILLIT', 'IZNA', 'GFRIEND', 'GOT7', 'ONF', 'MINNIE ((G)I-DLE)', 'HEARTS2HEARTS', 'IVE', 'AESPA', 'STAYC', 'BOYNEXTDOOR', 'NOWADAYS', 'P1HARMONY', 'CIX', 'WEI', 'BILLLIE', 'CLASS:Y', 'ARTMS', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV'],
+            },
+          },
+          zeitgeist: {
+            news: [
+              {
+                title: 'Global Economic Report',
+                description: 'Global inflation is falling but unevenly. The global economy shows "tenuous resilience" amid uncertainty, with growth projected to slow in some regions.',
+                icon: '📊',
+              },
+              {
+                title: 'Geopolitical Landscape',
+                description: 'Ongoing global conflicts persist, but diplomatic efforts like the 2025 New York Peace Conference on Gaza show a push towards resolution.',
+                icon: '🌍',
+              },
+              {
+                title: '2025 Philippine & Korean Elections',
+                description: 'Major national elections took place in key regions, shaping local and international discourse.',
+                icon: '🗳️',
+              },
+              {
+                title: 'Celebrity Deaths',
+                description: 'The world mourned the passing of several notable figures, impacting popular culture and public sentiment.',
+                icon: '🕊️',
+              },
+            ],
+            popCulture: [
+              {
+                title: 'Candid Culture',
+                description: 'A global shift where authenticity and honesty are more valued than curated perfection. People are craving "realness" over "sincerity signalling."',
+                icon: '🗣️',
+              },
+              {
+                title: 'Maximalism is Back',
+                description: 'A cultural backlash against "quiet luxury" led to the rise of "Oasiscore" and a "more is more" aesthetic in fashion and design.',
+                icon: '✨',
+              },
+              {
+                title: 'Tinned Fish Tok',
+                description: 'Social media trends influenced unexpected consumer habits, like the viral phenomenon of "tinned fish tok," leading to a rise in sales and new culinary trends.',
+                icon: '🐟',
+              },
+              {
+                title: 'Experientialism',
+                description: 'The public is seeking immersive, real-world experiences designed for intense in-the-moment immersion, not just content capture.',
+                icon: '🎉',
+              },
+            ],
+            kpopIndustry: [
+              {
+                title: 'Global Soft Power',
+                description: 'K-Pop continues its dominance as a major global force, influencing everything from fashion and beauty to tourism and local economies.',
+                icon: '🌐',
+              },
+              {
+                title: 'Rising Stars',
+                description: 'The industry saw a flood of new talent, with Daliatime events showcasing 13 artists who debuted within the first 18 months.',
+                icon: '🌟',
+              },
+              {
+                title: 'Tech & Engagement',
+                description: 'Immersive exhibits like D\'Festa BGC and digital engagement strategies have become a new way to connect with fans globally.',
+                icon: '📱',
+              },
+              {
+                title: 'Major Returns',
+                description: 'The industry was rocked by major comebacks from groups like STAY with their reunion album, keeping the veteran presence strong.',
+                icon: '�',
+              },
+            ],
+          },
+          future: {
+            nextEra: 'NEVER SAY NEVER',
+            upcomingEvent: '#my-diaries-awards-2025',
+            zb1Future: 'The big question: will they continue or disband in 2026? A future defined by the "NEVER SAY NEVER" spirit.',
+          },
+        };
+
+        const app = document.getElementById('app');
+        let currentSection = 'intro';
+
+        const render = () => {
+            switch (currentSection) {
+                case 'intro':
+                    renderIntro();
+                    break;
+                case 'overview':
+                    renderOverview();
+                    break;
+                case 'eras':
+                    renderEras();
+                    break;
+                case 'events':
+                    renderEvents();
+                    break;
+                case 'zeitgeist':
+                    renderZeitgeist();
+                    break;
+                case 'conclusion':
+                    renderConclusion();
+                    break;
+            }
+        };
+
+        // --- Render Functions for each section ---
+        const renderIntro = () => {
+            app.innerHTML = `
+                <div class="text-center p-8 sm:p-12 bg-gray-800 rounded-3xl shadow-2xl transition-all duration-500 transform hover:scale-105">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500 mb-4">
+                        Daliatime Wrapped
+                    </h1>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-8">2023–2025</h2>
+                    <p class="text-lg sm:text-xl text-gray-300 mb-10">
+                        Welcome to your definitive recap. We've logged every era, every event, and every cultural shift to bring you the full story of Daliatime's first 18 months.
+                    </p>
+                    <button id="start-btn" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50">
+                        BEGIN YOUR WRAPPED
+                    </button>
+                </div>
+            `;
+            document.getElementById('start-btn').addEventListener('click', () => {
+                currentSection = 'overview';
+                render();
+            });
+        };
+
+        const renderOverview = () => {
+            const data = DALIATIME_DATA.overview;
+            app.innerHTML = `
+                <div class="text-center p-8 bg-gray-800 rounded-3xl shadow-2xl">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-cyan-300">
+                        The Daliatime Vibe Check
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-12 text-gray-200">
+                        A period of rapid growth and ambitious beginnings, shaped by a blend of nostalgia and futurism.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 sm:gap-10 mb-12">
+                        ${renderStatCard('Eras Logged', data.eras)}
+                        ${renderStatCard('Promo Events', data.promoEvents)}
+                        ${renderStatCard('PMD Debuts', data.pmdDebuts)}
+                        ${renderStatCard('Leader Addresses', data.leaderAddresses)}
+                    </div>
+                    <p class="text-lg text-gray-400 mb-6">
+                        Your journey was officially logged from <b>${data.start}</b> to <b>${data.end}</b>.
+                    </p>
+                    <div class="flex justify-center">
+                        <button id="next-btn" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-cyan-500 focus:ring-opacity-50">
+                            NEXT: YOUR ERAS
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'eras';
+                render();
+            });
+        };
+
+        const renderStatCard = (label, value) => {
+            return `
+                <div class="bg-gray-700 p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-teal-400">
+                        ${value}
+                    </div>
+                    <div class="text-sm sm:text-base text-gray-300 mt-2">${label}</div>
+                </div>
+            `;
+        };
+
+        const renderEras = () => {
+            const data = DALIATIME_DATA.eras;
+            app.innerHTML = `
+                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-rose-300">
+                        Your Daliatime Eras
+                    </h2>
+                    <div class="space-y-6 mb-8">
+                        ${Object.values(data).map(era => renderEraCard(era)).join('')}
+                    </div>
+                    <div class="flex justify-center space-x-4">
+                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            PREVIOUS
+                        </button>
+                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-rose-500">
+                            NEXT: EVENTS
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'overview';
+                render();
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'events';
+                render();
+            });
+
+            // Add event listeners for each era card to toggle expansion
+            document.querySelectorAll('.era-card-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const content = btn.nextElementSibling;
+                    content.classList.toggle('hidden');
+                    btn.querySelector('.toggle-icon').textContent = content.classList.contains('hidden') ? '▼' : '▲';
+                });
+            });
+        };
+
+        const renderEraCard = (era) => {
+            const notableSongsHtml = era.notableSongs.map(song =>
+                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full">${song}</span>`
+            ).join('');
+            const debutsHtml = era.debuts.map(d =>
+                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full">${d}</span>`
+            ).join('');
+
+            return `
+                <div class="p-6 rounded-2xl text-left shadow-lg bg-gradient-to-br ${era.color} text-white">
+                    <h3 class="text-xl sm:text-2xl font-bold flex justify-between items-center cursor-pointer era-card-toggle">
+                        ${era.name} <span class="text-sm text-gray-200">(${era.dates})</span>
+                        <span class="text-xl transform transition-transform duration-300 toggle-icon">▼</span>
+                    </h3>
+                    <div class="mt-4 space-y-2 text-gray-100 hidden">
+                        <p class="text-lg font-semibold">Vibe: ${era.vibe}</p>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            ${era.highlights.map(h => `<li>${h}</li>`).join('')}
+                        </ul>
+                        <p class="mt-3 font-semibold">Notable Songs:</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            ${notableSongsHtml}
+                        </div>
+                        <p class="mt-3 font-semibold">Debuts:</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            ${debutsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderEvents = () => {
+            const data = DALIATIME_DATA.events;
+            const allArtistsWithHistory = new Set(['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'NMIXX', '(G)I-DLE', 'TWICE', 'TRI.BE', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'BOYNEXTDOOR', 'IVE', 'ZEROBASEONE', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'FROMIS_9', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'ATEEZ', 'RIIZE', 'GFRIEND', 'GOT7', 'AESPA', 'STAYC', 'CIX', 'BILLLIE', 'CLASS:Y', 'P1HARMONY', 'WEI', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV']);
+            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
+            const firstTimersOverall = allArtistsInDaliatime.filter(artist => {
+              const firstAppearanceIndex = allArtistsInDaliatime.indexOf(artist);
+              const isFirstAppearance = allArtistsInDaliatime.lastIndexOf(artist) === firstAppearanceIndex;
+              const hasPreviousHistory = allArtistsWithHistory.has(artist);
+              return isFirstAppearance && !hasPreviousHistory;
+            });
+            const getTopParticipants = () => {
+                const allArtists = Object.values(data).flatMap(event => event.artists);
+                const counts = allArtists.reduce((acc, curr) => {
+                  acc[curr] = (acc[curr] || 0) + 1;
+                  return acc;
+                }, {});
+                const sorted = Object.entries(counts).sort(([, countA], [, countB]) => countB - countA);
+                return sorted.filter(([, count]) => count > 1);
+            };
+            const topParticipants = getTopParticipants();
+            
+            const eventCards = Object.entries(data).map(([key, event]) => `
+                <div class="bg-gray-700 p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <h3 class="text-xl font-bold text-gray-200 mb-2">${key}</h3>
+                    <p class="text-sm text-gray-400 mb-4">Date: ${event.date}</p>
+                    <div class="text-center">
+                        <span class="text-3xl font-extrabold text-white">${event.totalArtists}</span>
+                        <p class="text-sm text-gray-400">Total Artists</p>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span class="text-3xl font-extrabold text-green-400">${event.firstTimers}</span>
+                        <p class="text-sm text-gray-400">Event First-Timers</p>
+                    </div>
+                </div>
+            `).join('');
+
+            const topParticipantsHtml = topParticipants.map(([artist, count]) => `
+                <li class="flex items-center space-x-2">
+                    <span class="font-semibold text-lg">${artist}</span>
+                    <span class="text-sm text-gray-400">(${count} events)</span>
+                </li>
+            `).join('');
+
+            const firstTimersHtml = firstTimersOverall.map(artist => `
+                <span class="bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-all duration-200 transform hover:scale-110">
+                    ${artist}
+                </span>
+            `).join('');
+
+            app.innerHTML = `
+                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-purple-300">
+                        Event Participation
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        ${eventCards}
+                    </div>
+                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl mb-8 text-left">
+                        <h3 class="text-xl font-bold text-teal-400 mb-4">Top Event Participants</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            ${topParticipantsHtml}
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl text-left">
+                        <h3 class="text-xl font-bold text-teal-400 mb-4">First-Timers in Daliatime</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${firstTimersHtml}
+                        </div>
+                    </div>
+                    <div class="flex justify-center space-x-4 mt-8">
+                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            PREVIOUS
+                        </button>
+                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-purple-500">
+                            NEXT: ZEITGEIST
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'eras';
+                render();
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'zeitgeist';
+                render();
+            });
+        };
+
+        const renderZeitgeist = () => {
+            const data = DALIATIME_DATA.zeitgeist;
+            const renderZeitgeistCategory = (title, items, color) => {
+                const listItems = items.map(item => `
+                    <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
+                        <span class="text-xl">${item.icon}</span>
+                        <div>
+                            <p class="font-semibold text-white">${item.title}</p>
+                            <p class="text-sm text-gray-300">${item.description}</p>
+                        </div>
+                    </li>
+                `).join('');
+                return `
+                    <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
+                        <div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
+                            <h3 class="text-lg font-bold text-white">${title}</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            ${listItems}
+                        </ul>
+                    </div>
+                `;
+            };
+
+            app.innerHTML = `
+                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-emerald-300">
+                        The Daliatime Zeitgeist
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                        A look at the global shifts that defined our time.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        ${renderZeitgeistCategory('Global News', data.news, 'bg-cyan-500')}
+                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-pink-500')}
+                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-purple-500')}
+                    </div>
+                    <div class="flex justify-center space-x-4 mt-8">
+                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            PREVIOUS
+                        </button>
+                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold rounded-full transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-emerald-500">
+                            NEXT: CONCLUSION
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'events';
+                render();
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'conclusion';
+                render();
+            });
+        };
+
+        const renderConclusion = () => {
+            const data = DALIATIME_DATA;
+            app.innerHTML = `
+                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-yellow-300">
+                        Mega Conclusion: The Daliatime Report
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                        The story of our first 18 months in a nutshell.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        <!-- PMD Family Growth card -->
+                        <div class="bg-gray-700 p-6 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-pink-400 mb-4">PMD Family Growth</h3>
+                            <p class="text-lg text-gray-300 mb-2">Two new groups joined our family:</p>
+                            <ul class="list-disc list-inside text-left text-gray-200">
+                                <li>The boy group <b>ALLIN</b></li>
+                                <li>The first girl group <b>HI TIME</b></li>
+                            </ul>
+                        </div>
+                        <!-- Cultural Leadership card -->
+                        <div class="bg-gray-700 p-6 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-cyan-400 mb-4">Cultural Leadership</h3>
+                            <p class="text-lg text-gray-300 mb-2">Our leader, Sung Hanbin, achieved:</p>
+                            <ul class="list-disc list-inside text-left text-gray-200">
+                                <li>Third double transannual leader status</li>
+                                <li>A new milestone with his solo debut, <b>Champion</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl mb-12">
+                        <h3 class="text-2xl font-bold text-rose-400 mb-4">The Big Question</h3>
+                        <p class="text-lg text-gray-300">
+                            Our time with ZEROBASEONE is drawing to a close in 2026. The future is unwritten, but whatever comes, we will face it with the spirit of our next era: <span class="font-bold text-2xl text-rose-300">NEVER SAY NEVER.</span>
+                        </p>
+                    </div>
+                    <div class="flex justify-center space-x-4">
+                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            BACK
+                        </button>
+                        <button id="restart-btn" class="px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-orange-500">
+                            RESTART WRAPPED
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'zeitgeist';
+                render();
+            });
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                currentSection = 'intro';
+                render();
+            });
+        };
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', () => {
+            render();
+        });
+    </script>
+</body>
+</html>
