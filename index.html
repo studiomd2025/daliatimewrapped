@@ -235,12 +235,12 @@
           mdLive: {
             description: "MD Live was relaunched on May 27, 2024. It was the first platform to have a multistream format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our community's content. As of 2025.06.10, 6 shows have been streamed.",
             shows: [
-              { name: '#thegoodlife', embed: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVGg1vExg0w91QjYRUuotHq" title="#thegoodlife" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
-              { name: 'ALLIN Debut Live', embed: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7" title="Allin debut live" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
-              { name: 'forever.21 : The Homecoming Part 1', embed: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUU42o_J_jE4FXZOwC_TmAX" title="forever.21 : the homecoming part 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
-              { name: 'forever.21 : The Homecoming Part 2', embed: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVpCr1LQwcU5guZ2bozgeD_" title="forever.21 : the homecoming part 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
-              { name: 'Hi Time Debut Show', embed: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXFe2p8ewZVRja7iVOaV1aQ" title="hi time debut show" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
-              { name: 'ALLINDAY Music Festival 2025', embed: '<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUBO2SD_U_zlCoDFhlUO7SG" title="allinday music festival" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
+              { name: '#thegoodlife', embed: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVGg1vExg0w91QjYRUuotHq" title="#thegoodlife" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
+              { name: 'ALLIN Debut Live', embed: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7" title="Allin debut live" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
+              { name: 'forever.21 : The Homecoming Part 1', embed: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUU42o_J_jE4FXZOwC_TmAX" title="forever.21 : the homecoming part 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
+              { name: 'forever.21 : The Homecoming Part 2', embed: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVpCr1LQwcU5guZ2bozgeD_" title="forever.21 : the homecoming part 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
+              { name: 'Hi Time Debut Show', embed: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXFe2p8ewZVRja7iVOaV1aQ" title="hi time debut show" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
+              { name: 'ALLINDAY Music Festival 2025', embed: '<iframe width="100%" height="315" src="https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUBO2SD_U_zlCoDFhlUO7SG" title="allinday music festival" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>' },
             ],
             link: 'https://mdliveofficial.carrd.co'
           },
@@ -523,26 +523,37 @@
                 }
             };
             
+            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
+            
             const getTopParticipants = () => {
-                const allArtists = Object.values(data).flatMap(event => event.artists);
-                const counts = allArtists.reduce((acc, curr) => {
-                  const name = curr.name;
-                  acc[name] = (acc[name] || 0) + 1;
+                const allNames = allArtistsInDaliatime.map(a => a.name);
+                const counts = allNames.reduce((acc, curr) => {
+                  acc[curr] = (acc[curr] || 0) + 1;
                   return acc;
                 }, {});
                 const sorted = Object.entries(counts).sort(([, countA], [, countB]) => countB - countA);
                 return sorted.filter(([, count]) => count > 1);
             };
             const topParticipants = getTopParticipants();
-            
-            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
-            const allArtistsWithHistory = new Set(['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'NMIXX', 'I-DLE', 'TWICE', 'TRI.BE', 'NCT WISH', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'BOYNEXTDOOR', 'IVE', 'ZEROBASEONE', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'FROMIS_9', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'ATEEZ', 'RIIZE', 'GFRIEND', 'GOT7', 'AESPA', 'STAYC', 'CIX', 'BILLLIE', 'CLASS:Y', 'P1HARMONY', 'WEI', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV', 'YENA', 'AMPERS&ONE', 'KISS OF LIFE', 'XDINARY HEROES', 'SUPER JUNIOR-D&E', 'HYOLYN', 'TAEMIN', 'LEE CHAE YEON', 'KATSEYE', 'ARRC', 'IZNA', 'MINNIE (I-DLE)', 'HEARTS2HEARTS', 'NOWADAYS', 'ARTMS']);
-            const firstTimersOverall = allArtistsInDaliatime.filter(artist => {
-                const isFirstAppearance = allArtistsInDaliatime.filter(a => a.name === artist.name).length === 1;
-                const hasPreviousHistory = allArtistsWithHistory.has(artist.name);
-                return isFirstAppearance && !hasPreviousHistory;
-            });
-            
+
+            const firstTimersData = [
+                { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
+                { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
+                { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
+                { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
+                { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
+                { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
+                { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-profile/' },
+                { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
+                { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
+                { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
+                { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
+                { name: 'MINNIE (I-DLE)', link: 'https://kprofiles.com/minnie-g-i-dle-profile/' },
+                { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
+                { name: 'NOWADAYS', link: 'https://kprofiles.com/nowadays-members-profile/' },
+                { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' }
+            ];
+
             const eventCards = Object.entries(data).map(([key, event]) => `
                 <a href="${event.link}" target="_blank" class="bg-gray-700 p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
                     <h3 class="text-xl font-bold text-gray-200 mb-2">${getEventName(key)}</h3>
@@ -569,7 +580,7 @@
                 `;
             }).join('');
             
-            const firstTimersHtml = firstTimersOverall.map(artist => `
+            const firstTimersHtml = firstTimersData.map(artist => `
                 <a href="${artist.link}" target="_blank" class="bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-all duration-200 transform hover:scale-110">
                     ${artist.name}
                 </a>
@@ -615,19 +626,21 @@
             });
         };
 
-        let currentShowIndex = 0;
         const renderMDLive = () => {
             const data = DALIATIME_DATA.mdLive;
             const shows = data.shows;
+            let currentShowIndex = 0;
             
             const updateCarousel = () => {
               const carouselElement = document.getElementById('md-live-carousel');
               carouselElement.innerHTML = `
                 <div class="bg-gray-700 rounded-2xl shadow-xl p-4">
-                  <div class="w-full h-80 rounded-xl overflow-hidden mb-4">
-                    ${shows[currentShowIndex].embed}
+                  <div class="relative w-full" style="padding-top: 56.25%;">
+                    <div class="absolute top-0 left-0 w-full h-full">
+                        ${shows[currentShowIndex].embed}
+                    </div>
                   </div>
-                  <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center">
+                  <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4">
                     ${shows[currentShowIndex].name}
                   </h3>
                 </div>
