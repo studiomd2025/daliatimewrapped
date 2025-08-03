@@ -46,6 +46,7 @@
                 { name: 'MAGNETIC', link: 'https://open.spotify.com/track/1aKvZDoLGkNMxoRYgkckZG?si=52827f8605a34423' },
                 { name: 'YURA YURA', link: 'https://open.spotify.com/track/3kkiffSH6ZRggYhu4lVxFR?si=35127e40245e42a8' },
               ],
+              embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/76ccrVo2gipZvNAOriLkiD?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
               debuts: ['TWS', 'ILLIT', 'RESCENE', 'NCT WISH'],
               color: 'from-[#2b74b6] to-[#a0bce8]',
             },
@@ -59,7 +60,13 @@
                 'Allin, PMD’s 2nd boy group, debuted',
                 'First Dalia Birthday Live',
               ],
-              notableSongs: ['SUPERNOVA', 'ABCD', 'LOOP', 'FEEL THE POP'],
+              notableSongs: [
+                { name: 'SUPERNOVA (aespa)', link: 'https://spotify.link/kWz4FmtjAJb' },
+                { name: 'ABCD (Nayeon)', link: 'https://spotify.link/TDmzWWk7GDb' },
+                { name: 'LOOP (yves)', link: null },
+                { name: 'FEEL THE POP (zerobaseone)', link: null },
+              ],
+              embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1jZSfQlQIcs7rFNMZqEsFd?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
               debuts: ['BAD VILLAIN', 'ARTMS', 'KATSEYE', 'ALLIN'],
               color: 'from-[#6ef0a1] to-[#ffffb0]',
             },
@@ -74,7 +81,13 @@
                 'Daliatime 1st Anniversary & 3rd double transannual leader',
                 'Friendship between Hwanbin and N.SSIGN members was born',
               ],
-              notableSongs: ['CRAZY', 'DRIP', 'PSYCHO AND BEAUTIFUL', 'GOOD SO BAD'],
+              notableSongs: [
+                { name: 'CRAZY (le sserafim)', link: null },
+                { name: 'DRIP (babymonster)', link: null },
+                { name: 'PSYCHO AND BEAUTIFUL (class:y)', link: null },
+                { name: 'GOOD SO BAD (ZEROBASEONE)', link: 'https://spotify.link/wflQxdo2uMb' },
+              ],
+              embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/51ZqDbYC2818o9T3YZ0oKL?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
               debuts: ['MEOVV', 'IZNA', 'KICKFLIP', 'MADEIN'],
               color: 'from-[#ffffb0] to-[#a0bce8]',
             },
@@ -89,7 +102,14 @@
                 'Allin celebrated their 1st anniversary',
                 'Launched the "Rising Stars Channel" on Channel 3',
               ],
-              notableSongs: ['BEBE', 'LOOSE', 'SIGN', 'I FEEL GOOD', 'BLUE'],
+              notableSongs: [
+                { name: 'BEBE (stayc)', link: null },
+                { name: 'LOOSE (enhypen)', link: null },
+                { name: 'SIGN (izna)', link: null },
+                { name: 'I FEEL GOOD (boynextdoor)', link: null },
+                { name: 'BLUE (zerobaseone)', link: null },
+              ],
+              embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/75jczcoMc2R7B3XIY3Qxc5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
               debuts: ['HEARTS2HEARTS', 'KIIIKIII', 'NOUERA', 'CLOSE YOUR EYES'],
               color: 'from-[#a0bce8] to-[#2b74b6]',
             },
@@ -350,14 +370,11 @@
         };
 
         const renderEraCard = (era) => {
-            const isSongObject = typeof era.notableSongs[0] === 'object';
-            const notableSongsHtml = isSongObject ? 
-                era.notableSongs.map(song =>
-                    `<a href="${song.link}" target="_blank" class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900 hover:bg-opacity-40 transition-all duration-200">${song.name}</a>`
-                ).join('')
-                : era.notableSongs.map(song =>
-                    `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${song}</span>`
-                ).join('');
+            const notableSongsHtml = era.notableSongs.map(song =>
+                typeof song === 'string' ?
+                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${song}</span>` :
+                `<a href="${song.link}" target="_blank" class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900 hover:bg-opacity-40 transition-all duration-200">${song.name}</a>`
+            ).join('');
 
             const debutsHtml = era.debuts.map(d =>
                 `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${d}</span>`
@@ -381,6 +398,9 @@
                         <p class="mt-3 font-semibold">Debuts:</p>
                         <div class="flex flex-wrap gap-2 text-xs">
                             ${debutsHtml}
+                        </div>
+                        <div class="mt-6">
+                            ${era.embedCode}
                         </div>
                     </div>
                 </div>
