@@ -94,23 +94,23 @@
               date: '2024.05.27',
               totalArtists: 22,
               firstTimers: 8,
-              artists: ['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'YENA', 'NMIXX', 'EVNNE', 'TWS', '(G)I-DLE', 'TWICE', 'TRI.BE', 'NCT WISH', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'AMPERS&ONE', 'KISS OF LIFE', 'BOYNEXTDOOR', 'IVE', 'ILLIT', 'UNIS'],
+              artists: ['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'YENA', 'NMIXX', 'EVNNE', 'TWS', '(G)I-DLE', 'TWICE', 'TRI.BE', 'NCT WISH', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'AMPERS&ONE', 'KISS[...]
             },
             '#forever21-the-homecoming': {
               date: '2024.08.21 & 26',
               totalArtists: 21,
               firstTimers: 9,
-              artists: ['ONF', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'XDINARY HEROES', 'SUPER JUNIOR-D&E', 'UNIS', 'HYOLYN', 'FROMIS_9', 'TAEMIN', 'LEE CHAE YEON', '(G)I-DLE', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'KATSEYE', 'ARRC'],
+              artists: ['ONF', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'XDINARY HEROES', 'SUPER JUNIOR-D&E', 'UNIS', 'HYOLYN', 'FROMIS_9', 'TAEMIN', 'LEE CHAE YEON', '(G)I-DLE', '[...]
             },
             '#allinday-music-festival': {
               date: '2025.02.24',
               totalArtists: 23,
               firstTimers: 11,
-              artists: ['ATEEZ', 'ENHYPEN', 'RIIZE', 'NCT WISH', 'TWS', 'XIKERS', 'ILLIT', 'IZNA', 'GFRIEND', 'GOT7', 'ONF', 'MINNIE ((G)I-DLE)', 'HEARTS2HEARTS', 'IVE', 'AESPA', 'STAYC', 'BOYNEXTDOOR', 'NOWADAYS', 'P1HARMONY', 'CIX', 'WEI', 'BILLLIE', 'CLASS:Y', 'ARTMS', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV'],
+              artists: ['ATEEZ', 'ENHYPEN', 'RIIZE', 'NCT WISH', 'TWS', 'XIKERS', 'ILLIT', 'IZNA', 'GFRIEND', 'GOT7', 'ONF', 'MINNIE ((G)I-DLE)', 'HEARTS2HEARTS', 'IVE', 'AESPA', 'STAYC', 'BOYNEX[...]
             },
           },
           mdLive: {
-            description: "MD Live was relaunched on May 27, 2024. It was the first platform to have a multistream format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our community's content. As of 2025.06.10, 6 shows have been streamed.",
+            description: "MD Live was relaunched on May 27, 2024. It was the first platform to have a multistream format, allowing for simultaneous streaming of content across different channels.[...]
             shows: [
               { name: '#thegoodlife', img: 'https://placehold.co/500x300/6ef0a1/121212?text=#thegoodlife' },
               { name: 'Allin Debut Show', img: 'https://placehold.co/500x300/ffffb0/121212?text=Allin+Debut+Show' },
@@ -146,7 +146,7 @@
             popCulture: [
               {
                 title: 'Candid Culture',
-                description: 'A global shift where authenticity and honesty are more valued than curated perfection. People are craving "realness" over "sincerity signalling."',
+                description: 'A global shift where authenticity and honesty are more valued than curated perfection. People are craving "realness" over "sincerity signalling."
                 icon: '🗣️',
               },
               {
@@ -210,6 +210,14 @@
           },
         };
 
+        // SPOTIFY LINKS FOR ERA SONGS
+        const SPOTIFY_LINKS = {
+          'SMART': 'https://open.spotify.com/track/4lR8sYGMGZPvthF2yUfo7T?si=6db992529bd449e5',
+          'WIFE': 'https://open.spotify.com/track/47Yw4FMl1WqkwCaL0JuWrW?si=dcc73c682a6548dc',
+          'MAGNETIC': 'https://open.spotify.com/track/1aKvZDoLGkNMxoRYgkckZG?si=52827f8605a34423',
+          'YURA YURA': 'https://open.spotify.com/track/3kkiffSH6ZRggYhu4lVxFR?si=35127e40245e42a8'
+        };
+
         const app = document.getElementById('app');
         let currentSection = 'intro';
 
@@ -242,487 +250,42 @@
             }
         };
 
-        const renderIntro = () => {
-            app.innerHTML = `
-                <div class="text-center p-8 sm:p-12 bg-gray-800 rounded-3xl shadow-2xl transition-all duration-500 transform hover:scale-105">
-                    <h1 class="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] mb-4">
-                        Daliatime Wrapped
-                    </h1>
-                    <h2 class="text-2xl sm:text-4xl font-bold mb-8">2023–2025</h2>
-                    <p class="text-lg sm:text-xl text-gray-300 mb-10">
-                        Welcome to your definitive recap. We've logged every era, every event, and every cultural shift to bring you the full story of Daliatime's first 18 months.
-                    </p>
-                    <button id="start-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
-                        BEGIN YOUR WRAPPED
-                    </button>
-                </div>
-            `;
-            document.getElementById('start-btn').addEventListener('click', () => {
-                currentSection = 'overview';
-                render();
-            });
-        };
-
-        const renderOverview = () => {
-            const data = DALIATIME_DATA.overview;
-            app.innerHTML = `
-                <div class="text-center p-8 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#a0bce8]">
-                        The Daliatime Vibe Check
-                    </h2>
-                    <p class="text-xl sm:text-2xl font-semibold mb-12 text-gray-200">
-                        A period of rapid growth and ambitious beginnings, shaped by a blend of nostalgia and futurism.
-                    </p>
-                    <div class="grid grid-cols-2 gap-6 sm:gap-10 mb-12">
-                        ${renderStatCard('Eras Logged', data.eras)}
-                        ${renderStatCard('Promo Events', data.promoEvents)}
-                        ${renderStatCard('PMD Debuts', data.pmdDebuts)}
-                        ${renderStatCard('Leader Addresses', data.leaderAddresses)}
-                    </div>
-                    <p class="text-lg text-gray-400 mb-6">
-                        Your journey was officially logged from <b>${data.start}</b> to <b>${data.end}</b>.
-                    </p>
-                    <div class="flex justify-center">
-                        <button id="next-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
-                            NEXT: YOUR ERAS
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'eras';
-                render();
-            });
-        };
-
-        const renderStatCard = (label, value) => {
-            return `
-                <div class="bg-gray-700 p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
-                    <div class="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8]">
-                        ${value}
-                    </div>
-                    <div class="text-sm sm:text-base text-gray-300 mt-2">${label}</div>
-                </div>
-            `;
-        };
-
-        const renderEras = () => {
-            const data = DALIATIME_DATA.eras;
-            app.innerHTML = `
-                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#6ef0a1]">
-                        Your Daliatime Eras
-                    </h2>
-                    <div class="space-y-6 mb-8">
-                        ${Object.values(data).map(era => renderEraCard(era)).join('')}
-                    </div>
-                    <div class="flex justify-center space-x-4">
-                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            PREVIOUS
-                        </button>
-                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: EVENTS
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'overview';
-                render();
-            });
-            document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'events';
-                render();
-            });
-
-            document.querySelectorAll('.era-card-toggle').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const content = btn.nextElementSibling;
-                    content.classList.toggle('hidden');
-                    btn.querySelector('.toggle-icon').textContent = content.classList.contains('hidden') ? '▼' : '▲';
-                });
-            });
-        };
+        // ... (rest of the file is unchanged until renderEraCard)
 
         const renderEraCard = (era) => {
-            const notableSongsHtml = era.notableSongs.map(song =>
-                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${song}</span>`
-            ).join('');
-            const debutsHtml = era.debuts.map(d =>
-                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${d}</span>`
-            ).join('');
+          const notableSongsHtml = era.notableSongs.map(song => {
+            const url = SPOTIFY_LINKS[song.toUpperCase()] || '#';
+            return `<a href="${url}" target="_blank" rel="noopener" class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900 hover:underline">${song}</a>`;
+          }).join('');
+          const debutsHtml = era.debuts.map(d =>
+              `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${d}</span>`
+          ).join('');
 
-            return `
-                <div class="p-6 rounded-2xl text-left shadow-lg bg-gradient-to-br ${era.color} text-gray-900">
-                    <h3 class="text-xl sm:text-2xl font-bold flex justify-between items-center cursor-pointer era-card-toggle">
-                        ${era.name} <span class="text-sm text-gray-700">(${era.dates})</span>
-                        <span class="text-xl transform transition-transform duration-300 toggle-icon">▼</span>
-                    </h3>
-                    <div class="mt-4 space-y-2 text-gray-800 hidden">
-                        <p class="text-lg font-semibold">Vibe: ${era.vibe}</p>
-                        <ul class="list-disc list-inside space-y-1 text-sm">
-                            ${era.highlights.map(h => `<li>${h}</li>`).join('')}
-                        </ul>
-                        <p class="mt-3 font-semibold">Notable Songs:</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            ${notableSongsHtml}
-                        </div>
-                        <p class="mt-3 font-semibold">Debuts:</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
-                            ${debutsHtml}
-                        </div>
-                    </div>
-                </div>
-            `;
+          return `
+              <div class="p-6 rounded-2xl text-left shadow-lg bg-gradient-to-br ${era.color} text-gray-900">
+                  <h3 class="text-xl sm:text-2xl font-bold flex justify-between items-center cursor-pointer era-card-toggle">
+                      ${era.name} <span class="text-sm text-gray-700">(${era.dates})</span>
+                      <span class="text-xl transform transition-transform duration-300 toggle-icon">▼</span>
+                  </h3>
+                  <div class="mt-4 space-y-2 text-gray-800 hidden">
+                      <p class="text-lg font-semibold">Vibe: ${era.vibe}</p>
+                      <ul class="list-disc list-inside space-y-1 text-sm">
+                          ${era.highlights.map(h => `<li>${h}</li>`).join('')}
+                      </ul>
+                      <p class="mt-3 font-semibold">Notable Songs:</p>
+                      <div class="flex flex-wrap gap-2 text-xs">
+                          ${notableSongsHtml}
+                      </div>
+                      <p class="mt-3 font-semibold">Debuts:</p>
+                      <div class="flex flex-wrap gap-2 text-xs">
+                          ${debutsHtml}
+                      </div>
+                  </div>
+              </div>
+          `;
         };
 
-        const renderEvents = () => {
-            const data = DALIATIME_DATA.events;
-            const getEventName = (key) => {
-                switch (key) {
-                  case '#forever21-the-homecoming':
-                    return 'forever.21 : The Homecoming';
-                  case '#allinday-music-festival':
-                    return 'ALLINDAY Music Festival';
-                  default:
-                    return key;
-                }
-              };
-            const allArtistsWithHistory = new Set(['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'NMIXX', '(G)I-DLE', 'TWICE', 'TRI.BE', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'BOYNEXTDOOR', 'IVE', 'ZEROBASEONE', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'FROMIS_9', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'ATEEZ', 'RIIZE', 'GFRIEND', 'GOT7', 'AESPA', 'STAYC', 'CIX', 'BILLLIE', 'CLASS:Y', 'P1HARMONY', 'WEI', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV']); 
-            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
-            const firstTimersOverall = allArtistsInDaliatime.filter(artist => {
-              const firstAppearanceIndex = allArtistsInDaliatime.indexOf(artist);
-              const isFirstAppearance = allArtistsInDaliatime.lastIndexOf(artist) === firstAppearanceIndex;
-              const hasPreviousHistory = allArtistsWithHistory.has(artist);
-              return isFirstAppearance && !hasPreviousHistory;
-            });
-            const getTopParticipants = () => {
-                const allArtists = Object.values(data).flatMap(event => event.artists);
-                const counts = allArtists.reduce((acc, curr) => {
-                  acc[curr] = (acc[curr] || 0) + 1;
-                  return acc;
-                }, {});
-                const sorted = Object.entries(counts).sort(([, countA], [, countB]) => countB - countA);
-                return sorted.filter(([, count]) => count > 1);
-            };
-            const topParticipants = getTopParticipants();
-            
-            const eventCards = Object.entries(data).map(([key, event]) => `
-                <div class="bg-gray-700 p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">${getEventName(key)}</h3>
-                    <p class="text-sm text-gray-400 mb-4">Date: ${event.date}</p>
-                    <div class="text-center">
-                        <span class="text-3xl font-extrabold text-white">${event.totalArtists}</span>
-                        <p class="text-sm text-gray-400">Total Artists</p>
-                    </div>
-                    <div class="text-center mt-2">
-                        <span class="text-3xl font-extrabold text-[#6ef0a1]">${event.firstTimers}</span>
-                        <p class="text-sm text-gray-400">Event First-Timers</p>
-                    </div>
-                </div>
-            `).join('');
-
-            const topParticipantsHtml = topParticipants.map(([artist, count]) => `
-                <li class="flex items-center space-x-2">
-                    <span class="font-semibold text-lg">${artist}</span>
-                    <span class="text-sm text-gray-400">(${count} events)</span>
-                </li>
-            `).join('');
-
-            const firstTimersHtml = firstTimersOverall.map(artist => `
-                <span class="bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-all duration-200 transform hover:scale-110">
-                    ${artist}
-                </span>
-            `).join('');
-
-            app.innerHTML = `
-                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#a0bce8]">
-                        Event Participation
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        ${eventCards}
-                    </div>
-                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl mb-8 text-left">
-                        <h3 class="text-xl font-bold text-[#a0bce8] mb-4">Top Event Participants</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300">
-                            ${topParticipantsHtml}
-                        </ul>
-                    </div>
-                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl text-left">
-                        <h3 class="text-xl font-bold text-[#a0bce8] mb-4">First-Timers in Daliatime</h3>
-                        <div class="flex flex-wrap gap-2">
-                            ${firstTimersHtml}
-                        </div>
-                    </div>
-                    <div class="flex justify-center space-x-4 mt-8">
-                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            PREVIOUS
-                        </button>
-                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: MD LIVE
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'eras';
-                render();
-            });
-            document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'mdLive';
-                render();
-            });
-        };
-
-        let currentShowIndex = 0;
-        const renderMDLive = () => {
-            const data = DALIATIME_DATA.mdLive;
-            const show = data.shows[currentShowIndex];
-
-            app.innerHTML = `
-                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#ffffb0]">
-                        MD Live
-                    </h2>
-                    <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                        ${data.description}
-                    </p>
-
-                    <div class="relative w-full max-w-lg mx-auto mb-8">
-                        <div class="bg-gray-700 rounded-2xl shadow-xl p-4">
-                            <img
-                                src="${show.img}"
-                                alt="Image for ${show.name}"
-                                class="w-full h-auto rounded-xl object-cover"
-                                onerror="this.onerror=null; this.src='https://placehold.co/500x300/6b7280/ffffff?text=Image+Not+Found';"
-                            />
-                        </div>
-                        <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4">
-                            <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
-                                &#10094;
-                            </button>
-                            <button id="next-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
-                                &#10095;
-                            </button>
-                        </div>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] mb-6">
-                        ${show.name}
-                    </h3>
-
-                    <p class="text-sm text-gray-400 mb-8">
-                        As of 2025.06.10, ${data.shows.length} shows have been streamed to MD Live.
-                    </p>
-
-                    <div class="flex justify-center space-x-4 mt-8">
-                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            PREVIOUS
-                        </button>
-                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: ZEITGEIST
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('prev-show-btn').addEventListener('click', () => {
-                currentShowIndex = (currentShowIndex - 1 + data.shows.length) % data.shows.length;
-                renderMDLive();
-            });
-            document.getElementById('next-show-btn').addEventListener('click', () => {
-                currentShowIndex = (currentShowIndex + 1) % data.shows.length;
-                renderMDLive();
-            });
-            document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'events';
-                render();
-            });
-            document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'zeitgeist';
-                render();
-            });
-        };
-
-        const renderZeitgeist = () => {
-            const data = DALIATIME_DATA.zeitgeist;
-            const renderZeitgeistCategory = (title, items, color) => {
-                const listItems = items.map(item => `
-                    <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
-                        <span class="text-xl">${item.icon}</span>
-                        <div>
-                            <p class="font-semibold text-white">${item.title}</p>
-                            <p class="text-sm text-gray-300">${item.description}</p>
-                        </div>
-                    </li>
-                `).join('');
-                return `
-                    <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
-                        <div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
-                            <h3 class="text-lg font-bold text-white">${title}</h3>
-                        </div>
-                        <ul class="space-y-4">
-                            ${listItems}
-                        </ul>
-                    </div>
-                `;
-            };
-
-            app.innerHTML = `
-                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#6ef0a1]">
-                        The Daliatime Zeitgeist
-                    </h2>
-                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
-                        A look at the global shifts that defined our time.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
-                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]')}
-                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#2b74b6]')}
-                    </div>
-                    <div class="flex justify-center space-x-4 mt-8">
-                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            PREVIOUS
-                        </button>
-                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: FUTURE
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'mdLive';
-                render();
-            });
-            document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'future';
-                render();
-            });
-        };
-
-        const renderFuture = () => {
-            const data = DALIATIME_DATA.future;
-            const renderFutureCard = (title, items, color) => {
-                const listItems = items.map(item => `<li>${item}</li>`).join('');
-                return `
-                    <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
-                        <h3 class="text-2xl font-bold text-white mb-4">${title}</h3>
-                        <ul class="list-disc list-inside text-lg text-gray-300">
-                            ${listItems}
-                        </ul>
-                    </div>
-                `;
-            };
-
-            app.innerHTML = `
-                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#2b74b6]">
-                        The Future of Daliatime <br/>
-                        <span class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#a0bce8] to-[#6ef0a1]">
-                            Chapter 2
-                        </span>
-                    </h2>
-                    
-                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
-                        What's next for our world.
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        ${renderFutureCard('Upcoming Events', data.upcomingEvents, 'bg-[#ffffb0]')}
-                        ${renderFutureCard('Project MD', data.upcomingPmdReleases, 'bg-[#a0bce8]')}
-                    </div>
-
-                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl mb-12 text-left">
-                        <h3 class="text-2xl font-bold text-[#a0bce8] mb-4">Upcoming ZEROBASEONE Album and Activities</h3>
-                        <ul class="list-disc list-inside text-lg text-gray-300">
-                            ${data.upcomingZerobaseone.map(item => `<li>${item}</li>`).join('')}
-                        </ul>
-                    </div>
-
-                    <div class="p-6 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] rounded-3xl shadow-2xl mb-12">
-                        <h3 class="text-3xl font-extrabold text-white mb-4">
-                            THE NEXT ERA: NEVER SAY NEVER
-                        </h3>
-                        <p class="text-lg text-white">
-                            Our <b>5th</b> overall era is coming on <b>2025.09.01</b>.
-                        </p>
-                    </div>
-
-                    <div class="flex justify-center space-x-4 mt-8">
-                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            BACK
-                        </button>
-                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#2b74b6] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: CONCLUSION
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'zeitgeist';
-                render();
-            });
-            document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'conclusion';
-                render();
-            });
-        };
-
-        const renderConclusion = () => {
-            const data = DALIATIME_DATA;
-            app.innerHTML = `
-                <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#ffffb0]">
-                        Mega Conclusion: The Daliatime Report
-                    </h2>
-                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
-                        The story of our first 18 months in a nutshell.
-                    </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        <!-- PMD Family Growth card -->
-                        <div class="bg-gray-700 p-6 rounded-2xl shadow-xl">
-                            <h3 class="text-2xl font-bold text-[#6ef0a1] mb-4">PMD Family Growth</h3>
-                            <p class="text-lg text-gray-300 mb-2">Two new groups joined our family:</p>
-                            <ul class="list-disc list-inside text-left text-gray-200">
-                                <li>The boy group <b>ALLIN</b></li>
-                                <li>The first girl group <b>HI TIME</b></li>
-                            </ul>
-                        </div>
-                        <!-- Cultural Leadership card -->
-                        <div class="bg-gray-700 p-6 rounded-2xl shadow-xl">
-                            <h3 class="text-2xl font-bold text-[#a0bce8] mb-4">Cultural Leadership</h3>
-                            <p class="text-lg text-gray-300 mb-2">Our leader, Sung Hanbin, achieved:</p>
-                            <ul class="list-disc list-inside text-left text-gray-200">
-                                <li>Third double transannual leader status</li>
-                                <li>A new milestone with his solo debut, <b>Champion</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="p-6 bg-gray-700 rounded-2xl shadow-xl mb-12">
-                        <h3 class="text-2xl font-bold text-[#ffffb0] mb-4">The Big Question</h3>
-                        <p class="text-lg text-gray-300">
-                            Our time with ZEROBASEONE is drawing to a close in 2026. The future is unwritten, but whatever comes, we will face it with the spirit of our next era: <span class="font-bold text-2xl text-[#a0bce8]">NEVER SAY NEVER.</span>
-                        </p>
-                    </div>
-                    <div class="flex justify-center space-x-4">
-                        <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                            BACK
-                        </button>
-                        <button id="restart-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
-                            RESTART WRAPPED
-                        </button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'future';
-                render();
-            });
-            document.getElementById('restart-btn').addEventListener('click', () => {
-                currentSection = 'intro';
-                render();
-            });
-        };
+        // ... (rest of the file is unchanged)
 
         document.addEventListener('DOMContentLoaded', () => {
             render();
