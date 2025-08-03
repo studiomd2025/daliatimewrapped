@@ -144,7 +144,7 @@
                 { name: 'ONF', link: 'https://kprofiles.com/onf-members-profile/' },
                 { name: 'LE SSERAFIM', link: 'https://kprofiles.com/le-sserafim-members-profile/' },
                 { name: 'TXT', link: 'https://kprofiles.com/txt-members-profile/' },
-                { name: 'ITZY', link: 'https://kprofiles.com/itzy-members-profile/' },
+                { name: 'ITZY', link: 'httpss://kprofiles.com/itzy-members-profile/' },
                 { name: 'SF9', link: 'https://kprofiles.com/sf9-members-profile/' },
                 { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
                 { name: 'NMIXX', link: 'https://kprofiles.com/nmixx-members-profile/' },
@@ -634,16 +634,12 @@
             
             const updateCarousel = () => {
               const carouselElement = document.getElementById('md-live-carousel');
-              const videoWrapper = `
-                <div class="relative w-full pb-[56.25%] rounded-xl overflow-hidden mb-4">
-                  <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-              `;
-
               carouselElement.innerHTML = `
-                <div class="bg-gray-700 rounded-2xl shadow-xl p-4">
-                  ${videoWrapper}
-                  <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4 mb-8">
+                <div class="bg-gray-700 rounded-2xl shadow-xl p-4 flex flex-col items-center">
+                  <div class="relative w-full" style="padding-top: 56.25%;">
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+                  <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4 mb-4">
                     ${shows[currentShowIndex].name}
                   </h3>
                 </div>
