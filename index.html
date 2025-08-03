@@ -40,7 +40,12 @@
                 'ZB1 Japan debut with "Yura Yura"',
                 'Era identity took shape with power pop & internet trends',
               ],
-              notableSongs: ['SMART', 'WIFE', 'MAGNETIC', 'YURA YURA'],
+              notableSongs: [
+                { name: 'SMART', link: 'https://open.spotify.com/track/4lR8sYGMGZPvthF2yUfo7T?si=6db992529bd449e5' },
+                { name: 'WIFE', link: 'https://open.spotify.com/track/47Yw4FMl1WqkwCaL0JuWrW?si=dcc73c682a6548dc' },
+                { name: 'MAGNETIC', link: 'https://open.spotify.com/track/1aKvZDoLGkNMxoRYgkckZG?si=52827f8605a34423' },
+                { name: 'YURA YURA', link: 'https://open.spotify.com/track/3kkiffSH6ZRggYhu4lVxFR?si=35127e40245e42a8' },
+              ],
               debuts: ['TWS', 'ILLIT', 'RESCENE', 'NCT WISH'],
               color: 'from-[#2b74b6] to-[#a0bce8]',
             },
@@ -345,9 +350,15 @@
         };
 
         const renderEraCard = (era) => {
-            const notableSongsHtml = era.notableSongs.map(song =>
-                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${song}</span>`
-            ).join('');
+            const isSongObject = typeof era.notableSongs[0] === 'object';
+            const notableSongsHtml = isSongObject ? 
+                era.notableSongs.map(song =>
+                    `<a href="${song.link}" target="_blank" class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900 hover:bg-opacity-40 transition-all duration-200">${song.name}</a>`
+                ).join('')
+                : era.notableSongs.map(song =>
+                    `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${song}</span>`
+                ).join('');
+
             const debutsHtml = era.debuts.map(d =>
                 `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${d}</span>`
             ).join('');
@@ -388,7 +399,7 @@
                     return key;
                 }
               };
-            const allArtistsWithHistory = new Set(['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'NMIXX', '(G)I-DLE', 'TWICE', 'TRI.BE', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'BOYNEXTDOOR', 'IVE', 'ZEROBASEONE', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'FROMIS_9', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'ATEEZ', 'RIIZE', 'GFRIEND', 'GOT7', 'AESPA', 'STAYC', 'CIX', 'BILLLIE', 'CLASS:Y', 'P1HARMONY', 'WEI', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV']); 
+            const allArtistsWithHistory = new Set(['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'NMIXX', '(G)I-DLE', 'TWICE', 'TRI.BE', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'BOYNEXTDOOR', 'IVE', 'ZEROBASEONE', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'FROMIS_9', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'ATEEZ', 'RIIZE', 'GFRIEND', 'GOT7', 'AESPA', 'STAYC', 'CIX', 'BILLLIE', 'CLASS:Y', 'P1HARMONY', 'WEI', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV']);
             const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
             const firstTimersOverall = allArtistsInDaliatime.filter(artist => {
               const firstAppearanceIndex = allArtistsInDaliatime.indexOf(artist);
@@ -406,7 +417,7 @@
                 return sorted.filter(([, count]) => count > 1);
             };
             const topParticipants = getTopParticipants();
-            
+
             const eventCards = Object.entries(data).map(([key, event]) => `
                 <div class="bg-gray-700 p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
                     <h3 class="text-xl font-bold text-gray-200 mb-2">${getEventName(key)}</h3>
@@ -622,7 +633,7 @@
                             Chapter 2
                         </span>
                     </h2>
-                    
+
                     <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
                         What's next for our world.
                     </p>
