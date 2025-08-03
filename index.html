@@ -149,7 +149,7 @@
                 { name: 'NMIXX', link: 'https://kprofiles.com/nmixx-members-profile/' },
                 { name: 'EVNNE', link: 'https://kprofiles.com/evnne-members-profile/' },
                 { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
-                { name: '(G)I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
                 { name: 'TWICE', link: 'https://kprofiles.com/twice-members-profile/' },
                 { name: 'TRI.BE', link: 'https://kprofiles.com/tri-be-members-profile/' },
                 { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
@@ -183,7 +183,7 @@
                 { name: 'FROMIS_9', link: 'https://kprofiles.com/fromis_9-members-profile/' },
                 { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-profile/' },
                 { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
-                { name: '(G)I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
                 { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
                 { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
                 { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
@@ -210,7 +210,7 @@
                 { name: 'GFRIEND', link: 'https://kprofiles.com/gfriend-members-profile/' },
                 { name: 'GOT7', link: 'https://kprofiles.com/got7-members-profile/' },
                 { name: 'ONF', link: 'https://kprofiles.com/onf-members-profile/' },
-                { name: 'MINNIE ((G)I-DLE)', link: 'https://kprofiles.com/minnie-g-i-dle-profile/' },
+                { name: 'MINNIE (I-DLE)', link: 'https://kprofiles.com/minnie-g-i-dle-profile/' },
                 { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
                 { name: 'IVE', link: 'https://kprofiles.com/ive-members-profile/' },
                 { name: 'AESPA', link: 'https://kprofiles.com/aespa-members-profile/' },
@@ -499,10 +499,10 @@
                             ${notableSongsHtml}
                         </div>
                         <p class="mt-3 font-semibold">Debuts:</p>
-                        <div class="flex flex-wrap gap-2 text-xs">
+                        <div class="flex flex-wrap gap-2 text-xs mb-4">
                             ${debutsHtml}
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-6">
                             ${era.embedCode}
                         </div>
                     </div>
@@ -521,14 +521,12 @@
                   default:
                     return key;
                 }
-              };
-            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
-            const firstTimersOverall = allArtistsInDaliatime.filter(artist => !artist.link);
-
+            };
+            
             const getTopParticipants = () => {
                 const allArtists = Object.values(data).flatMap(event => event.artists);
                 const counts = allArtists.reduce((acc, curr) => {
-                  const name = curr.name || curr;
+                  const name = curr.name;
                   acc[name] = (acc[name] || 0) + 1;
                   return acc;
                 }, {});
@@ -536,6 +534,14 @@
                 return sorted.filter(([, count]) => count > 1);
             };
             const topParticipants = getTopParticipants();
+            
+            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
+            const allArtistsWithHistory = new Set(['ONF', 'LE SSERAFIM', 'TXT', 'ITZY', 'SF9', 'NMIXX', 'I-DLE', 'TWICE', 'TRI.BE', 'NCT WISH', 'CRAVITY', 'XIKERS', 'CHUNG HA', 'BOYNEXTDOOR', 'IVE', 'ZEROBASEONE', 'DREAMCATCHER', 'SOMI', 'BABYMONSTER', 'ENHYPEN', 'XG', 'FROMIS_9', 'WEEEKLY', 'NCT 127', 'STRAY KIDS', 'LIGHTSUM', 'YOUNG POSSE', 'ATEEZ', 'RIIZE', 'GFRIEND', 'GOT7', 'AESPA', 'STAYC', 'CIX', 'BILLLIE', 'CLASS:Y', 'P1HARMONY', 'WEI', 'N.SSIGN', 'EVNNE', 'RESCENE', 'MADEIN', 'MEOVV', 'YENA', 'AMPERS&ONE', 'KISS OF LIFE', 'XDINARY HEROES', 'SUPER JUNIOR-D&E', 'HYOLYN', 'TAEMIN', 'LEE CHAE YEON', 'KATSEYE', 'ARRC', 'IZNA', 'MINNIE (I-DLE)', 'HEARTS2HEARTS', 'NOWADAYS', 'ARTMS']);
+            const firstTimersOverall = allArtistsInDaliatime.filter(artist => {
+                const isFirstAppearance = allArtistsInDaliatime.filter(a => a.name === artist.name).length === 1;
+                const hasPreviousHistory = allArtistsWithHistory.has(artist.name);
+                return isFirstAppearance && !hasPreviousHistory;
+            });
             
             const eventCards = Object.entries(data).map(([key, event]) => `
                 <a href="${event.link}" target="_blank" class="bg-gray-700 p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
@@ -552,14 +558,18 @@
                 </a>
             `).join('');
 
-            const topParticipantsHtml = topParticipants.map(([artist, count]) => `
-                <li class="flex items-center space-x-2">
-                    <span class="font-semibold text-lg">${artist}</span>
-                    <span class="text-sm text-gray-400">(${count} events)</span>
-                </li>
-            `).join('');
-
-            const firstTimersHtml = allArtistsInDaliatime.filter(artist => artist.link).map(artist => `
+            const topParticipantsHtml = topParticipants.map(([artistName, count]) => {
+                const artistData = allArtistsInDaliatime.find(a => a.name === artistName);
+                const artistLink = artistData && artistData.link ? artistData.link : '#';
+                return `
+                    <li class="flex items-center space-x-2">
+                        <a href="${artistLink}" target="_blank" class="font-semibold text-lg text-white hover:text-[#ffffb0] transition-colors duration-200">${artistName}</a>
+                        <span class="text-sm text-gray-400">(${count} events)</span>
+                    </li>
+                `;
+            }).join('');
+            
+            const firstTimersHtml = firstTimersOverall.map(artist => `
                 <a href="${artist.link}" target="_blank" class="bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-all duration-200 transform hover:scale-110">
                     ${artist.name}
                 </a>
@@ -605,16 +615,16 @@
             });
         };
 
+        let currentShowIndex = 0;
         const renderMDLive = () => {
             const data = DALIATIME_DATA.mdLive;
             const shows = data.shows;
-            let currentShowIndex = 0; // Local state for the carousel
-
+            
             const updateCarousel = () => {
               const carouselElement = document.getElementById('md-live-carousel');
               carouselElement.innerHTML = `
                 <div class="bg-gray-700 rounded-2xl shadow-xl p-4">
-                  <div class="w-full aspect-video rounded-xl overflow-hidden mb-4">
+                  <div class="w-full h-80 rounded-xl overflow-hidden mb-4">
                     ${shows[currentShowIndex].embed}
                   </div>
                   <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center">
