@@ -718,29 +718,36 @@
         const renderZeitgeist = () => {
             const data = DALIATIME_DATA.zeitgeist;
             const renderZeitgeistCategory = (title, items, color) => {
-    // Render the list items
-    const listItems = items.map(item => `<li>${item}</li>`).join('');
-
-    // Determine the link for the title based on its content
-    let titleLink = '';
-    if (title === 'Popular Culture') {
-        titleLink = 'daliatimepopculture.html';
-    } else if (title === 'K-Pop Industry') {
-        titleLink = 'daliatimekpop.html';
-    }
-    const titleElement = titleLink ? 
-        `<a href="${titleLink}" target="_blank" class="block p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4 hover:bg-opacity-50 transition-all duration-200"><h3 class="text-lg font-bold text-white">${title}</h3></a>` :
-        `<div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4"><h3 class="text-lg font-bold text-white">${title}</h3></div>`;
-
-    return `
-        <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
-            ${titleElement}
-            <ul class="space-y-4">
-                ${listItems}
-            </ul>
-        </div>
-    `;
-};
+                const listItems = items.map(item => {
+                    let buttonHtml = '';
+                    if (item.title === 'Popular Culture') {
+                        buttonHtml = `<a href="daliatimepopculture.html" target="_blank" class="block mt-4 text-center text-xs font-bold px-3 py-1 bg-white bg-opacity-20 text-gray-900 rounded-full hover:bg-opacity-40 transition-all duration-200">Read More</a>`;
+                    }
+                    if (item.title === 'K-Pop Industry') {
+                        buttonHtml = `<a href="daliatimekpop.html" target="_blank" class="block mt-4 text-center text-xs font-bold px-3 py-1 bg-white bg-opacity-20 text-gray-900 rounded-full hover:bg-opacity-40 transition-all duration-200">Read More</a>`;
+                    }
+                    return `
+                        <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
+                            <span class="text-xl">${item.icon}</span>
+                            <div>
+                                <p class="font-semibold text-white">${item.title}</p>
+                                <p class="text-sm text-gray-300">${item.description}</p>
+                                ${buttonHtml}
+                            </div>
+                        </li>
+                    `;
+                }).join('');
+                return `
+                    <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
+                        <div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
+                            <h3 class="text-lg font-bold text-white">${title}</h3>
+                        </div>
+                        <ul class="space-y-4">
+                            ${listItems}
+                        </ul>
+                    </div>
+                `;
+            };
 
             app.innerHTML = `
                 <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
