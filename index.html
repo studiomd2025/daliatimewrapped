@@ -162,7 +162,7 @@
                 { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
                 { name: 'BOYNEXTDOOR', link: 'https://kprofiles.com/boynextdoor-members-profile/' },
                 { name: 'IVE', link: 'https://kprofiles.com/ive-members-profile/' },
-                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
+                { name: 'ILLIT', link: 'httpss://kprofiles.com/illit-members-profile/' },
                 { name: 'UNIS', link: 'https://kprofiles.com/unis-members-profile/' },
               ],
               link: 'https://mdthegoodlife.carrd.co'
@@ -718,25 +718,15 @@
         const renderZeitgeist = () => {
             const data = DALIATIME_DATA.zeitgeist;
             const renderZeitgeistCategory = (title, items, color) => {
-                const listItems = items.map(item => {
-                    let buttonHtml = '';
-                    if (item.title === 'Popular Culture') {
-                        buttonHtml = `<a href="daliatimepopculture.html" target="_blank" class="block mt-4 text-center text-xs font-bold px-3 py-1 bg-white bg-opacity-20 text-gray-900 rounded-full hover:bg-opacity-40 transition-all duration-200">Read More</a>`;
-                    }
-                    if (item.title === 'K-Pop Industry') {
-                        buttonHtml = `<a href="daliatimekpop.html" target="_blank" class="block mt-4 text-center text-xs font-bold px-3 py-1 bg-white bg-opacity-20 text-gray-900 rounded-full hover:bg-opacity-40 transition-all duration-200">Read More</a>`;
-                    }
-                    return `
-                        <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
-                            <span class="text-xl">${item.icon}</span>
-                            <div>
-                                <p class="font-semibold text-white">${item.title}</p>
-                                <p class="text-sm text-gray-300">${item.description}</p>
-                                ${buttonHtml}
-                            </div>
-                        </li>
-                    `;
-                }).join('');
+                const listItems = items.map(item => `
+                    <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
+                        <span class="text-xl">${item.icon}</span>
+                        <div>
+                            <p class="font-semibold text-white">${item.title}</p>
+                            <p class="text-sm text-gray-300">${item.description}</p>
+                        </div>
+                    </li>
+                `).join('');
                 return `
                     <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
                         <div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
@@ -761,6 +751,18 @@
                         ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
                         ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]')}
                         ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#2b74b6]')}
+                    </div>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
+                        <a href="daliatimepopculture.html" target="_blank">
+                            <button class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                                Daliatime Pop Culture
+                            </button>
+                        </a>
+                        <a href="daliatimekpop.html" target="_blank">
+                            <button class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#2b74b6] to-[#6ef0a1] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                                K-pop in Daliatime
+                            </button>
+                        </a>
                     </div>
                     <div class="flex justify-center space-x-4 mt-8">
                         <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
@@ -903,10 +905,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'future';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('restart-btn').addEventListener('click', () => {
                 currentSection = 'intro';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
