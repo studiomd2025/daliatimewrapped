@@ -36,7 +36,7 @@
               vibe: 'Melting Point & The Caralia Transition',
               highlights: [
                 'Became transannual leader in just 21 days',
-                'Official start of daliatime amid a major transition',
+                'Official start of Daliatime amid a major transition',
                 'ZB1 Japan debut with "Yura Yura"',
                 'Era identity took shape with power pop & internet trends',
               ],
@@ -49,7 +49,7 @@
               embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/76ccrVo2gipZvNAOriLkiD?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
               debuts: [
                 { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
-                { name: 'ILLIT', link: 'httpskprofiles.com/illit-members-profile/' },
+                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
                 { name: 'RESCENE', link: 'https://kprofiles.com/rescene-members-profile/' },
                 { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' }
               ],
@@ -86,9 +86,9 @@
               vibe: 'Brat Summer & The Homecoming',
               highlights: [
                 'Reboot of forever.21 : The Homecoming with a new concept',
+                'Timeless World tour from September to November',
                 'Western pop dominated the global charts',
-                'PMD’s 1st girl group, Hi Time, debuted',
-                'Daliatime 1st Anniversary & 3rd double transannual leader',
+                'PMD’s 1st girl group, Hi TiME, debuted',
                 'Friendship between Hwanbin and N.SSIGN members was born',
               ],
               notableSongs: [
@@ -103,7 +103,7 @@
                 { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
                 { name: 'KICKFLIP', link: 'https://kprofiles.com/kickflip-members-profile/' },
                 { name: 'MADEIN', link: 'https://kprofiles.com/madein-members-profile/' },
-                { name: 'HI TIME', link: null }
+                { name: 'Hi TiME', link: null }
               ],
               color: 'from-[#ffffb0] to-[#a0bce8]',
             },
@@ -240,7 +240,7 @@
               { name: 'ALLIN Debut Live', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7' },
               { name: 'forever.21 : The Homecoming Part 1', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUU42o_J_jE4FXZOwC_TmAX' },
               { name: 'forever.21 : The Homecoming Part 2', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVpCr1LQwcU5guZ2bozgeD_' },
-              { name: 'Hi Time Debut Show', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXFe2p8ewZVRja7iVOaV1aQ' },
+              { name: 'Hi TiME Debut Show', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXFe2p8ewZVRja7iVOaV1aQ' },
               { name: 'ALLINDAY Music Festival 2025', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUBO2SD_U_zlCoDFhlUO7SG' },
             ],
             link: 'https://mdliveofficial.carrd.co'
@@ -385,6 +385,7 @@
             document.getElementById('start-btn').addEventListener('click', () => {
                 currentSection = 'overview';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
@@ -417,6 +418,7 @@
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'eras';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
@@ -454,10 +456,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'overview';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'events';
                 render();
+                window.scrollTo(0, 0);
             });
 
             document.querySelectorAll('.era-card-toggle').forEach(btn => {
@@ -620,10 +624,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'eras';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'mdLive';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
@@ -636,15 +642,13 @@
               const carouselElement = document.getElementById('md-live-carousel');
               carouselElement.innerHTML = `
                 <div class="bg-gray-700 rounded-2xl shadow-xl p-4 flex flex-col items-center">
-                  <div class="w-full">
-                    <div class="relative pb-[56.25%] rounded-xl overflow-hidden mb-4">
-                        <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
+                  <div class="relative w-full pb-[56.25%] rounded-xl overflow-hidden mb-4">
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                   </div>
-                  <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4 mb-4">
-                    ${shows[currentShowIndex].name}
-                  </h3>
                 </div>
+                <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4 mb-4">
+                    ${shows[currentShowIndex].name}
+                </h3>
                 <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4">
                   <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
                     &#10094;
@@ -699,10 +703,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'events';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'zeitgeist';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
@@ -756,10 +762,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'mdLive';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'future';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
@@ -824,10 +832,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'zeitgeist';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'conclusion';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
@@ -848,7 +858,7 @@
                             <p class="text-lg text-gray-300 mb-2">Two new groups joined our family:</p>
                             <ul class="list-disc list-inside text-left text-gray-200">
                                 <li>The boy group <b>ALLIN</b></li>
-                                <li>The first girl group <b>HI TIME</b></li>
+                                <li>The first girl group <b>Hi TiME</b></li>
                             </ul>
                         </div>
                         <!-- Cultural Leadership card -->
@@ -880,10 +890,12 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'future';
                 render();
+                window.scrollTo(0, 0);
             });
             document.getElementById('restart-btn').addEventListener('click', () => {
                 currentSection = 'intro';
                 render();
+                window.scrollTo(0, 0);
             });
         };
 
