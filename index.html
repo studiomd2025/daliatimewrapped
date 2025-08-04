@@ -155,7 +155,7 @@
                 { name: 'TWICE', link: 'https://kprofiles.com/twice-members-profile/' },
                 { name: 'TRI.BE', link: 'https://kprofiles.com/tri-be-members-profile/' },
                 { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
-                { name: 'CRAVITY', link: 'https://kprofiles.com/cravity-members-profile/' },
+                { name: 'CRAVITY', link: 'httpss://kprofiles.com/cravity-members-profile/' },
                 { name: 'XIKERS', link: 'https://kprofiles.com/xikers-members-profile/' },
                 { name: 'CHUNG HA', link: 'https://kprofiles.com/chungha-members-profile/' },
                 { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
@@ -411,7 +411,7 @@
                     </p>
                     <div class="flex justify-center">
                         <button id="next-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
-                            NEXT: YOUR ERAS
+                            YOUR ERAS
                         </button>
                     </div>
                 </div>
@@ -449,7 +449,7 @@
                             PREVIOUS
                         </button>
                         <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: EVENTS
+                            EVENTS
                         </button>
                     </div>
                 </div>
@@ -617,7 +617,7 @@
                             PREVIOUS
                         </button>
                         <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: My Diaries Live
+                            My Diaries Live
                         </button>
                     </div>
                 </div>
@@ -650,7 +650,7 @@
                     ${shows[currentShowIndex].name}
                   </h3>
                 </div>
-                <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between items-center px-4">
+                <div class="absolute inset-0 flex justify-between items-center px-4 z-10">
                   <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
                     &#10094;
                   </button>
@@ -685,7 +685,7 @@
 
                     <a href="${data.link}" target="_blank" class="block w-full max-w-lg mx-auto">
                         <button class="w-full py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
-                            Visit MD Live Official
+                            MORE ON MD LIVE
                         </button>
                     </a>
 
@@ -694,7 +694,7 @@
                             PREVIOUS
                         </button>
                         <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: ZEITGEIST
+                            ZEITGEIST
                         </button>
                     </div>
                 </div>
@@ -716,15 +716,20 @@
         const renderZeitgeist = () => {
             const data = DALIATIME_DATA.zeitgeist;
             const renderZeitgeistCategory = (title, items, color) => {
-                const listItems = items.map(item => `
-                    <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
-                        <span class="text-xl">${item.icon}</span>
-                        <div>
-                            <p class="font-semibold text-white">${item.title}</p>
-                            <p class="text-sm text-gray-300">${item.description}</p>
-                        </div>
-                    </li>
-                `).join('');
+                const listItems = items.map(item => {
+                    const hasButton = item.title.includes('K-Pop Industry');
+                    const buttonHtml = hasButton ? `<a href="daliatimekpop.html" target="_blank" class="block mt-4 text-center text-xs font-bold px-3 py-1 bg-white bg-opacity-20 text-gray-900 rounded-full hover:bg-opacity-40 transition-all duration-200">Read More</a>` : '';
+                    return `
+                        <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
+                            <span class="text-xl">${item.icon}</span>
+                            <div>
+                                <p class="font-semibold text-white">${item.title}</p>
+                                <p class="text-sm text-gray-300">${item.description}</p>
+                                ${buttonHtml}
+                            </div>
+                        </li>
+                    `;
+                }).join('');
                 return `
                     <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
                         <div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
@@ -743,7 +748,7 @@
                         The Daliatime Zeitgeist
                     </h2>
                     <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
-                        A look at the global shifts that defined our time.
+                        A look at the global shifts that defined our world.
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
@@ -755,7 +760,7 @@
                             PREVIOUS
                         </button>
                         <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: FUTURE
+                            FUTURE
                         </button>
                     </div>
                 </div>
@@ -825,7 +830,7 @@
                             PREVIOUS
                         </button>
                         <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#2b74b6] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
-                            NEXT: CONCLUSION
+                            CONCLUSION
                         </button>
                     </div>
                 </div>
