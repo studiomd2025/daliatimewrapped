@@ -158,7 +158,7 @@
                 { name: 'XIKERS', link: 'https://kprofiles.com/xikers-members-profile/' },
                 { name: 'CHUNG HA', link: 'https://kprofiles.com/chungha-members-profile/' },
                 { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
-                { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
+                { name: 'KISS OF LIFE', link: 'httpss://kprofiles.com/kiss-of-life-members-profile/' },
                 { name: 'BOYNEXTDOOR', link: 'https://kprofiles.com/boynextdoor-members-profile/' },
                 { name: 'IVE', link: 'https://kprofiles.com/ive-members-profile/' },
                 { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
@@ -234,7 +234,7 @@
             },
           },
           mdLive: {
-            description: "MD Live was relaunched on May 27, 2024. It was the first platform to have a multistream format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our community's content. As of 2025.06.10, 6 shows have been streamed.",
+            description: "My Diaries Live, also known as MD Live, was relaunched on May 27, 2024. It was the first platform to have a multistream format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our community's content. As of 2025.06.10, 6 shows have been streamed.",
             shows: [
               { name: '#thegoodlife', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVGg1vExg0w91QjYRUuotHq' },
               { name: 'ALLIN Debut Live', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7' },
@@ -594,7 +594,7 @@
             app.innerHTML = `
                 <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#a0bce8]">
-                        Event Participation
+                        Events
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         ${eventCards}
@@ -645,10 +645,10 @@
                   <div class="relative w-full pb-[56.25%] rounded-xl overflow-hidden mb-4">
                     <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                   </div>
-                </div>
-                <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4 mb-4">
+                  <h3 class="text-xl sm:text-2xl font-bold text-[#a0bce8] text-center mt-4 mb-4">
                     ${shows[currentShowIndex].name}
-                </h3>
+                  </h3>
+                </div>
                 <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4">
                   <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
                     &#10094;
@@ -672,7 +672,7 @@
             app.innerHTML = `
                 <div class="text-center p-6 bg-gray-800 rounded-3xl shadow-2xl">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 text-[#ffffb0]">
-                        MD Live
+                        My Diaries Live
                     </h2>
                     <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
                         ${data.description}
@@ -703,12 +703,10 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'events';
                 render();
-                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'zeitgeist';
                 render();
-                window.scrollTo(0, 0);
             });
         };
 
@@ -762,12 +760,10 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'mdLive';
                 render();
-                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'future';
                 render();
-                window.scrollTo(0, 0);
             });
         };
 
@@ -832,12 +828,10 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'zeitgeist';
                 render();
-                window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
                 currentSection = 'conclusion';
                 render();
-                window.scrollTo(0, 0);
             });
         };
 
@@ -890,12 +884,10 @@
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'future';
                 render();
-                window.scrollTo(0, 0);
             });
             document.getElementById('restart-btn').addEventListener('click', () => {
                 currentSection = 'intro';
                 render();
-                window.scrollTo(0, 0);
             });
         };
 
