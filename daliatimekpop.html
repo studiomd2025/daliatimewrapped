@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Pop Daliatime Chapter 1 Rewind</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* All CSS from the separate 'style.css' file is placed here for canvas preview */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto; /* Simplified margin shorthand */
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 60vh;
+            }
+        }
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-card-blue {
+            background-image: linear-gradient(135deg, #073B4C, #118AB2);
+        }
+        .gradient-card-yellow {
+            background-image: linear-gradient(135deg, #FFD166, #FF6B6B);
+        }
+        .gradient-card-green {
+            background-image: linear-gradient(135deg, #06D6A0, #26C6DA);
+        }
+        .genre-icon {
+            width: 4rem;
+            height: 4rem;
+            background-color: #118AB2;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+    </style>
+</head>
+<body class="bg-[#073B4C] text-white">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-black text-[#FFD166] tracking-tighter">K-POP DALIATIME REWIND</h1>
+            <p class="text-xl md:text-2xl font-semibold text-gray-200 mt-2">Chapter 1: The Foundation (2023.12.12 - 2025.06.10)</p>
+            <p class="text-md text-gray-400 mt-4">A look back at the artists, trends, and defining moments that shaped a pivotal era in K-Pop, and a glimpse into Chapter 2.</p>
+        </header>
+
+        <main>
+            <section id="titans" class="my-16">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">The Titans of Daliatime</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">From industry veterans to explosive rookies, the Daliatime period was defined by artists who consistently dominated charts, shattered records, and captured global attention. Here's a look at the top performers who shaped the sound and spectacle of the era.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <article class="stat-card rounded-xl p-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Top Performing Artists</h3>
+                        <div class="chart-container">
+                            <canvas id="topArtistsChart"></canvas>
+                        </div>
+                    </article>
+                    <article class="stat-card rounded-xl p-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Top Songs (Daliatime Releases)</h3>
+                         <div class="chart-container">
+                            <canvas id="topSongsChart"></canvas>
+                        </div>
+                    </article>
+                    <article class="stat-card rounded-xl p-6 shadow-2xl lg:col-span-2">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Most Viewed MVs (Daliatime Releases)</h3>
+                        <div class="chart-container">
+                            <canvas id="topMVsChart"></canvas>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <hr class="my-12 border-gray-700">
+
+            <section id="zerobaseone" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">Spotlight: ZEROBASEONE</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300"><strong>ZEROBASEONE</strong> solidified their status as a powerhouse of the 5th generation. Their journey through Daliatime was marked by million-selling albums, chart-topping singles, and an ever-expanding global reach, with leader <strong>Sung Hanbin</strong> playing a pivotal role in their public presence.</p>
+                <div class="bg-[#118AB2] rounded-xl p-8 shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-1">
+                        <h3 class="text-3xl font-bold text-[#FFD166]">Key Highlights</h3>
+                        <p class="text-sm mt-4 text-gray-200">The group's releases during this period were met with immense commercial and critical success. Their third EP, 'You Had Me at HELLO', was a major highlight, leading to their first tour. Their Japanese debut, 'Yura Yura (Unmei no Hana)', was also a massive success.</p>
+                        <p class="text-sm mt-4 text-gray-200">The group also demonstrated their positive influence by donating ₩100 million to a children's hospital, showcasing their dedication to philanthropy.</p>
+                    </div>
+                    <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <article class="stat-card rounded-lg p-4 text-center">
+                            <span class="text-3xl">🎬</span>
+                            <h4 class="text-lg font-semibold text-[#FFD166] mt-2">Most Viewed MV</h4>
+                            <p class="text-4xl font-extrabold">Feel the Pop</p>
+                            <p class="text-gray-300">~115M Views</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4 text-center">
+                            <span class="text-3xl">💿</span>
+                            <h4 class="text-lg font-semibold text-[#FFD166] mt-2">Top Selling Album (Daliatime)</h4>
+                            <p class="text-4xl font-extrabold">You Had Me at HELLO</p>
+                            <p class="text-gray-300">~1.38M Sales</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="my-12 border-gray-700">
+            
+            <section id="hanbin" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">Spotlight on a Leader: Sung Hanbin</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">As both the leader of <strong>ZEROBASEONE</strong> and a prominent public figure, <strong>Sung Hanbin</strong>'s activities throughout Daliatime cemented his status as a leader of the era. His diverse roles helped him connect with a broader audience and showcased his multifaceted talents beyond his group's releases.</p>
+                <article class="stat-card rounded-xl p-6 shadow-2xl">
+                    <table class="w-full text-left table-auto">
+                        <thead class="text-[#FFD166] border-b-2 border-gray-500">
+                            <tr>
+                                <th class="p-2">Activity</th>
+                                <th class="p-2">Description</th>
+                                <th class="p-2">Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-2 flex items-center space-x-2"><span class="text-2xl">🎤</span> <p>M Countdown MC</p></td>
+                                <td class="p-2">Became a beloved triple MC for the popular music show, increasing his public profile.</td>
+                                <td class="p-2">2024.01 - Present</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-2 flex items-center space-x-2"><span class="text-2xl">📸</span> <p>Magazine Features</p></td>
+                                <td class="p-2">Starred in numerous solo magazine covers and editorials, showcasing his visual appeal and fashion influence.</td>
+                                <td class="p-2">Throughout the era</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
+                                <td class="p-2">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
+                                <td class="p-2">2023.07</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+            </section>
+
+            <hr class="my-12 border-gray-700">
+
+            <section id="industry" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">Industry Dynamics & Key Shifts</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">Daliatime Chapter 1 was not just about music; it was a period of significant change. Album sales experienced a noticeable dip, while the industry's landscape became more polarized, with major agencies solidifying their dominance. Amid these shifts, nostalgic trends like group reunions and the rise of new genres took hold.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
+                    <article class="stat-card rounded-xl p-6 shadow-2xl flex flex-col items-center justify-center">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Genre Snapshot</h3>
+                        <div class="chart-container !h-64 !max-h-[300px]">
+                            <canvas id="genreChart"></canvas>
+                        </div>
+                        <p class="text-gray-300 text-sm mt-4 text-center"><strong>Pop:</strong> The foundational genre, evolving with modern twists. Subgenres like UK Garage (UKG) and Miami Bass became popular, with artists experimenting with new sounds. <br> <strong>Example:</strong> `Like Magic` (<strong>M.O.N.T</strong>), `Bubble Gum` (<strong>NewJeans</strong>), `Magnetic` (<strong>ILLIT</strong>).</p>
+                        <p class="text-gray-300 text-sm mt-4 text-center"><strong>R&B/Soul:</strong> A constant presence, often fused with modern beats and smooth vocals. <br> <strong>Example:</strong> `Only Cry in the Rain` (<strong>Chuu</strong>), `Elevator` (<strong>BAEKHYUN</strong>), `Soñar (Breaker)` (<strong>NMIXX</strong>).</p>
+                        <p class="text-gray-300 text-sm mt-4 text-center"><strong>Hip-Hop:</strong> Both traditional and experimental forms saw success, with artists showcasing their rapping and production skills. <br> <strong>Example:</strong> `Chk Chk Boom` (<strong>Stray Kids</strong>), `Spot!` (<strong>ZICO</strong> ft. <strong>JENNIE</strong>), `Hate to Love` (<strong>Jackson Wang</strong>).</p>
+                    </article>
+                    <article class="stat-card rounded-xl p-6 shadow-2xl flex flex-col items-center justify-center">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Concept Snapshot</h3>
+                        <div class="chart-container !h-64 !max-h-[300px]">
+                            <canvas id="conceptChart"></canvas>
+                        </div>
+                        <p class="text-gray-300 text-sm mt-4 text-center"><strong>Y2K Nostalgia:</strong> This concept, pioneered by groups like <strong>NewJeans</strong>, dominated the era. It blends late '90s and early 2000s aesthetics, sounds, and fashion, creating a sense of comforting retro familiarity. <br> <strong>Example:</strong> <strong>NewJeans</strong>' entire visual and sonic identity.</p>
+                        <p class="text-gray-300 text-sm mt-4 text-center"><strong>Futuristic/AI:</strong> A concept that explores technology and a hyper-real universe, often accompanied by complex lore and visual effects. <br> <strong>Example:</strong> <strong>aespa</strong>'s `Supernova` and <strong>PLAVE</strong>'s digital identity.</p>
+                        <p class="text-gray-300 text-sm mt-4 text-center"><strong>Girl Crush:</strong> A confident, powerful, and often edgy concept that focuses on female empowerment and self-love. <br> <strong>Example:</strong> <strong>(G)I-DLE</strong>'s `Super Lady` and <strong>LE SSERAFIM</strong>'s `Easy`, `DASH` (<strong>NMIXX</strong>).</p>
+                    </article>
+                </div>
+                <article class="stat-card rounded-xl p-6 shadow-2xl mt-12">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Significant Industry Events</h3>
+                    <ul class="list-disc list-inside mt-4 space-y-2 text-gray-300">
+                        <li><strong>Global Festival Participation:</strong> Major K-Pop acts, including <strong>ATEEZ</strong>, <strong>Stray Kids</strong>, and <strong>LE SSERAFIM</strong>, made waves with headlining performances at global festivals like Coachella, solidifying K-Pop's mainstream presence.</li>
+                        <li><strong>NewJeans Legal Disputes:</strong> An ongoing legal battle involving the group's management label, ADOR, and parent company HYBE dominated headlines, highlighting tensions within the industry.</li>
+                        <li><strong>Group Disbandments:</strong> The dissolution of veteran groups like <strong>Cherry Bullet</strong> and <strong>Weki Meki</strong> marked the end of an era for many fans, shifting the landscape.</li>
+                        <li><strong>Virtual Artist Agency:</strong> The formation of dedicated agencies and labels for virtual idols, such as VLAST for <strong>PLAVE</strong>, signaled a growing investment in the genre.</li>
+                    </ul>
+                </article>
+            </section>
+            
+            <hr class="my-12 border-gray-700">
+            
+            <section id="year-eras" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">A Year-by-Year Breakdown</h2>
+                 <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">Daliatime Chapter 1 can be broken down into two distinct periods, each with its own defining metrics and narrative. The first was a year of new beginnings, while the second was a shorter but powerful voyage of comebacks and new talent.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <article class="stat-card rounded-xl p-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Year 1: <span class="text-[#06D6A0]">New Start</span></h3>
+                        <p class="text-sm text-gray-300 text-center mb-4">(2023.12.12 - 2024.12.31)</p>
+                        <div class="flex justify-around items-center my-6">
+                            <div class="text-center">
+                                <p class="text-4xl font-extrabold text-[#FFD166]">38</p>
+                                <p class="text-lg text-gray-300">Group Debuts</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-4xl font-extrabold text-[#FFD166]">~150</p>
+                                <p class="text-lg text-gray-300">Total Releases</p>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-300">
+                             <li><strong>Notable Debuts:</strong> <strong>TWS</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong>, <strong>MEOVV</strong></li>
+                             <li><strong>Notable Songs:</strong> `Super Lady` (<strong>(G)I-DLE</strong>), `Easy` (<strong>LE SSERAFIM</strong>), `Magnetic` (<strong>ILLIT</strong>)</li>
+                        </ul>
+                    </article>
+                    <article class="stat-card rounded-xl p-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Year 2: <span class="text-[#06D6A0]">Voyage</span></h3>
+                        <p class="text-sm text-gray-300 text-center mb-4">(2025.01.01 - 2025.06.10)</p>
+                        <div class="flex justify-around items-center my-6">
+                             <div class="text-center">
+                                <p class="text-4xl font-extrabold text-[#FFD166]">7</p>
+                                <p class="text-lg text-gray-300">Group Debuts</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-4xl font-extrabold text-[#FFD166]">~50</p>
+                                <p class="text-lg text-gray-300">Total Releases</p>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-300">
+                             <li><strong>Notable Debuts:</strong> <strong>Hearts2Hearts</strong>, <strong>KiiiKiii</strong>, <strong>Close Your Eyes</strong></li>
+                             <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `Rebel Heart` (<strong>IVE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+
+            <hr class="my-12 border-gray-700">
+
+            <section id="new-guard" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">The New Guard: Debuts & Rookies</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">Chapter 1 was a period of fresh faces and new beginnings. <strong>45</strong> new groups debuted, with <strong>39 (87%)</strong> remaining active as of 2025.06.10. This shows a high rate of successful integration for new talent. Several prominent rookies emerged from this period, showcasing the talent pipeline from survival programs and major agencies.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <article class="stat-card rounded-xl p-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Debut & Activity Stats</h3>
+                        <div class="flex justify-around items-center my-6">
+                            <div class="text-center">
+                                <p class="text-5xl font-extrabold text-[#06D6A0]">45</p>
+                                <p class="text-lg text-gray-300">Group Debuts<br>in Daliatime</p>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-5xl font-extrabold text-[#06D6A0]">39</p>
+                                <p class="text-lg text-gray-300">Active as of<br>2025.06.10</p>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside mt-6 space-y-2 text-gray-300">
+                            <li><strong>Notable Rookies:</strong> <strong>ILLIT</strong>, <strong>TWS</strong>, <strong>UNIS</strong>, <strong>BADVILLAIN</strong></li>
+                            <li><strong>Survival Groups:</strong> Several successful groups were formed through prominent survival programs during this time, including <strong>Izna</strong> (from I-LAND 2) and <strong>Close Your Eyes</strong> (from Project 7).</li>
+                        </ul>
+                    </article>
+                    <article class="stat-card rounded-xl p-6 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Prominent Survival Programs</h3>
+                        <div class="space-y-4 text-gray-300">
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <p class="font-bold text-xl text-[#FFD166]">I-LAND 2</p>
+                                <p class="text-sm">Formed girl group <strong>Izna</strong>, who debuted in November 2024.</p>
+                            </div>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <p class="font-bold text-xl text-[#FFD166]">Project 7</p>
+                                <p class="text-sm">Formed boy group <strong>Close Your Eyes</strong>, who debuted on April 2, 2025.</p>
+                            </div>
+                            <div class="bg-gray-800 rounded-lg p-4">
+                                <p class="font-bold text-xl text-[#FFD166]">Universe League</p>
+                                <p class="text-sm">Formed the group <strong>AHOF</strong>, whose official debut is set for July 2025 (in Daliatime Chapter 2).</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <hr class="my-12 border-gray-700">
+
+            <section id="music-shows" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">Music Show Champions</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">Music show wins remain a key benchmark for a comeback's success. During Daliatime, these songs consistently claimed trophies, demonstrating immense popularity and dedicated fan support across various broadcast platforms.</p>
+                <article class="stat-card rounded-xl p-6 shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Top 10 Songs by Music Show Wins</h3>
+                    <div class="chart-container">
+                        <canvas id="musicShowWinsChart"></canvas>
+                    </div>
+                </article>
+            </section>
+
+            <hr class="my-12 border-gray-700">
+
+            <section id="timeline" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">Daliatime Milestones: Firsts & Lasts</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">The 18-month Daliatime period was framed by significant beginnings and endings. Here are the key moments that marked the start and conclusion of this vibrant chapter in K-Pop history.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="space-y-6">
+                        <h3 class="text-3xl font-bold text-[#FFD166] border-b-4 border-[#FFD166] pb-2">The Firsts...</h3>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">First Overall Debut (Group)</p>
+                            <p class="text-xl font-bold">tripleS NXT</p>
+                            <p class="text-sm text-gray-400">2023.12.23</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">First Overall Debut (Solo)</p>
+                            <p class="text-xl font-bold">Lee Sung Kyoung</p>
+                            <p class="text-sm text-gray-400">2024.01.13</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">First Girl Group Debut</p>
+                            <p class="text-xl font-bold">Geenius</p>
+                            <p class="text-sm text-gray-400">2024.01.05</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">First Boy Group Debut</p>
+                            <p class="text-xl font-bold">Waker</p>
+                            <p class="text-sm text-gray-400">2024.01.08</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">First Major Event</p>
+                            <p class="text-xl font-bold">2023 Asia Artist Awards</p>
+                            <p class="text-sm text-gray-400">2023.12.14</p>
+                        </article>
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-3xl font-bold text-[#FF6B6B] border-b-4 border-[#FF6B6B] pb-2">...And the Lasts</h3>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">Last Overall Debut (Group)</p>
+                            <p class="text-xl font-bold">USPEER</p>
+                            <p class="text-sm text-gray-400">2025.06.04</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">Last Overall Debut (Solo)</p>
+                            <p class="text-xl font-bold">Mark (of NCT)</p>
+                            <p class="text-sm text-gray-400">2025.04.07</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">Last Girl Group Debut</p>
+                            <p class="text-xl font-bold">USPEER</p>
+                            <p class="text-sm text-gray-400">2025.06.04</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">Last Boy Group Debut</p>
+                            <p class="text-xl font-bold">Close Your Eyes</p>
+                            <p class="text-sm text-gray-400">2025.04.02</p>
+                        </article>
+                        <article class="stat-card rounded-lg p-4">
+                            <p class="text-sm text-gray-300">Last Major Event</p>
+                            <p class="text-xl font-bold">KCON Japan 2025</p>
+                            <p class="text-sm text-gray-400">2025.05.10-12</p>
+                        </article>
+                    </div>
+                    <article class="stat-card rounded-xl p-6 shadow-2xl md:col-span-2 mt-8">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Major Group Disbandments</h3>
+                        <ul class="list-disc list-inside mt-4 space-y-2 text-gray-300">
+                            <li><strong>Cherry Bullet:</strong> Disbanded after 5 years on 2024.04.22.</li>
+                            <li><strong>Weki Meki:</strong> Ended group activities on 2024.06.12, with the release of a final single.</li>
+                            <li><strong>Luminous & Superkind:</strong> Both groups officially disbanded sometime in 2025.</li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-gray-700">
+            
+            <section id="eras" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#06D6A0]">A Journey Through Eras</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">The Daliatime period was segmented into distinct eras, each with its own unique flavor and flurry of activity. The "Cinema Paradise" era emerged as the most prolific, boasting the highest concentration of comebacks and major events, signaling a peak in industry output. The era titles are now named after ZEROBASEONE’s title tracks that served as key anchor points for the fandom.</p>
+                <article class="stat-card rounded-xl p-6 shadow-2xl mb-12">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-[#FFD166]">Activity by Comeback Era</h3>
+                    <div class="chart-container">
+                        <canvas id="eraActivityChart"></canvas>
+                    </div>
+                </article>
+                <div class="space-y-8">
+                    <article>
+                        <h3 class="text-2xl font-bold mb-3 text-[#06D6A0]">Inaugural</h3>
+                        <p class="text-gray-300 text-sm">(2023.12.12 - 2024.05.12)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Albums:</strong> 'With You-th' (<strong>TWICE</strong>), 'DREAM()SCAPE' (<strong>NCT DREAM</strong>), 'minisode 3: TOMORROW' (<strong>TXT</strong>), 'Ive Switch' (<strong>IVE</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Songs:</strong> 'Born to Be' (<strong>ITZY</strong>), 'Super Lady' (<strong>(G)I-DLE</strong>), 'Easy' (<strong>LE SSERAFIM</strong>), 'Heya' (<strong>IVE</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Debuts:</strong> <strong>Waker</strong>, <strong>All(H)Ours</strong>, <strong>DXMON</strong>, <strong>Rescene</strong>, <strong>TWS</strong>, <strong>Geenius</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong></p>
+                    </article>
+                    <article>
+                        <h3 class="text-2xl font-bold mb-3 text-[#06D6A0]">You Had Me At Hello</h3>
+                        <p class="text-gray-300 text-sm">(2024.05.13 - 2024.08.25)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Albums:</strong> 'You Had Me at HELLO' (<strong>ZEROBASEONE</strong>), 'Armageddon' (<strong>aespa</strong>), 'Cosmic' (<strong>Red Velvet</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Songs:</strong> 'How Sweet' (<strong>NewJeans</strong>), 'ATE' (<strong>Stray Kids</strong>), 'WALK' (<strong>NCT 127</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Debuts:</strong> <strong>UNICODE</strong>, <strong>B.D.U</strong>, <strong>BADVILLAIN</strong>, <strong>KATSEYE</strong>, <strong>ARrC</strong>, <strong>DragonPony</strong></p>
+                    </article>
+                    <article>
+                        <h3 class="text-2xl font-bold mb-3 text-[#06D6A0]">Cinema Paradise</h3>
+                        <p class="text-gray-300 text-sm">(2024.08.26 - 2025.02.23)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Albums:</strong> 'CINEMA PARADISE' (<strong>ZEROBASEONE</strong>), 'IVE EMPATHY' (<strong>IVE</strong>), 'Amortage' (<strong>JISOO</strong>), 'SPILL THE FEELS' (<strong>SEVENTEEN</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Songs:</strong> 'Good So Bad' (<strong>ZEROBASEONE</strong>), 'earthquake' (<strong>JISOO</strong>), 'STRATEGY' (<strong>TWICE</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Debuts:</strong> <strong>I:Mond</strong>, <strong>Izna</strong>, <strong>MEOVV</strong>, <strong>Madein</strong></p>
+                    </article>
+                    <article>
+                        <h3 class="text-2xl font-bold mb-3 text-[#06D6A0]">Blue Paradise</h3>
+                        <p class="text-gray-300 text-sm">(2025.02.24 - 2025.06.10)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Albums:</strong> 'Blue Paradise' (<strong>ZEROBASEONE</strong>), 'Ruby' (<strong>JENNIE</strong>), 'Fe3O4: FORWARD' (<strong>NMIXX</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Songs:</strong> 'Blue' (<strong>ZEROBASEONE</strong>), 'HOT' (<strong>LE SSERAFIM</strong>), 'Rebel Heart' (<strong>IVE</strong>), 'I Feel Good` (<strong>BoyNextDoor</strong>)</p>
+                        <p class="text-gray-300 mt-2"><strong>Notable Debuts:</strong> <strong>Close Your Eyes</strong>, <strong>USPEER</strong>, <strong>KiiiKiii</strong>, <strong>Hearts2Hearts</strong></p>
+                    </article>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-gray-700">
+            
+            <section id="future" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#FFD166]">Daliatime Chapter 2: The Horizon</h2>
+                <p class="text-center max-w-3xl mx-auto mb-12 text-gray-300">The conclusion of Daliatime Chapter 1 sets the stage for an exciting new period. Chapter 2 promises a continuation of key trends and a host of anticipated comebacks, tours, and fresh faces. Here’s a look at what the industry has to look forward to.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="gradient-card-blue rounded-xl p-6 shadow-2xl flex flex-col justify-between">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-white">Group Returns</h3>
+                        <p class="text-gray-100">Fans are anticipating reunions and comebacks from veteran groups like <strong>BTS</strong>, <strong>MONSTA X</strong>, <strong>CLC</strong>, and <strong>I.O.I.</strong> as they navigate their own career paths in Chapter 2. Additionally, <strong>BLACKPINK</strong> is expected to have a new album and world tour, which would be a major highlight of the new period.</p>
+                    </article>
+                    <article class="gradient-card-yellow rounded-xl p-6 shadow-2xl flex flex-col justify-between">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-white">Tours & Global Expansion</h3>
+                        <p class="text-gray-800">The industry continues to prioritize a global presence. Upcoming tours are a major focus, bringing top acts such as <strong>ENHYPEN</strong> to fans in Asia, North America, and beyond. This trend, already cemented in Chapter 1, will only intensify.</p>
+                    </article>
+                    <article class="gradient-card-green rounded-xl p-6 shadow-2xl flex flex-col justify-between">
+                        <h3 class="text-2xl font-bold mb-4 text-center text-white">New Survival Groups</h3>
+                        <p class="text-gray-800">Survival shows continue to be a vital pipeline for new talent. As seen with shows like `Boys Planet`, which produced <strong>ZEROBASEONE</strong>, the industry will continue to rely on these platforms to discover and launch the next generation of K-Pop stars. Look for new and innovative survival formats in Chapter 2.</p>
+                    </article>
+                </div>
+            </section>
+            
+            <hr class="my-12 border-gray-700">
+            
+            <section id="wrapped" class="my-20">
+                <h2 class="text-4xl font-bold text-center mb-10 text-[#FFD166]">Daliatime Chapter 1 Wrapped</h2>
+                <article class="gradient-card-blue rounded-2xl p-8 shadow-2xl text-center">
+                    <h3 class="text-5xl md:text-6xl font-black text-white tracking-tighter mb-4">The Numbers Tell the Story</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                            <p class="text-4xl font-black text-[#06D6A0]">45</p>
+                            <p class="text-sm font-semibold text-gray-300 mt-1">New Groups Debuted</p>
+                        </div>
+                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                            <p class="text-4xl font-black text-[#FFD166]">87%</p>
+                            <p class="text-sm font-semibold text-gray-300 mt-1">Active as of 2025.06.10</p>
+                        </div>
+                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                            <p class="text-4xl font-black text-[#FF6B6B]">-15%</p>
+                            <p class="text-sm font-semibold text-gray-300 mt-1">Album Sales Dip (2024 vs. 2023)</p>
+                        </div>
+                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
+                            <p class="text-4xl font-black text-[#FFD166]">~100</p>
+                            <p class="text-sm font-semibold text-gray-300 mt-1">Music Show Wins by Top Songs</p>
+                        </div>
+                    </div>
+                    <p class="text-center max-w-4xl mx-auto text-gray-300 leading-relaxed text-lg mt-8">Daliatime Chapter 1 was a whirlwind of innovation and legacy. We witnessed the undisputed chart dominance of artists like <strong>SEVENTEEN</strong> and <strong>Stray Kids</strong>, while new hits like <strong>aespa's "Supernova"</strong> and <strong>ROSÉ's "APT."</strong> captured the global zeitgeist.</p>
+                    <p class="text-center max-w-4xl mx-auto text-gray-300 leading-relaxed text-lg mt-4">The industry saw a fascinating blend of old and new: a drop in overall album sales was countered by the electrifying rise of <strong>virtual idols</strong> and a powerful wave of <strong>nostalgic reunions</strong> from iconic groups. The foundation of Daliatime was built on a new generation of talent. As we enter Chapter 2, the stage is set for a future defined by these trends, with global tours, veteran comebacks, and new stars promising to continue the evolution of the K-Pop world.</p>
+                </article>
+            </section>
+        </main>
+
+        <footer class="text-center mt-20 py-8 border-t border-gray-700">
+            <p class="text-gray-400">Daliatime K-Pop Rewind | Data compiled as of 2025.06.10.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // All JS from the separate 'main.js' file is placed here for canvas preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const FONT_COLOR = '#E5E7EB';
+            const GRID_COLOR = 'rgba(229, 231, 235, 0.2)';
+            const PALETTE = {
+                blue: '#118AB2',
+                green: '#06D6A0',
+                yellow: '#FFD166',
+                pink: '#FF6B6B',
+                darkBlue: '#073B4C',
+                lightPink: '#F78C6B',
+                teal: '#26C6DA',
+                orange: '#FFA726',
+                purple: '#7E57C2',
+                red: '#EF5350'
+            };
+            const COLORS = Object.values(PALETTE);
+
+            // Reusable function to create chart configurations
+            const createChart = (canvasId, type, data, options = {}) => {
+                const defaultOptions = {
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: { color: FONT_COLOR, font: { weight: '600' } },
+                            grid: { color: GRID_COLOR }
+                        },
+                        y: {
+                            ticks: { color: FONT_COLOR, font: { weight: '600' } },
+                            grid: { color: GRID_COLOR }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: PALETTE.darkBlue,
+                            titleColor: PALETTE.yellow,
+                            bodyColor: FONT_COLOR,
+                            borderColor: PALETTE.blue,
+                            borderWidth: 1,
+                            padding: 10,
+                            callbacks: {
+                                title: (tooltipItems) => {
+                                    const item = tooltipItems[0];
+                                    const label = item.chart.data.labels[item.dataIndex];
+                                    return Array.isArray(label) ? label.join(' ') : label;
+                                },
+                                label: (tooltipItem) => {
+                                   if (['pie', 'doughnut'].includes(tooltipItem.chart.config.type)) {
+                                        return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                                   }
+                                   return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
+                                }
+                            }
+                        }
+                    }
+                };
+
+                const finalOptions = Chart.helpers.merge(defaultOptions, options);
+
+                if (type === 'pie' || type === 'doughnut') {
+                    finalOptions.scales = {}; // Remove scales for circular charts
+                    finalOptions.plugins.legend = {
+                        position: 'bottom',
+                        labels: { color: FONT_COLOR, font: { weight: '600' } }
+                    };
+                }
+                
+                new Chart(document.getElementById(canvasId), { type, data, options: finalOptions });
+            };
+
+            // Helper function to wrap long labels
+            const wrapLabel = (label) => {
+                const maxLength = 16;
+                if (label.length <= maxLength) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length > maxLength) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                }
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            // Chart Data and Configurations
+            const charts = [
+                {
+                    id: 'topArtistsChart',
+                    type: 'bar',
+                    data: {
+                        labels: ['SEVENTEEN', 'Stray Kids', 'aespa', 'IVE', 'NewJeans', 'LE SSERAFIM', 'ZEROBASEONE', 'NCT DREAM', 'TWICE', 'TXT'].map(wrapLabel),
+                        datasets: [{
+                            label: 'Overall Impact Score',
+                            data: [98, 95, 92, 90, 88, 85, 82, 80, 78, 75],
+                            backgroundColor: COLORS,
+                            borderColor: PALETTE.darkBlue,
+                            borderWidth: 2,
+                            borderRadius: 5
+                        }]
+                    }
+                },
+                {
+                    id: 'topSongsChart',
+                    type: 'bar',
+                    data: {
+                        labels: ['aespa - Supernova', 'ZICO - SPOT! (feat. JENNIE)', 'ILLIT - Magnetic', 'IVE - HEYA', 'LE SSERAFIM - Smart', 'NewJeans - How Sweet', 'ZEROBASEONE - Feel the Pop', 'ROSÉ, Bruno Mars - APT.', 'JISOO - earthquake', 'TWICE - ONE SPARK'].map(wrapLabel),
+                        datasets: [{
+                            label: 'Popularity Score',
+                            data: [99, 97, 94, 91, 89, 86, 84, 82, 80, 78],
+                            backgroundColor: COLORS.slice().reverse(),
+                            borderColor: PALETTE.darkBlue,
+                            borderWidth: 2,
+                            borderRadius: 5
+                        }]
+                    }
+                },
+                {
+                    id: 'topMVsChart',
+                    type: 'bar',
+                    data: {
+                        labels: ['ROSÉ - APT.', 'aespa - Whiplash', 'JISOO - earthquake', 'JENNIE - Mantra', 'ZEROBASEONE - Feel the Pop', 'Stray Kids - ATE', 'IVE - Accendio', 'LE SSERAFIM - HOT', 'NewJeans - Bubble Gum', 'TWICE - STRATEGY'].map(wrapLabel),
+                        datasets: [{
+                            label: 'Views (in Millions)',
+                            data: [450, 410, 380, 350, 115, 112, 105, 102, 98, 95],
+                            backgroundColor: COLORS,
+                            borderColor: PALETTE.darkBlue,
+                            borderWidth: 2,
+                            borderRadius: 5
+                        }]
+                    }
+                },
+                {
+                    id: 'genreChart',
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Pop', 'R&B/Soul', 'Hip-Hop', 'Ballad/Acoustic', 'Rock'],
+                        datasets: [{
+                            label: 'Genre Distribution',
+                            data: [40, 25, 20, 10, 5],
+                            backgroundColor: [PALETTE.yellow, PALETTE.blue, PALETTE.pink, PALETTE.green, PALETTE.orange],
+                            borderColor: PALETTE.darkBlue,
+                            borderWidth: 2,
+                            hoverOffset: 4
+                        }]
+                    }
+                },
+                {
+                    id: 'conceptChart',
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Y2K Nostalgia', 'Futuristic/AI', 'Girl Crush', 'Bright & Playful', 'Cinematic', 'Band Sound'],
+                        datasets: [{
+                            label: 'Concept Distribution',
+                            data: [30, 20, 15, 15, 10, 10],
+                            backgroundColor: [PALETTE.yellow, PALETTE.blue, PALETTE.pink, PALETTE.green, PALETTE.orange, PALETTE.purple],
+                            borderColor: PALETTE.darkBlue,
+                            borderWidth: 2,
+                            hoverOffset: 4
+                        }]
+                    }
+                },
+                {
+                    id: 'musicShowWinsChart',
+                    type: 'bar',
+                    data: {
+                        labels: ['(G)I-DLE - Super Lady', 'LE SSERAFIM - Smart', 'IVE - HEYA', 'aespa - Supernova', 'ZEROBASEONE - Feel the Pop', 'NCT DREAM - Smoothie', 'TWICE - ONE SPARK', 'ILLIT - Magnetic', 'TWS - plot twist', 'Stray Kids - LALALALA'].map(wrapLabel),
+                        datasets: [{
+                            label: 'Total Wins',
+                            data: [13, 11, 10, 10, 9, 9, 8, 8, 7, 7],
+                            backgroundColor: COLORS.slice().reverse(),
+                            borderColor: PALETTE.darkBlue,
+                            borderWidth: 2,
+                            borderRadius: 5
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y'
+                    }
+                },
+                {
+                    id: 'eraActivityChart',
+                    type: 'bar',
+                    data: {
+                        labels: ['Inaugural', ['You Had Me', 'At Hello'], 'Cinema Paradise', 'Blue Paradise'],
+                        datasets: [{
+                            label: 'Releases',
+                            data: [45, 40, 65, 55],
+                            backgroundColor: PALETTE.green,
+                        }, {
+                            label: 'Debuts',
+                            data: [12, 8, 15, 10],
+                            backgroundColor: PALETTE.yellow,
+                        }, {
+                            label: 'Events',
+                            data: [20, 25, 35, 30],
+                            backgroundColor: PALETTE.pink,
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } },
+                            y: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: { color: FONT_COLOR, font: { weight: '600' } }
+                            }
+                        }
+                    }
+                }
+            ];
+
+            charts.forEach(chart => createChart(chart.id, chart.type, chart.data, chart.options));
+        });
+    </script>
+</body>
+</html>
