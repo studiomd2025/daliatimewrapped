@@ -11,6 +11,16 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Keyframes for button animation */
+        @keyframes pulse-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-pulse-gradient {
+            background-size: 200% 200%;
+            animation: pulse-gradient 4s ease infinite;
+        }
     </style>
 </head>
 <body class="bg-[#121212] text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
@@ -114,7 +124,7 @@
               vibe: 'New Paradise & Chapter 2',
               highlights: [
                 'Ceremonial start at ALLINDAY Music Festival',
-                'Hanbin made solo debut with Champion (SWF 3 OST)',
+                'Dalia made solo debut with Champion (SWF 3 OST)',
                 'STAY reunion, Cara\'s return from military service, released surprise reunion album',
                 'ALLIN celebrated their 1st anniversary',
                 'Launched the "Rising Stars Channel" on Channel 3',
@@ -235,7 +245,7 @@
             },
           },
           mdLive: {
-            description: "My Diaries Live, also known as MD Live, was relaunched on May 27, 2024. It was the first platform to have a multistream format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our community's content. As of 2025.06.10, 6 shows have been streamed.",
+            description: "<b>My Diaries Live</b>, also known as MD Live and formerly known as MDTV (2019-2020) and BE Live (2020-2024), was relaunched on May 27, 2024. Known for streaming events and activities, it was the first platform to have a <b>multistream</b> format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our events.<br><br>As of 2025.06.10, <b>6 shows</b> have been streamed.",
             shows: [
               { name: '#thegoodlife', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVGg1vExg0w91QjYRUuotHq' },
               { name: 'ALLIN Debut Live', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7' },
@@ -321,9 +331,9 @@
           future: {
             nextEra: 'NEVER SAY NEVER',
             upcomingEvents: [
-              'MY DIARIES AWARDS 2025 (2025.09.01)',
+              'MY DIARIES AWARDS 2025',
               'ALLINDAY Music Festival 2025',
-              'My Turn season 3',
+              'MY TURN season 3 (survival audition event)',
             ],
             upcomingPmdReleases: [
               'STAY NEW ALBUM and COMEBACK SHOW',
@@ -333,7 +343,7 @@
               'New way to interact: PMDCU',
             ],
             upcomingZerobaseone: [
-              'New album: NEVER SAY NEVER (<a href="https://zb1.lnk.to/neversaynever" target="_blank">pre-save</a>)',
+              'New album: NEVER SAY NEVER <a href="https://zb1.lnk.to/neversaynever" target="_blank" class="inline-block px-3 py-1 text-xs font-bold rounded-full animate-pulse-gradient" style="background: linear-gradient(90deg, #6ef0a1, #ffffb0, #a0bce8); background-size: 200% 200%; color: #121212;">pre-save</a>',
               'More events and activities',
               'The next chapter of SUNG HANBIN in 2026: Redebut? New group?',
             ],
@@ -620,7 +630,7 @@
                         <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
                             PREVIOUS
                         </button>
-                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white">
                             MD LIVE
                         </button>
                     </div>
@@ -719,7 +729,7 @@
 
         const renderZeitgeist = () => {
             const data = DALIATIME_DATA.zeitgeist;
-            const renderZeitgeistCategory = (title, items, color) => {
+            const renderZeitgeistCategory = (title, items, color, link = null) => {
                 const listItems = items.map(item => `
                     <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
                         <span class="text-xl">${item.icon}</span>
@@ -729,11 +739,18 @@
                         </div>
                     </li>
                 `).join('');
+
+                const categoryTitleHtml = link ?
+                    `<a href="${link}" target="_self" class="block p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4 hover:bg-opacity-50 transition-all duration-200">
+                        <h3 class="text-lg font-bold text-white">${title}</h3>
+                    </a>` :
+                    `<div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
+                        <h3 class="text-lg font-bold text-white">${title}</h3>
+                    </div>`;
+
                 return `
                     <div class="bg-gray-700 p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
-                        <div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
-                            <h3 class="text-lg font-bold text-white">${title}</h3>
-                        </div>
+                        ${categoryTitleHtml}
                         <ul class="space-y-4">
                             ${listItems}
                         </ul>
@@ -751,16 +768,16 @@
                     </p>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
-                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]')}
-                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#2b74b6]')}
+                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]', 'daliatimepopculture.html')}
+                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#2b74b6]', 'daliatimekpop.html')}
                     </div>
                     <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
-                        <a href="daliatimepopculture.html" target="_blank">
+                        <a href="daliatimepopculture.html" target="_self">
                             <button class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
                                 Daliatime Pop Culture
                             </button>
                         </a>
-                        <a href="daliatimekpop.html" target="_blank">
+                        <a href="daliatimekpop.html" target="_self">
                             <button class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#2b74b6] to-[#6ef0a1] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
                                 K-pop in Daliatime
                             </button>
@@ -832,7 +849,7 @@
                             THE NEXT ERA: NEVER SAY NEVER
                         </h3>
                         <p class="text-lg text-white">
-                            Our <b>5th</b> overall era is coming on <b>2025.09.01</b>.
+                            Our <b>5th</b> overall era is coming on <b>2025.09.01</b>
                         </p>
                     </div>
 
