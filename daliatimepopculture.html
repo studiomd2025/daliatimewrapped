@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daliatime Pop Culture Wrapped (2023-2025)</title>
+    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞𝙢𝙚𝙒𝙧𝙖𝙥𝙥𝙚𝙙 : popculture</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,19 +13,35 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #121212;
             color: #FFFFFF;
+            padding-bottom: 80px;
+            /* Frutiger Aero inspired gradient */
+            background: radial-gradient(at top left, #2B78BF 0%, #1A1A1A 50%, #60D394 100%), 
+                        linear-gradient(135deg, #1A1A1A 0%, #2B78BF 70%, #60D394 100%);
+            background-blend-mode: multiply;
+            background-attachment: fixed;
+            background-size: cover;
         }
-        .spotify-green { color: #1DB954; }
-        .spotify-pink { color: #F573A0; }
-        .spotify-blue { color: #509BF5; }
-        .spotify-yellow { color: #F2D13D; }
+        .spotify-green { color: #60D394; }
+        .spotify-pink { color: #B5CBEB; }
+        .spotify-blue { color: #2B78BF; }
+        .spotify-yellow { color: #F7E598; }
 
-        .bg-spotify-dark { background-color: #191414; }
-        .bg-spotify-card { background-color: #282828; }
+        .bg-spotify-dark { background-color: transparent; } /* Background handled by body gradient */
+        
+        /* Glassmorphism for panels */
+        .bg-spotify-card {
+            background-color: rgba(40, 40, 40, 0.4); /* Translucent dark gray */
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.5rem; /* Ensure rounded corners */
+            padding: 1.5rem; /* Adjust padding if needed */
+        }
 
         .header-glow {
-            text-shadow: 0 0 8px rgba(29, 185, 84, 0.7), 0 0 10px rgba(29, 185, 84, 0.5);
+            text-shadow: 0 0 8px rgba(96, 211, 148, 0.7), 0 0 10px rgba(96, 211, 148, 0.5);
         }
         .stat-number {
             font-weight: 900;
@@ -57,7 +74,7 @@
             transform: translateX(-50%);
             width: 4px;
             height: 100%;
-            background-color: #1DB954;
+            background-color: #60D394;
             opacity: 0.3;
         }
         .timeline-item {
@@ -84,8 +101,8 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: #1DB954;
-            border: 4px solid #191414;
+            background-color: #60D394;
+            border: 4px solid #1A1A1A;
         }
         .timeline-item:nth-child(odd) .timeline-dot {
             right: -10px;
@@ -94,18 +111,51 @@
             left: -10px;
         }
         .flowchart-node {
-            border: 2px solid #1DB954;
-            background-color: #282828;
+            border: 2px solid #60D394;
+            background-color: rgba(40, 40, 40, 0.6); /* Slightly darker for flowchart node */
             padding: 1rem;
             border-radius: 0.5rem;
             text-align: center;
             min-width: 150px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
         .flowchart-arrow {
             font-size: 2rem;
-            color: #1DB954;
+            color: #60D394;
             margin: 0 1rem;
             align-self: center;
+        }
+        .fixed-nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            padding: 1rem 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .back-button {
+            background: linear-gradient(90deg, #60D394, #F7E598); /* Gradient from palette */
+            color: #1A1A1A; /* Dark text for contrast */
+            padding: 0.75rem 2.5rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: bold;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: none;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
@@ -202,7 +252,7 @@
                         </div>
                         <div class="text-center">
                             <p class="text-2xl font-bold">Alamat</p>
-                            <p class="text-gray-400">💃 Fusing native sounds & dances</p>
+                            <p class="text-gray-400">� Fusing native sounds & dances</p>
                         </div>
                     </div>
                      <p class="text-center text-gray-400 mt-4">P-Pop groups gained significant international recognition, blending global pop aesthetics with distinct Filipino cultural pride.</p>
@@ -309,6 +359,13 @@
         <p class="text-xs mt-2">Data synthesized from the "Daliatime Pop Culture Wrapped" analysis report.</p>
     </footer>
 
+    <!-- Fixed Navigation Bar at the bottom -->
+    <div class="fixed-nav-bottom">
+        <button onclick="history.back()" class="back-button">
+            BACK
+        </button>
+    </div>
+
     <script>
         const tooltipTitleCallback = (tooltipItems) => {
             const item = tooltipItems[0];
@@ -370,8 +427,8 @@
                 datasets: [{
                     label: 'Engagement Rate (%)',
                     data: [3.86, 1.21],
-                    backgroundColor: ['#1DB954', '#F573A0'],
-                    borderColor: ['#1DB954', '#F573A0'],
+                    backgroundColor: ['#60D394', '#B5CBEB'],
+                    borderColor: ['#60D394', '#B5CBEB'],
                     borderWidth: 1
                 }]
             },
@@ -390,7 +447,7 @@
                 datasets: [{
                     label: 'Concurrent Viewers (Millions)',
                     data: [10, 12, 3],
-                    backgroundColor: ['#509BF5', '#F573A0', '#F2D13D'],
+                    backgroundColor: ['#2B78BF', '#B5CBEB', '#F7E598'],
                 }]
             },
             options: {
@@ -409,24 +466,24 @@
                         label: 'K-Pop',
                         data: [9, 6, 9, 5, 4, 6],
                         fill: true,
-                        backgroundColor: 'rgba(29, 185, 84, 0.2)',
-                        borderColor: '#1DB954',
-                        pointBackgroundColor: '#1DB954',
+                        backgroundColor: 'rgba(96, 211, 148, 0.2)',
+                        borderColor: '#60D394',
+                        pointBackgroundColor: '#60D394',
                     }, {
                         label: 'K-Drama',
                         data: [7, 8, 7, 9, 6, 7],
                         fill: true,
-                        backgroundColor: 'rgba(245, 115, 160, 0.2)',
-                        borderColor: '#F573A0',
-                        pointBackgroundColor: '#F573A0',
+                        backgroundColor: 'rgba(181, 203, 235, 0.2)',
+                        borderColor: '#B5CBEB',
+                        pointBackgroundColor: '#B5CBEB',
                     },
                     {
                         label: 'K-Food',
                         data: [6, 9, 5, 6, 9, 9],
                         fill: true,
-                        backgroundColor: 'rgba(80, 155, 245, 0.2)',
-                        borderColor: '#509BF5',
-                        pointBackgroundColor: '#509BF5',
+                        backgroundColor: 'rgba(43, 120, 191, 0.2)',
+                        borderColor: '#2B78BF',
+                        pointBackgroundColor: '#2B78BF',
                     }
                 ]
             },
@@ -438,7 +495,7 @@
                         grid: { color: 'rgba(255, 255, 255, 0.2)' },
                         pointLabels: { color: '#FFFFFF', font: { size: 12 } },
                         ticks: {
-                            color: '#121212',
+                            color: '#1A1A1A',
                             backdropColor: 'rgba(255, 255, 255, 0.8)',
                             stepSize: 2
                         }
@@ -460,9 +517,8 @@
             data: {
                 labels: ['Netflix', 'Other Platforms'],
                 datasets: [{
-                    label: 'Market Share Q1 2025',
                     data: [34, 66],
-                    backgroundColor: ['#E50914', '#509BF5'],
+                    backgroundColor: ['#E50914', '#2B78BF'],
                     borderColor: '#282828',
                     borderWidth: 4
                 }]
@@ -488,8 +544,8 @@
                     label: 'Global Market Value (Trillions USD)',
                     data: [0.04, 1.6],
                     fill: true,
-                    borderColor: '#1DB954',
-                    backgroundColor: 'rgba(29, 185, 84, 0.3)',
+                    borderColor: '#60D394',
+                    backgroundColor: 'rgba(96, 211, 148, 0.3)',
                     tension: 0.1
                 }]
             },
@@ -506,7 +562,7 @@
                 labels: ['Prefer Experiences', 'Prefer Material Goods'],
                 datasets: [{
                     data: [73, 27],
-                    backgroundColor: ['#F2D13D', '#509BF5'],
+                    backgroundColor: ['#F7E598', '#2B78BF'],
                     borderColor: '#282828',
                     borderWidth: 4
                 }]
