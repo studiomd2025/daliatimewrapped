@@ -373,7 +373,7 @@
                     {
                         title: 'Tech & Engagement',
                         description: 'Immersive exhibits like D\'Festa BGC and digital engagement strategies have become a new way to connect with fans globally.',
-                        icon: '�',
+                        icon: '📱',
                         link: null
                     },
                     {
@@ -773,7 +773,8 @@
                 currentShowIndex = (currentShowIndex - 1 + shows.length) % shows.length;
                 updateCarousel();
               });
-              document.getElementById('next-show-btn').addEventListener(() => {
+              // FIX: Added 'click' event type for next-show-btn
+              document.getElementById('next-show-btn').addEventListener('click', () => {
                 currentShowIndex = (currentShowIndex + 1) % shows.length;
                 updateCarousel();
               });
@@ -810,6 +811,7 @@
             `;
             updateCarousel(); // Initial render of the carousel
 
+            // Ensure event listeners are re-attached after innerHTML update
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'events';
                 render();
