@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png"> <!-- Favicon added -->
     <style>
         /* Custom CSS for Frutiger Aero / City Pop dark mode aesthetics */
         body {
@@ -84,6 +85,15 @@
             border-radius: 8px;
             margin-bottom: 0.5rem;
         }
+        /* Styling for the profile image in the Sung Hanbin section */
+        .profile-img {
+            width: 150px; /* Increased size */
+            height: 150px; /* Increased size */
+            object-fit: cover;
+            border-radius: 8px; /* Square with rounded corners */
+            margin-right: 1.5rem; /* More space from text */
+            flex-shrink: 0; /* Prevent shrinking on smaller screens */
+        }
         /* Fixed navigation bar at the bottom */
         .fixed-nav-bottom {
             position: fixed;
@@ -121,7 +131,7 @@
     <div class="container mx-auto p-4 md:p-8 flex-grow">
 
         <header class="text-center my-12">
-            <h1 class="text-5xl md:text-7xl font-black text-[#FBF8B2] tracking-tighter">K-POP DALIATIME REWIND</h1>
+            <h1 class="text-5xl md:text-7xl font-black text-[#FBF8B2] tracking-tighter">K-POP DALIATIME REWIND</h1> <!-- Main title header -->
             <p class="text-xl md:text-2xl font-semibold text-[#A0AEC0] mt-2">Chapter 1: The Foundation (2023.12.12 - 2025.06.10)</p>
             <p class="text-md text-[#A0AEC0] mt-4">A look back at the artists, trends, and defining moments that shaped a pivotal era in K-Pop, and a glimpse into Chapter 2.</p>
         </header>
@@ -186,7 +196,10 @@
             
             <section id="hanbin" class="my-20">
                 <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Spotlight on a Leader: Sung Hanbin</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">As both the leader of <strong>ZEROBASEONE</strong> and a prominent public figure, <strong>Sung Hanbin</strong>'s activities throughout Daliatime cemented his status as a leader of the era. His diverse roles helped him connect with a broader audience and showcased his multifaceted talents beyond his group's releases.</p>
+                <div class="flex flex-col md:flex-row items-center md:items-start max-w-3xl mx-auto mb-12">
+                    <img src="https://i.ibb.co/p5P7QW8/Uad5k4-i-400x400.jpg" alt="Sung Hanbin Profile" class="profile-img mb-4 md:mb-0">
+                    <p class="text-center md:text-left text-[#CBD5E0]">As both the leader of ZEROBASEONE and ALLIN and a prominent public figure, <strong>Sung Hanbin</strong>'s activities throughout Daliatime cemented his status as Dalia, leader of the current era. His diverse roles helped him connect with a broader audience and showcased his multifaceted talents beyond his group's releases.</p>
+                </div>
                 <article class="stat-card rounded-xl p-6 shadow-2xl">
                     <table class="w-full text-left table-auto">
                         <thead class="text-[#9DC3E7] border-b-2 border-gray-600">
@@ -198,7 +211,9 @@
                         </thead>
                         <tbody>
                             <tr class="border-b border-gray-700">
-                                <td class="p-2 flex items-center space-x-2"><span class="text-2xl">🎤</span> <p>M Countdown MC</p></td>
+                                <td class="p-2 flex items-center space-x-2">
+                                    <span class="text-2xl">🎤</span> <p>M Countdown MC</p>
+                                </td>
                                 <td class="p-2">Became a beloved triple MC for the popular music show, increasing his public profile.</td>
                                 <td class="p-2">2024.01 - Present</td>
                             </tr>
@@ -206,6 +221,11 @@
                                 <td class="p-2 flex items-center space-x-2"><span class="text-2xl">📸</span> <p>Magazine Features</p></td>
                                 <td class="p-2">Starred in numerous solo magazine covers and editorials, showcasing his visual appeal and fashion influence.</td>
                                 <td class="p-2">Throughout the era</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-2 flex items-center space-x-2"><span class="text-2xl">🕺🏻</span> <p>Studio Choom "Artist of the Month"</p></td>
+                                <td class="p-2">For July 2024 with self-written original song, "Bad Boy". He also worked with top-tier choreographers in the Korean dance industry.</td>
+                                <td class="p-2">2024.07</td>
                             </tr>
                             <tr>
                                 <td class="p-2 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
@@ -483,7 +503,7 @@
                         <p class="text-[#A0AEC0] text-sm">(2023.12.12 - 2024.05.12)</p>
                         <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'With You-th' (<strong>TWICE</strong>), 'DREAM()SCAPE' (<strong>NCT DREAM</strong>), 'minisode 3: TOMORROW' (<strong>TXT</strong>), 'Ive Switch' (<strong>IVE</strong>)</p>
                         <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Born to Be' (<strong>ITZY</strong>), 'Super Lady' (<strong>(G)I-DLE</strong>), 'Easy' (<strong>LE SSERAFIM</strong>), 'Magnetic' (<strong>ILLIT</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Waker</strong>, <strong>All(H)Ours</strong>, <strong>DXMON</strong>, <strong>Rescene</strong>, <strong>TWS</strong>, <strong>Geenius</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong></p>
+                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Waker</strong>, <strong>All(H)Ours</strong>, <strong>DXMON</strong>, <strong>Rescene</strong>, <strong>TWS</strong>, <strong>Geenius</strong >, <strong>ILLIT</strong>, <strong>UNIS</strong></p>
                     </article>
                     <article>
                         <h3 class="text-2xl font-bold mb-3 text-[#70E093]">You Had Me At Hello</h3>
