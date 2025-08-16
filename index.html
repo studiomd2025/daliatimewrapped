@@ -195,7 +195,7 @@
 
     <!-- Background Music Player -->
     <audio id="background-music" loop preload="auto">
-        <source src="https://dl.dropboxusercontent.com/s/1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk/BIRTHDAY_2025.m4a" type="audio/mpeg">
+        <source src="https://od.lk/s/NThfNTg5NDA0NTVf/chapter_1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -579,7 +579,7 @@
         const playMusicForSection = () => {
             if (currentSection !== 'intro' && currentSection !== 'finale') {
                 // Google Drive direct download link for the audio file
-                backgroundMusic.src = "https://dl.dropboxusercontent.com/s/1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk/BIRTHDAY_2025.m4a"; // Updated to Dropbox direct link
+                backgroundMusic.src = "https://od.lk/s/NThfNTg5NDA0NTVf/chapter_1.mp3"; // Updated to OD.lk direct link
                 backgroundMusic.load(); // Load the audio to get its duration
 
                 // Listen for 'canplaythrough' to ensure metadata (like duration) is loaded
@@ -1007,7 +1007,7 @@
               carouselElement.innerHTML = `
                 <div class="glass-panel rounded-2xl shadow-xl p-4 flex flex-col items-center">
                   <div class="relative w-full pb-[56.25%]">
-                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                   </div>
                   <h3 class="text-xl sm:text-2xl font-bold text-green-custom text-center mt-4">
                     ${shows[currentShowIndex].name}
