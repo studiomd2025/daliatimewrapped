@@ -195,7 +195,7 @@
 
     <!-- Background Music Player -->
     <audio id="background-music" loop preload="auto">
-        <source src="https://drive.google.com/uc?export=download&id=1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk" type="audio/mpeg">
+        <source src="https://dl.dropboxusercontent.com/s/1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk/BIRTHDAY_2025.m4a" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -503,7 +503,7 @@
                     {
                         title: 'Global Soft Power',
                         description: 'K-Pop continues its dominance as a major global force, influencing everything from fashion and beauty to tourism and local economies.',
-                        icon: '�',
+                        icon: '🌐',
                         link: 'daliatimekpop.html'
                     },
                     {
@@ -579,7 +579,7 @@
         const playMusicForSection = () => {
             if (currentSection !== 'intro' && currentSection !== 'finale') {
                 // Google Drive direct download link for the audio file
-                backgroundMusic.src = "https://drive.google.com/uc?export=download&id=1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk";
+                backgroundMusic.src = "https://dl.dropboxusercontent.com/s/1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk/BIRTHDAY_2025.m4a"; // Updated to Dropbox direct link
                 backgroundMusic.load(); // Load the audio to get its duration
 
                 // Listen for 'canplaythrough' to ensure metadata (like duration) is loaded
@@ -909,13 +909,14 @@
                 { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
                 { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
                 { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
+                { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
+                { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
+                { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
+                { name: 'LIGHTSUM', link: 'https://kprofiles.com/lightsum-members-profile/' },
+                { name: 'YOUNG POSSE', link: 'https://kprofiles.com/young-posse-members-profile/' },
                 { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
                 { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
-                { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
-                { name: 'MINNIE (I-DLE)', link: 'https://kprofiles.com/minnie-g-i-dle-profile/' },
-                { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
-                { name: 'NOWZ', link: 'https://kprofiles.com/nowadays-members-profile/' },
-                { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' }
             ];
 
             const eventCards = Object.entries(data).map(([key, event]) => `
