@@ -10,9 +10,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        /* Google Font for Headings: Comfortaa */
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+        /* Heading Font: Exo 2 (kept as an option, but not applied) */
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+
+
         body {
             font-family: 'Inter', sans-serif;
         }
+        /* Apply Comfortaa font to headings */
+        h1, h2, h3 { /* Added h3 for consistency, as some titles use h3 */
+            font-family: 'Comfortaa', cursive; /* Fallback to cursive if Comfortaa isn't loaded */
+        }
+
         /* Keyframes for button animation */
         @keyframes pulse-gradient {
             0% { background-position: 0% 50%; }
@@ -79,13 +90,134 @@
             justify-content: center;
             gap: 1rem; /* Space between buttons */
         }
+
+        /* Keyframes for fade-in-up animation */
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+        /* Keyframes for wipe-right animation (kept for potential future use or if user changes mind) */
+        @keyframes wipe-right {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%); /* Start off-screen to the left */
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0); /* End at its natural position */
+            }
+        }
+        /* Era card content animation */
+        .era-card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 0;
+        }
+        .era-card-content.expanded {
+            max-height: 1000px; /* Sufficiently large value to cover content */
+            opacity: 1;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+            height: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-content iframe {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2001;
+            transition: background-color 0.2s;
+        }
+        .modal-close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
     </style>
 </head>
 <body class="frutiger-aero-bg text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
 
+    <!-- Background Music Player -->
+    <audio id="background-music" loop preload="auto">
+        <source src="https://drive.google.com/uc?export=download&id=1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Controls -->
+    <div class="fixed top-4 left-4 z-50 flex items-center space-x-2 bg-gray-800 bg-opacity-50 p-2 rounded-full shadow-lg">
+        <button id="music-toggle" class="p-1 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
+            <span id="music-icon">🔊</span>
+        </button>
+    </div>
+
     <div id="app" class="w-full max-w-4xl">
         <!-- Content will be rendered here by JavaScript -->
     </div>
+
+    <!-- Modal Structure -->
+    <div id="inline-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close">&times;</button>
+            <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
 
     <script>
         const DALIATIME_DATA = {
@@ -145,7 +277,8 @@
                         { name: 'BAD VILLAIN', link: 'https://kprofiles.com/badvillain-members-profile/' },
                         { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' },
                         { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
-                        { name: 'ALLIN', link: null }
+                        // Updated ALLIN link
+                        { name: 'ALLIN', link: 'https://sites.google.com/view/pmdofficial/allin' }
                     ],
                     color: 'linear-gradient(135deg, rgba(110, 240, 161, 0.8), rgba(255, 255, 176, 0.8))',
                 },
@@ -172,7 +305,8 @@
                         { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
                         { name: 'KICKFLIP', link: 'https://kprofiles.com/kickflip-members-profile/' },
                         { name: 'MADEIN', link: 'https://kprofiles.com/madein-members-profile/' },
-                        { name: 'Hi TiME', link: null }
+                        // Updated Hi TiME link
+                        { name: 'Hi TiME', link: 'https://sites.google.com/view/pmdofficial/hi-time' }
                     ],
                     color: 'linear-gradient(135deg, rgba(255, 255, 176, 0.8), rgba(160, 188, 232, 0.8))',
                 },
@@ -216,22 +350,28 @@
                         { name: 'ITZY', link: 'https://kprofiles.com/itzy-members-profile/' },
                         { name: 'SF9', link: 'https://kprofiles.com/sf9-members-profile/' },
                         { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
-                        { name: 'NMIXX', link: 'https://kprofiles.com/nmixx-members-profile/' },
-                        { name: 'EVNNE', link: 'https://kprofiles.com/evnne-members-profile/' },
+                        // Added TWS and NCT WISH
                         { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
-                        { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
-                        { name: 'TWICE', link: 'https://kprofiles.com/twice-members-profile/' },
-                        { name: 'TRI.BE', link: 'https://kprofiles.com/tri-be-members-profile/' },
                         { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
-                        { name: 'CRAVITY', link: 'https://kprofiles.com/cravity-members-profile/' },
-                        { name: 'XIKERS', link: 'https://kprofiles.com/xikers-members-profile/' },
-                        { name: 'CHUNG HA', link: 'https://kprofiles.com/chungha-members-profile/' },
                         { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
                         { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
-                        { name: 'BOYNEXTDOOR', link: 'https://kprofiles.com/boynextdoor-members-profile/' },
-                        { name: 'IVE', link: 'https://kprofiles.com/ive-members-profile/' },
+                        // Added ILLIT and UNIS
                         { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
-                        { name: 'UNIS', link: 'https://kprofiles.com/unis-members/' },
+                        { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' }, // Updated UNIS link
+                        { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
+                        { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
+                        { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
+                        { name: 'FROMIS_9', link: 'https://kprofiles.com/fromis_9-members-profile/' },
+                        { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
+                        { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
+                        { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                        { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
+                        { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
+                        { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
+                        { name: 'LIGHTSUM', link: 'https://kprofiles.com/lightsum-members-profile/' },
+                        { name: 'YOUNG POSSE', link: 'https://kprofiles.com/young-posse-members-profile/' },
+                        { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
+                        { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
                     ],
                     link: 'https://mdthegoodlife.carrd.co'
                 },
@@ -303,7 +443,7 @@
                 },
             },
             mdLive: {
-                description: "<b>My Diaries Live</b>, also known as MD Live and formerly known as MDTV (2019-2020) and BE Live (2020-2024), was relaunched on May 27, 2024. Known for streaming events and activities, it was the first platform to have a <b>multistream</b> format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our events.<br><br>As of 2025.06.10, <b>6 shows</b> have been streamed.",
+                description: "<b>My Diaries Live</b>, also known as MD Live and formerly known as MDTV (2019-2024) and BE Live (2020-2024), was relaunched on May 27, 2024. Known for streaming events and activities, it was the first platform to have a <b>multistream</b> format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our events.<br><br>As of 2025.06.10, <b>6 shows</b> have been streamed.",
                 shows: [
                     { name: '#thegoodlife', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVGg1vExg0w91QjYRUuotHq' },
                     { name: 'ALLIN Debut Live', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7' },
@@ -411,6 +551,92 @@
         const app = document.getElementById('app');
         let currentSection = 'intro';
 
+        // Get audio elements
+        const backgroundMusic = document.getElementById('background-music');
+        const musicToggleBtn = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+
+        // Set initial volume
+        backgroundMusic.volume = 0.5; // Default volume
+        backgroundMusic.muted = false; // Start unmuted as per request
+
+        // Event listener for music toggle button
+        musicToggleBtn.addEventListener('click', () => {
+            if (backgroundMusic.muted) {
+                backgroundMusic.muted = false;
+                musicIcon.textContent = '🔊';
+                // Attempt to play if currently paused
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play().catch(e => console.error("Autoplay prevented on toggle:", e));
+                }
+            } else {
+                backgroundMusic.muted = true;
+                musicIcon.textContent = '🔇';
+            }
+        });
+
+        // Function to handle playing music on section change
+        const playMusicForSection = () => {
+            if (currentSection !== 'intro' && currentSection !== 'finale') {
+                // Google Drive direct download link for the audio file
+                backgroundMusic.src = "https://drive.google.com/uc?export=download&id=1OsKQUmFMF52OquQbf3idGxQgzrkNmNtk";
+                backgroundMusic.load(); // Load the audio to get its duration
+
+                // Listen for 'canplaythrough' to ensure metadata (like duration) is loaded
+                backgroundMusic.addEventListener('canplaythrough', function onCanPlayThrough() {
+                    // Always start from 0:00 as requested
+                    backgroundMusic.currentTime = 0;
+                    // Remove the event listener to prevent multiple triggers
+                    backgroundMusic.removeEventListener('canplaythrough', onCanPlayThrough);
+                });
+
+                // Attempt to play. This might be blocked by browser autoplay policies
+                // if the user hasn't interacted with the page yet.
+                backgroundMusic.play().catch(e => {
+                    console.warn("Autoplay with sound prevented. User interaction needed for music.", e);
+                });
+            } else {
+                backgroundMusic.pause();
+            }
+        };
+
+        // Modal elements
+        const inlineModal = document.getElementById('inline-modal');
+        const modalIframe = document.getElementById('modal-iframe');
+        const modalCloseBtn = document.getElementById('modal-close');
+
+        // Function to open the modal
+        const openModal = (url) => {
+            modalIframe.src = url;
+            inlineModal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        };
+
+        // Function to close the modal
+        const closeModal = () => {
+            modalIframe.src = ''; // Clear iframe src to stop any media
+            inlineModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+        };
+
+        // Close modal on overlay click
+        inlineModal.addEventListener('click', (event) => {
+            if (event.target === inlineModal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on close button click
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Close modal on Escape key press
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && inlineModal.classList.contains('open')) {
+                closeModal();
+            }
+        });
+
+
         const render = () => {
             // Clear previous content
             app.innerHTML = ''; 
@@ -445,7 +671,11 @@
                     renderFinale();
                     break;
             }
-             // Add padding to body for fixed navigation so content isn't hidden behind it
+            
+            // Call playMusicForSection after rendering the new section
+            playMusicForSection();
+
+            // Add padding to body for fixed navigation so content isn't hidden behind it
             if (currentSection !== 'intro') {
                 document.body.style.paddingBottom = '80px'; // Adjust this value as needed
             } else {
@@ -455,19 +685,20 @@
 
         const renderIntro = () => {
             app.innerHTML = `
-                <div class="text-center p-8 sm:p-12 glass-panel rounded-3xl shadow-2xl transition-all duration-500 transform hover:scale-105">
-                    <h1 class="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] mb-4">
+                <div id="intro-panel" class="text-center p-8 sm:p-12 glass-panel rounded-3xl shadow-2xl transition-all duration-500 transform hover:scale-105 animate-fade-in-up">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] mb-4 animated-text-gradient">
                         Daliatime Wrapped
                     </h1>
                     <h2 class="text-2xl sm:text-4xl font-bold mb-8">2023–2025</h2>
                     <p class="text-lg sm:text-xl text-gray-300 mb-10">
                         Welcome to your definitive recap. We've logged every era, every event, and every cultural shift to bring you the full story of Daliatime's first 18 months.
                     </p>
-                    <button id="start-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
+                    <button id="start-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 animate-pulse-gradient">
                         BEGIN YOUR WRAPPED
                     </button>
                 </div>
             `;
+
             document.getElementById('start-btn').addEventListener('click', () => {
                 currentSection = 'overview';
                 render();
@@ -478,7 +709,7 @@
         const renderOverview = () => {
             const data = DALIATIME_DATA.overview;
             app.innerHTML = `
-                <div class="text-center p-8 glass-panel rounded-3xl shadow-2xl min-h-[calc(100vh-124px)]">
+                <div class="text-center p-8 glass-panel rounded-3xl shadow-2xl min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         The Daliatime Vibe Check
                     </h2>
@@ -543,7 +774,7 @@
         const renderEras = () => {
             const data = DALIATIME_DATA.eras;
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         Your Daliatime Eras
                     </h2>
@@ -575,8 +806,24 @@
             document.querySelectorAll('.era-card-toggle').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const content = btn.nextElementSibling;
-                    content.classList.toggle('hidden');
-                    btn.querySelector('.toggle-icon').textContent = content.classList.contains('hidden') ? '▼' : '▲';
+                    const toggleIcon = btn.querySelector('.toggle-icon');
+
+                    // Collapse all other expanded era cards
+                    document.querySelectorAll('.era-card-content.expanded').forEach(expandedContent => {
+                        if (expandedContent !== content) {
+                            expandedContent.classList.remove('expanded');
+                            expandedContent.previousElementSibling.querySelector('.toggle-icon').textContent = '▼';
+                        }
+                    });
+
+                    // Toggle the clicked era card
+                    if (content.classList.contains('expanded')) {
+                        content.classList.remove('expanded');
+                        toggleIcon.textContent = '▼';
+                    } else {
+                        content.classList.add('expanded');
+                        toggleIcon.textContent = '▲';
+                    }
                 });
             });
         };
@@ -602,7 +849,7 @@
                         ${era.name} <span class="text-sm text-gray-700">(${era.dates})</span>
                         <span class="text-xl transform transition-transform duration-300 toggle-icon">▼</span>
                     </h3>
-                    <div class="mt-4 space-y-2 text-gray-800 hidden">
+                    <div class="mt-4 space-y-2 text-gray-800 era-card-content">
                         <p class="text-lg font-semibold">${era.vibe}</p>
                         <ul class="list-disc list-inside space-y-1 text-sm">
                             ${era.highlights.map(h => `<li>${h}</li>`).join('')}
@@ -651,8 +898,12 @@
             
             const firstTimersData = [
                 { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
+                { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' }, // Added TWS
+                { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' }, // Added NCT WISH
                 { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
                 { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
+                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' }, // Added ILLIT
+                { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' }, // Updated UNIS link
                 { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
                 { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
                 { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
@@ -683,7 +934,7 @@
             `).join('');
 
             const topParticipantsHtml = topParticipants.map(([artistName, count]) => {
-                const artistData = allArtistsInDaliatime.find(a => a.name === artistName);
+                const artistData = firstTimersData.find(a => a.name === artistName); // Use firstTimersData to find link
                 const artistLink = artistData && artistData.link ? artistData.link : '#';
                 return `
                     <li class="flex items-center space-x-2">
@@ -700,7 +951,7 @@
             `).join('');
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         Events
                     </h2>
@@ -783,7 +1034,7 @@
             };
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         My Diaries Live
                     </h2>
@@ -840,9 +1091,9 @@
                 `).join('');
 
                 const categoryTitleHtml = link ?
-                    `<a href="${link}" target="_self" class="block p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4 hover:bg-opacity-50 transition-all duration-200">
+                    `<button onclick="openModal('${link}')" class="block p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4 hover:bg-opacity-50 transition-all duration-200">
                         <h3 class="text-lg font-bold text-white">${title}</h3>
-                    </a>` :
+                    </button>` :
                     `<div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
                         <h3 class="text-lg font-bold text-white">${title}</h3>
                     </div>`;
@@ -858,7 +1109,7 @@
             };
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         The Daliatime Zeitgeist
                     </h2>
@@ -867,16 +1118,12 @@
                     </p>
                     <!-- Buttons moved here -->
                     <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
-                        <a href="daliatimepopculture.html" target="_self">
-                            <button class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
-                                Daliatime Pop Culture
-                            </button>
-                        </a>
-                        <a href="daliatimekpop.html" target="_self">
-                            <button class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#478dcc] to-[#6ef0a1] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
-                                K-pop in Daliatime
-                            </button>
-                        </a>
+                        <button id="daliatime-pop-culture-btn" class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                            Daliatime Pop Culture
+                        </button>
+                        <button id="kpop-in-daliatime-btn" class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#478dcc] to-[#6ef0a1] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                            K-pop in Daliatime
+                        </button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
@@ -894,6 +1141,15 @@
                     </button>
                 </div>
             `;
+
+            // Attach event listeners for modal buttons
+            document.getElementById('daliatime-pop-culture-btn').addEventListener('click', () => {
+                openModal('daliatimepopculture.html');
+            });
+            document.getElementById('kpop-in-daliatime-btn').addEventListener('click', () => {
+                openModal('daliatimekpop.html');
+            });
+
             document.getElementById('previous-btn').addEventListener('click', () => {
                 currentSection = 'mdLive';
                 render();
@@ -912,7 +1168,7 @@
                 const listItems = items.map(item => `<li>${item}</li>`).join('');
                 return `
                     <div class="glass-panel p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
-                        <h3 class="text-2xl font-bold text-white mb-4">${title}</h3>
+                        <h3 class="text-2xl font-bold text-yellow-custom mb-4">${title}</h3>
                         <ul class="list-disc list-inside text-lg text-gray-300">
                             ${listItems}
                         </ul>
@@ -921,13 +1177,14 @@
             };
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8">
-    <span class="animated-text-gradient">The Future of Daliatime</span> <br/>
+                        <span class="animated-text-gradient">The Future of Daliatime</span> <br/>
                         <span class="text-2xl font-extrabold text-green-custom">
                             Chapter 2
                         </span>
                     </h2>
+
                     <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
                         What's next for our world.
                     </p>
@@ -946,7 +1203,7 @@
 
                     <div class="p-6 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] rounded-3xl shadow-2xl">
                         <h3 class="text-3xl font-extrabold text-white mb-4">
-                            THE NEXT ERA: NEVER SAY NEVER
+                            THE NEXT ERA: <b>NEVER SAY NEVER</b>
                         </h3>
                         <p class="text-lg text-white">
                             Our <b>5th</b> overall era is coming on <b>2025.09.01</b>
@@ -978,7 +1235,7 @@
         const renderConclusion = () => {
             const data = DALIATIME_DATA;
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         Mega Conclusion: The Daliatime Report
                     </h2>
@@ -1042,7 +1299,7 @@
         // New function for the FINALE section
         const renderFinale = () => {
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)]"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         FINALE
                     </h2>
@@ -1063,7 +1320,7 @@
                 </div>
                 <!-- Fixed navigation for this section -->
                 <div class="fixed-nav-bottom">
-                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-2 focus:ring-gray-500">
                         PREVIOUS
                     </button>
                     <button id="restart-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
