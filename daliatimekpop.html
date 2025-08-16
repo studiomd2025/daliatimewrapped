@@ -231,7 +231,7 @@
                                 <tr>
                                     <td class="p-3 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
                                     <td class="p-3">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
-                                    <td class="p-3">2024.07</td>
+                                    <td class="p-3">2023.07</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -314,7 +314,7 @@
                         </div>
                         <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
                                 <li><strong>Notable Debuts:</strong> <strong>Hearts2Hearts</strong>, <strong>KiiiKiii</strong>, <strong>Close Your Eyes</strong></li>
-                                <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
+                                <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `Rebel Heart` (<strong>IVE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
                         </ul>
                     </article>
                 </div>
@@ -518,7 +518,7 @@
                         <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Cinema Paradise</h3>
                         <p class="text-[#A0AEC0] text-sm">(2024.08.26 - 2025.02.23)</p>
                         <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'CINEMA PARADISE' (<strong>ZEROBASEONE</strong>), 'IVE EMPATHY' (<strong>IVE</strong>), 'Amortage' (<strong>JISOO</strong>), 'SPILL THE FEELS' (<strong>SEVENTEEN</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Good So Bad' (<strong>ZEROBASEONE</strong>), 'earthquake' (<strong>JISOO</strong>), 'STRATEGY' (<strong>TWICE</strong>), `Rebel Heart` (<strong>IVE</strong>)</p>
+                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Good So Bad' (<strong>ZEROBASEONE</strong>), 'earthquake' (<strong>JISOO</strong>), 'STRATEGY' (<strong>TWICE</strong>)</p>
                         <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>I:Mond</strong>, <strong>izna</strong>, <strong>MEOVV</strong>, <strong>Madein</strong></p>
                     </article>
                     <article>
@@ -646,7 +646,7 @@
                         }
                     },
                     plugins: {
-                        legend: { display: false },
+                        legend: { display: false }, // Default to false, overridden for specific charts
                         tooltip: {
                             backgroundColor: PALETTE.darkBlue, // Deep charcoal tooltip background
                             titleColor: PALETTE.yellow, // Bright yellow for tooltip title
@@ -678,10 +678,38 @@
                     finalOptions.scales = {}; // Remove scales for circular charts
                     finalOptions.plugins.legend = {
                         position: 'bottom',
-                        labels: { color: FONT_COLOR, font: { weight: '600' } }
+                        labels: { color: FONT_COLOR, font: { weight: '600' } },
+                        onClick: (e, legendItem, legend) => { // Custom onClick for doughnut charts
+                            const chart = legend.chart;
+                            const datasetIndex = legendItem.datasetIndex;
+                            const meta = chart.getDatasetMeta(datasetIndex);
+                            meta.hidden = meta.hidden === null ? !chart.data.datasets[datasetIndex].hidden : null;
+                            chart.update();
+                        }
                     };
                 }
                 
+                // Special handling for Era Activity Chart to enable clickable legend
+                if (canvasId === 'eraActivityChart') {
+                    finalOptions.plugins.legend = {
+                        position: 'top',
+                        labels: { color: FONT_COLOR, font: { weight: '600' } },
+                        onClick: (e, legendItem, legend) => {
+                            const index = legendItem.datasetIndex;
+                            const ci = legend.chart;
+                            if (ci.isDatasetVisible(index)) {
+                                ci.hide(index);
+                                legendItem.hidden = true;
+                            } else {
+                                ci.show(index);
+                                legendItem.hidden = false;
+                            }
+                            ci.update();
+                        }
+                    };
+                }
+
+
                 // Store the new chart instance
                 chartInstances[canvasId] = new Chart(document.getElementById(canvasId), { type, data, options: finalOptions });
             };
@@ -836,12 +864,7 @@
                             x: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } },
                             y: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } }
                         },
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                                labels: { color: FONT_COLOR, font: { weight: '600' } }
-                            }
-                        }
+                        // Legend click handled in createChart function for this specific ID
                     }
                 }
             ];
