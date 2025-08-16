@@ -117,7 +117,7 @@
             font-weight: 700;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            /* Removed transition for hover effect to comply with "charts only" animation request */
             cursor: pointer; /* Indicate it's clickable */
         }
         .fixed-nav-button:hover {
@@ -149,9 +149,9 @@
                     </article>
                     <article class="stat-card rounded-xl p-6 shadow-2xl">
                         <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top Songs (Daliatime Releases)</h3>
-                         <div class="chart-container">
-                            <canvas id="topSongsChart"></canvas>
-                        </div>
+                           <div class="chart-container">
+                                <canvas id="topSongsChart"></canvas>
+                            </div>
                     </article>
                     <article class="stat-card rounded-xl p-6 shadow-2xl lg:col-span-2">
                         <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Most Viewed MVs (Daliatime Releases)</h3>
@@ -166,7 +166,7 @@
 
             <section id="zerobaseone" class="my-20">
                 <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Spotlight: ZEROBASEONE</h2>
-                 <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]"><strong>ZEROBASEONE</strong> solidified their status as a powerhouse of the 5th generation. Their journey through Daliatime was marked by million-selling albums, chart-topping singles, and an ever-expanding global reach, with leader <strong>Sung Hanbin</strong> playing a pivotal role in their public presence.</p>
+                   <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]"><strong>ZEROBASEONE</strong> solidified their status as a powerhouse of the 5th generation. Their journey through Daliatime was marked by million-selling albums, chart-topping singles, and an ever-expanding global reach, with leader <strong>Sung Hanbin</strong> playing a pivotal role in their public presence.</p>
                 <div class="bg-[#3474B2] rounded-xl p-8 shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                     <div class="md:col-span-1">
                         <h3 class="text-3xl font-bold text-[#FBF8B2]">Key Highlights</h3>
@@ -231,7 +231,7 @@
                                 <tr>
                                     <td class="p-3 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
                                     <td class="p-3">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
-                                    <td class="p-3">2023.07</td>
+                                    <td class="p-3">2024.07</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -279,7 +279,7 @@
             
             <section id="year-eras" class="my-20">
                 <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">A Year-by-Year Breakdown</h2>
-                 <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Daliatime Chapter 1 can be broken down into two distinct periods, each with its own defining metrics and narrative. The first was a year of new beginnings, while the second was a shorter but powerful voyage of comebacks and new talent.</p>
+                   <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Daliatime Chapter 1 can be broken down into two distinct periods, each with its own defining metrics and narrative. The first was a year of new beginnings, while the second was a shorter but powerful voyage of comebacks and new talent.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <article class="stat-card rounded-xl p-6 shadow-2xl">
                         <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Year 1: <span class="text-[#70E093]">New Start</span></h3>
@@ -295,15 +295,15 @@
                             </div>
                         </div>
                         <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                             <li><strong>Notable Debuts:</strong> <strong>TWS</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong>, <strong>MEOVV</strong></li>
-                             <li><strong>Notable Songs:</strong> `Super Lady` (<strong>I-DLE</strong>), `Easy` (<strong>LE SSERAFIM</strong>), `Magnetic` (<strong>ILLIT</strong>)</li>
+                                <li><strong>Notable Debuts:</strong> <strong>TWS</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong>, <strong>MEOVV</strong></li>
+                                <li><strong>Notable Songs:</strong> `Super Lady` (<strong>I-DLE</strong>), `Easy` (<strong>LE SSERAFIM</strong>), `Magnetic` (<strong>ILLIT</strong>)</li>
                         </ul>
                     </article>
                     <article class="stat-card rounded-xl p-6 shadow-2xl">
                         <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Year 2: <span class="text-[#70E093]">Voyage</span></h3>
                         <p class="text-sm text-[#CBD5E0] text-center mb-4">(2025.01.01 - 2025.06.10)</p>
                         <div class="flex justify-around items-center my-6">
-                             <div class="text-center">
+                               <div class="text-center">
                                 <p class="text-4xl font-extrabold text-[#FBF8B2]">7</p>
                                 <p class="text-lg text-[#CBD5E0]">Group Debuts</p>
                             </div>
@@ -313,8 +313,8 @@
                             </div>
                         </div>
                         <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                             <li><strong>Notable Debuts:</strong> <strong>Hearts2Hearts</strong>, <strong>KiiiKiii</strong>, <strong>Close Your Eyes</strong></li>
-                             <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `Rebel Heart` (<strong>IVE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
+                                <li><strong>Notable Debuts:</strong> <strong>Hearts2Hearts</strong>, <strong>KiiiKiii</strong>, <strong>Close Your Eyes</strong></li>
+                                <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `Rebel Heart` (<strong>IVE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
                         </ul>
                     </article>
                 </div>
@@ -618,10 +618,23 @@
                 PALETTE.orange, PALETTE.purple, PALETTE.red, PALETTE.lightPink, '#81E6D9' /* A custom light teal */
             ];
 
+            // Map to store active Chart.js instances
+            const chartInstances = {};
+
             // Reusable function to create chart configurations
             const createChart = (canvasId, type, data, options = {}) => {
+                // Destroy existing chart instance if it exists to allow re-animation
+                if (chartInstances[canvasId]) {
+                    chartInstances[canvasId].destroy();
+                    delete chartInstances[canvasId];
+                }
+
                 const defaultOptions = {
                     maintainAspectRatio: false,
+                    animation: {
+                        duration: 1000, // Duration of the animation in milliseconds
+                        easing: 'easeOutQuart' // Easing function for the animation
+                    },
                     scales: {
                         x: {
                             ticks: { color: FONT_COLOR, font: { weight: '600' } },
@@ -649,7 +662,7 @@
                                 },
                                 label: (tooltipItem) => {
                                    if (['pie', 'doughnut'].includes(tooltipItem.chart.config.type)) {
-                                        return `${tooltipItem.label}: ${tooltipItem.raw}%`;
+                                       return `${tooltipItem.label}: ${tooltipItem.raw}%`;
                                    }
                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
                                 }
@@ -659,7 +672,8 @@
                 };
 
                 const finalOptions = Chart.helpers.merge(defaultOptions, options);
-
+                
+                // Special handling for pie/doughnut charts (no scales, legend visible)
                 if (type === 'pie' || type === 'doughnut') {
                     finalOptions.scales = {}; // Remove scales for circular charts
                     finalOptions.plugins.legend = {
@@ -668,7 +682,8 @@
                     };
                 }
                 
-                new Chart(document.getElementById(canvasId), { type, data, options: finalOptions });
+                // Store the new chart instance
+                chartInstances[canvasId] = new Chart(document.getElementById(canvasId), { type, data, options: finalOptions });
             };
 
             // Helper function to wrap long labels
@@ -690,7 +705,7 @@
             };
 
             // Chart Data and Configurations
-            const charts = [
+            const chartsData = [
                 {
                     id: 'topArtistsChart',
                     type: 'bar',
@@ -749,6 +764,12 @@
                             borderWidth: 2,
                             hoverOffset: 4
                         }]
+                    },
+                    options: {
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true
+                        }
                     }
                 },
                 {
@@ -764,6 +785,12 @@
                             borderWidth: 2,
                             hoverOffset: 4
                         }]
+                    },
+                    options: {
+                        animation: {
+                            animateRotate: true,
+                            animateScale: true
+                        }
                     }
                 },
                 {
@@ -819,7 +846,43 @@
                 }
             ];
 
-            charts.forEach(chart => createChart(chart.id, chart.type, chart.data, chart.options));
+            // Intersection Observer setup
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.5 // Trigger when 50% of the item is visible
+            };
+
+            const chartObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    const chartConfig = chartsData.find(c => c.id === entry.target.id);
+                    if (!chartConfig) return;
+
+                    if (entry.isIntersecting) {
+                        // Element is in view, create/re-create chart
+                        if (!chartInstances[chartConfig.id]) { // Only create if not already present (prevents redundant creation on minor scrolls)
+                            createChart(chartConfig.id, chartConfig.type, chartConfig.data, chartConfig.options);
+                        } else {
+                            // If chart already exists and was off-screen, trigger update to re-animate
+                            chartInstances[chartConfig.id].update();
+                        }
+                    } else {
+                        // Element is out of view, destroy chart to enable re-animation on scroll back
+                        if (chartInstances[chartConfig.id]) {
+                            chartInstances[chartConfig.id].destroy();
+                            delete chartInstances[chartConfig.id];
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe each chart canvas
+            chartsData.forEach(chart => {
+                const canvas = document.getElementById(chart.id);
+                if (canvas) {
+                    chartObserver.observe(canvas);
+                }
+            });
         });
     </script>
 </body>
