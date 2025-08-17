@@ -9,12 +9,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Comfortaa:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             color: #FFFFFF;
-            padding-bottom: 80px;
+            padding-bottom: 80px; /* Added back for footer */
             /* Frutiger Aero inspired gradient */
             background: radial-gradient(at top left, #2B78BF 0%, #1A1A1A 50%, #60D394 100%), 
                         linear-gradient(135deg, #1A1A1A 0%, #2B78BF 70%, #60D394 100%);
@@ -27,17 +27,17 @@
         .spotify-blue { color: #2B78BF; }
         .spotify-yellow { color: #F7E598; }
 
-        .bg-spotify-dark { background-color: transparent; } /* Background handled by body gradient */
+        .bg-spotify-dark { background-color: transparent; }
         
         /* Glassmorphism for panels */
         .bg-spotify-card {
-            background-color: rgba(40, 40, 40, 0.4); /* Translucent dark gray */
+            background-color: rgba(40, 40, 40, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border-radius: 0.5rem; /* Ensure rounded corners */
-            padding: 1.5rem; /* Adjust padding if needed */
+            border-radius: 0.5rem;
+            padding: 1.5rem;
         }
 
         .header-glow {
@@ -47,11 +47,20 @@
             font-weight: 900;
             font-size: 3.5rem;
             line-height: 1.1;
+            display: inline-block; /* To allow transform on span */
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
+        .stat-number.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px; /* Adjusted max-width to be slightly smaller for better fit */
             margin-left: auto;
             margin-right: auto;
             height: 350px;
@@ -82,6 +91,13 @@
             width: 50%;
             padding: 1rem 2rem;
             box-sizing: border-box;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transition properties */
+        }
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .timeline-item:nth-child(odd) {
             left: 0;
@@ -112,13 +128,34 @@
         }
         .flowchart-node {
             border: 2px solid #60D394;
-            background-color: rgba(40, 40, 40, 0.6); /* Slightly darker for flowchart node */
+            background-color: rgba(40, 40, 40, 0.6);
             padding: 1rem;
             border-radius: 0.5rem;
             text-align: center;
-            min-width: 150px;
+            width: 200px; /* Fixed width for uniformity */
+            height: 120px; /* Fixed height for uniformity */
+            display: flex; /* Use flexbox for vertical centering */
+            flex-direction: column;
+            justify-content: center;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
+            opacity: 0; /* Initial state for animation */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transition properties */
+        }
+        /* Specific animations for flowchart nodes */
+        .flowchart-node.slide-from-left {
+            transform: translateX(-100px);
+        }
+        .flowchart-node.slide-from-right {
+            transform: translateX(100px);
+        }
+        .flowchart-node.scale-in-center { /* Changed class name to avoid conflict */
+            transform: scale(0.8);
+        }
+
+        .flowchart-node.is-visible {
+            opacity: 1;
+            transform: translateX(0) scale(1); /* Reset to original position/scale */
         }
         .flowchart-arrow {
             font-size: 2rem;
@@ -126,36 +163,11 @@
             margin: 0 1rem;
             align-self: center;
         }
-        .fixed-nav-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            padding: 1rem 0;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        .back-button {
-            background: linear-gradient(90deg, #60D394, #F7E598); /* Gradient from palette */
-            color: #1A1A1A; /* Dark text for contrast */
-            padding: 0.75rem 2.5rem;
-            border-radius: 9999px; /* Pill shape */
-            font-weight: bold;
-            font-size: 1.125rem;
-            line-height: 1.75rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            border: none;
-            cursor: pointer;
-        }
-        .back-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        /* Removed fixed-nav-bottom and back-button CSS */
+
+        /* Comfortaa font for headers */
+        h1, h2 {
+            font-family: 'Comfortaa', cursive;
         }
     </style>
 </head>
@@ -178,11 +190,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                 <div class="bg-spotify-card rounded-lg shadow-lg p-6 flex flex-col justify-center items-center">
                     <h3 class="text-2xl font-bold mb-4 text-center">The Creator Economy Boom</h3>
-                    <p class="stat-number spotify-green">$16B</p>
+                    <p class="stat-number spotify-green"><span data-animate="stat-number">$16B</span></p>
                     <p class="text-center text-gray-400 mt-2">Estimated value of the influencer market, a testament to the shift from traditional media to individual creators.</p>
                 </div>
 
-                <div class="bg-spotify-card rounded-lg shadow-lg p-6">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="engagementRateChart">
                     <h3 class="text-2xl font-bold mb-4 text-center">Micro-Influencer Engagement</h3>
                     <div class="chart-container">
                         <canvas id="engagementRateChart"></canvas>
@@ -194,21 +206,21 @@
                     <h3 class="text-2xl font-bold mb-4 text-center">Nostalgia's Enduring Power</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                         <div>
-                            <p class="text-5xl font-black spotify-blue">70%</p>
+                            <p class="text-5xl font-black spotify-blue"><span data-animate="stat-number">$70%</span></p>
                             <p class="mt-2 text-gray-400">Increase in searches for vintage aesthetics on Pinterest, fueling Y2K fashion revivals.</p>
                         </div>
                         <div>
-                            <p class="text-5xl font-black spotify-blue">$300M</p>
+                            <p class="text-5xl font-black spotify-blue"><span data-animate="stat-number">$300M</span></p>
                             <p class="mt-2 text-gray-400">Estimated value of Bob Dylan's catalog sale, highlighting music's timeless value.</p>
                         </div>
                         <div>
-                            <p class="text-5xl font-black spotify-blue">50%</p>
+                            <p class="text-5xl font-black spotify-blue"><span data-animate="stat-number">50%</span></p>
                             <p class="mt-2 text-gray-400">of consumers cited nostalgia as a factor in their 2024 buying decisions.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-spotify-card rounded-lg shadow-lg p-6">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="virtualConcertsChart">
                     <h3 class="text-2xl font-bold mb-4 text-center">The Digital-Physical Fusion</h3>
                      <div class="chart-container">
                         <canvas id="virtualConcertsChart"></canvas>
@@ -218,7 +230,7 @@
 
                 <div class="bg-spotify-card rounded-lg shadow-lg p-6 flex flex-col justify-center items-center">
                     <h3 class="text-2xl font-bold mb-4 text-center">Brand Purpose Resonates</h3>
-                    <p class="stat-number spotify-pink">69%</p>
+                    <p class="stat-number spotify-pink"><span data-animate="stat-number">69%</span></p>
                     <p class="text-center text-gray-400 mt-2">Faster growth of Unilever's "Sustainable Living Brands," proving that consumers increasingly support companies committed to positive environmental impact.</p>
                 </div>
             </div>
@@ -231,7 +243,7 @@
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-spotify-card rounded-lg shadow-lg p-6 md:col-span-2">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 md:col-span-2 chart-section" data-chart-id="hallyuWaveChart">
                     <h3 class="text-2xl font-bold mb-4 text-center">The Hallyu Wave's Global Reach</h3>
                      <div class="chart-container h-[450px] max-h-[500px]">
                         <canvas id="hallyuWaveChart"></canvas>
@@ -258,7 +270,7 @@
                      <p class="text-center text-gray-400 mt-4">P-Pop groups gained significant international recognition, blending global pop aesthetics with distinct Filipino cultural pride.</p>
                 </div>
                 
-                <div class="bg-spotify-card rounded-lg shadow-lg p-6">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="phStreamingChart">
                     <h3 class="text-2xl font-bold mb-4 text-center">Philippine Streaming Market Growth</h3>
                     <div class="chart-container">
                         <canvas id="phStreamingChart"></canvas>
@@ -274,22 +286,22 @@
                 Technology was the underlying rhythm that propelled pop culture forward, with AI, immersive streaming, and the metaverse composing the soundtrack of our digital lives.
             </p>
 
-            <div class="bg-spotify-card rounded-lg shadow-lg p-6 mb-8">
+            <div class="bg-spotify-card rounded-lg shadow-lg p-6 mb-8 flowchart-section">
                 <h3 class="text-2xl font-bold mb-6 text-center">AI: The New Creative Partner</h3>
                 <div class="flex flex-col md:flex-row justify-center items-center">
-                    <div class="flowchart-node">
+                    <div class="flowchart-node slide-from-left" data-animate="flowchart-node-simultaneous">
                         <p class="font-bold">Brainstorming & Scripting</p>
                         <p class="text-sm text-gray-400">AI tools assist writers</p>
                     </div>
                     <div class="flowchart-arrow hidden md:block">&rarr;</div>
                     <div class="flowchart-arrow md:hidden my-4">&darr;</div>
-                    <div class="flowchart-node">
+                    <div class="flowchart-node scale-in-center" data-animate="flowchart-node-simultaneous">
                         <p class="font-bold">Automated Post-Production</p>
                         <p class="text-sm text-gray-400">Agentic AI handles tedious tasks</p>
                     </div>
                     <div class="flowchart-arrow hidden md:block">&rarr;</div>
                     <div class="flowchart-arrow md:hidden my-4">&darr;</div>
-                    <div class="flowchart-node">
+                    <div class="flowchart-node slide-from-right" data-animate="flowchart-node-simultaneous">
                         <p class="font-bold">Hyper-Personalization</p>
                         <p class="text-sm text-gray-400">AI curates user experiences</p>
                     </div>
@@ -298,14 +310,14 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-spotify-card rounded-lg shadow-lg p-6">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="metaverseMarketChart">
                     <h3 class="text-2xl font-bold mb-4 text-center">The Metaverse Economy</h3>
                     <div class="chart-container">
                         <canvas id="metaverseMarketChart"></canvas>
                     </div>
                     <p class="text-center text-gray-400 mt-4">The global metaverse market is projected to see astronomical growth, with e-commerce, virtual learning, and gaming set to be the biggest beneficiaries.</p>
                 </div>
-                <div class="bg-spotify-card rounded-lg shadow-lg p-6">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="consumerValuesChart">
                     <h3 class="text-2xl font-bold mb-4 text-center">The Shift in Consumer Values</h3>
                     <div class="chart-container">
                         <canvas id="consumerValuesChart"></canvas>
@@ -320,29 +332,29 @@
             <p class="text-center max-w-3xl mx-auto text-gray-300 mb-12">
                 A look back at the beefs, memes, and moments that had everyone talking.
             </p>
-            <div class="timeline">
-                <div class="timeline-item">
+            <div class="timeline timeline-section">
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
                     <div class="timeline-dot"></div>
                     <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
                         <h4 class="font-bold text-lg spotify-pink">Kendrick vs. Drake</h4>
                         <p class="text-sm text-gray-400">The rap beef that dominated 2024, with "Not Like Us" becoming a viral anthem.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
                     <div class="timeline-dot"></div>
                     <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
                         <h4 class="font-bold text-lg spotify-yellow">"Brat Summer"</h4>
                         <p class="text-sm text-gray-400">Charli XCX ushered in an era of hedonism, a sharp turn from "quiet luxury."</p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
                     <div class="timeline-dot"></div>
                     <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
                         <h4 class="font-bold text-lg spotify-blue">Moo Deng the Hippo</h4>
                         <p class="text-sm text-gray-400">Thailand's baby pygmy hippo captured hearts worldwide with 500M+ TikTok views.</p>
                     </div>
                 </div>
-                <div class="timeline-item">
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
                     <div class="timeline-dot"></div>
                     <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
                         <h4 class="font-bold text-lg spotify-pink">"Wala po akong maalala"</h4>
@@ -359,14 +371,11 @@
         <p class="text-xs mt-2">Data synthesized from the "Daliatime Pop Culture Wrapped" analysis report.</p>
     </footer>
 
-    <!-- Fixed Navigation Bar at the bottom -->
-    <div class="fixed-nav-bottom">
-        <button onclick="history.back()" class="back-button">
-            BACK
-        </button>
-    </div>
-
     <script>
+        // Store references to Chart.js instances
+        const charts = {};
+        const chartsInitialized = {};
+
         const tooltipTitleCallback = (tooltipItems) => {
             const item = tooltipItems[0];
             let label = item.chart.data.labels[item.dataIndex];
@@ -383,7 +392,7 @@
                     const newLabel = [];
                     let line = '';
                     words.forEach(word => {
-                        if ((line + word).length > 16) {
+                        if ((line + word).length > 16 && line.length > 0) {
                             newLabel.push(line.trim());
                             line = '';
                         }
@@ -420,170 +429,428 @@
             }
         };
 
-        new Chart(document.getElementById('engagementRateChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Micro-Influencers (<15k followers)', 'Macro-Influencers (>1M followers)'],
-                datasets: [{
-                    label: 'Engagement Rate (%)',
-                    data: [3.86, 1.21],
-                    backgroundColor: ['#60D394', '#B5CBEB'],
-                    borderColor: ['#60D394', '#B5CBEB'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                scales: globalScales,
-                plugins: globalPlugins
-            }
-        });
+        const pieDoughnutAnimation = {
+            animateRotate: true,
+            animateScale: true,
+            duration: 1000,
+            easing: 'easeInOutQuart'
+        };
 
-        new Chart(document.getElementById('virtualConcertsChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Marshmello (2019)', 'Travis Scott (2020)', 'The Big Bang (2023)'],
-                datasets: [{
-                    label: 'Concurrent Viewers (Millions)',
-                    data: [10, 12, 3],
-                    backgroundColor: ['#2B78BF', '#B5CBEB', '#F7E598'],
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: globalScales,
-                plugins: globalPlugins,
+        // Chart creation functions
+        function createEngagementRateChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.engagementRateChart) {
+                charts.engagementRateChart.destroy();
+                charts.engagementRateChart = null;
             }
-        });
-
-        new Chart(document.getElementById('hallyuWaveChart'), {
-            type: 'radar',
-            data: {
-                labels: ['India', 'USA', 'Thailand', 'Turkey', 'Nigeria', 'UK'],
-                datasets: [
-                    {
-                        label: 'K-Pop',
-                        data: [9, 6, 9, 5, 4, 6],
-                        fill: true,
-                        backgroundColor: 'rgba(96, 211, 148, 0.2)',
-                        borderColor: '#60D394',
-                        pointBackgroundColor: '#60D394',
-                    }, {
-                        label: 'K-Drama',
-                        data: [7, 8, 7, 9, 6, 7],
-                        fill: true,
-                        backgroundColor: 'rgba(181, 203, 235, 0.2)',
-                        borderColor: '#B5CBEB',
-                        pointBackgroundColor: '#B5CBEB',
-                    },
-                    {
-                        label: 'K-Food',
-                        data: [6, 9, 5, 6, 9, 9],
-                        fill: true,
-                        backgroundColor: 'rgba(43, 120, 191, 0.2)',
-                        borderColor: '#2B78BF',
-                        pointBackgroundColor: '#2B78BF',
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
-                        grid: { color: 'rgba(255, 255, 255, 0.2)' },
-                        pointLabels: { color: '#FFFFFF', font: { size: 12 } },
-                        ticks: {
-                            color: '#1A1A1A',
-                            backdropColor: 'rgba(255, 255, 255, 0.8)',
-                            stepSize: 2
-                        }
-                    }
+            const ctx = document.getElementById('engagementRateChart').getContext('2d');
+            charts.engagementRateChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: processLabels(['Micro-Influencers (<15k followers)', 'Macro-Influencers (>1M followers)']),
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: [3.86, 1.21],
+                        backgroundColor: ['#60D394', '#B5CBEB'],
+                        borderColor: ['#60D394', '#B5CBEB'],
+                        borderWidth: 1
+                    }]
                 },
-                plugins: {
-                    legend: { labels: { color: '#FFFFFF' } },
-                    tooltip: {
-                        callbacks: {
-                            title: (ctx) => ctx[0].label
-                        }
-                    }
-                }
-            }
-        });
-
-        new Chart(document.getElementById('phStreamingChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Netflix', 'Other Platforms'],
-                datasets: [{
-                    data: [34, 66],
-                    backgroundColor: ['#E50914', '#2B78BF'],
-                    borderColor: '#282828',
-                    borderWidth: 4
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top', labels: { color: '#FFFFFF' } },
-                    tooltip: {
-                        callbacks: {
-                            title: (ctx) => ctx[0].label
-                        }
-                    }
-                }
-            }
-        });
-        
-        new Chart(document.getElementById('metaverseMarketChart'), {
-            type: 'line',
-            data: {
-                labels: ['2021', '2030 (Projected)'],
-                datasets: [{
-                    label: 'Global Market Value (Trillions USD)',
-                    data: [0.04, 1.6],
-                    fill: true,
-                    borderColor: '#60D394',
-                    backgroundColor: 'rgba(96, 211, 148, 0.3)',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: globalScales,
-                plugins: globalPlugins
-            }
-        });
-
-        new Chart(document.getElementById('consumerValuesChart'), {
-            type: 'pie',
-            data: {
-                labels: ['Prefer Experiences', 'Prefer Material Goods'],
-                datasets: [{
-                    data: [73, 27],
-                    backgroundColor: ['#F7E598', '#2B78BF'],
-                    borderColor: '#282828',
-                    borderWidth: 4
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top', labels: { color: '#FFFFFF' } },
-                    tooltip: {
-                        callbacks: {
-                             title: (ctx) => ctx[0].label
+                options: {
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', // This makes it a horizontal bar chart
+                    scales: {
+                        x: { // Numerical scale for horizontal bars
+                            min: 0, // Ensure it starts from 0
+                            ticks: { color: '#FFFFFF' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        y: { // Categorical scale for horizontal bars
+                            ticks: { color: '#FFFFFF' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
                         }
                     },
-                    title: {
-                        display: true,
-                        text: 'Consumer Preference Shift (2024)',
-                        color: '#FFFFFF',
-                        font: { size: 16 }
+                    plugins: globalPlugins,
+                    animation: {
+                        x: { // Animate x (width) for horizontal bars
+                            type: 'number',
+                            easing: 'easeOutQuart',
+                            from: (context) => context.chart.scales.x.left, // Start from the left edge of the chart area
+                            duration: 700
+                        },
+                        opacity: { // Animate opacity simultaneously
+                            type: 'number',
+                            from: 0,
+                            to: 1,
+                            duration: 700
+                        }
                     }
                 }
+            });
+            chartsInitialized.engagementRateChart = true;
+        }
+
+        function createVirtualConcertsChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.virtualConcertsChart) {
+                charts.virtualConcertsChart.destroy();
+                charts.virtualConcertsChart = null;
             }
+            const ctx = document.getElementById('virtualConcertsChart').getContext('2d');
+            charts.virtualConcertsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: processLabels(['Marshmello (2019)', 'Travis Scott (2020)', 'The Big Bang (2023)']),
+                    datasets: [{
+                        label: 'Concurrent Viewers (Millions)',
+                        data: [10, 12, 3],
+                        backgroundColor: ['#2B78BF', '#B5CBEB', '#F7E598'],
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { // Numerical scale for vertical bars
+                            min: 0, // Ensure it starts from 0
+                            ticks: { color: '#FFFFFF', beginAtZero: true },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: { // Categorical scale for vertical bars
+                            ticks: { color: '#FFFFFF' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        }
+                    },
+                    plugins: globalPlugins,
+                    animation: {
+                        y: { // Animate y (height) for vertical bars
+                            type: 'number',
+                            easing: 'easeOutQuart',
+                            from: (context) => context.chart.scales.y.bottom, // Start from the bottom edge of the chart area
+                            duration: 700
+                        },
+                        opacity: { // Animate opacity simultaneously
+                            type: 'number',
+                            from: 0,
+                            to: 1,
+                            duration: 700
+                        }
+                    }
+                }
+            });
+            chartsInitialized.virtualConcertsChart = true;
+        }
+
+        function createHallyuWaveChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.hallyuWaveChart) {
+                charts.hallyuWaveChart.destroy();
+                charts.hallyuWaveChart = null;
+            }
+            const ctx = document.getElementById('hallyuWaveChart').getContext('2d');
+            charts.hallyuWaveChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: processLabels(['India', 'USA', 'Thailand', 'Turkey', 'Nigeria', 'UK']),
+                    datasets: [
+                        {
+                            label: 'K-Food', /* Changed order for staggered animation */
+                            data: [6, 9, 5, 6, 9, 9],
+                            fill: true,
+                            backgroundColor: 'rgba(43, 120, 191, 0.2)', /* Blue color */
+                            borderColor: '#2B78BF',
+                            pointBackgroundColor: '#2B78BF',
+                        },
+                        {
+                            label: 'K-Drama', /* Changed order for staggered animation */
+                            data: [7, 8, 7, 9, 6, 7],
+                            fill: true,
+                            backgroundColor: 'rgba(181, 203, 235, 0.2)', /* White/Light Blue color */
+                            borderColor: '#B5CBEB',
+                            pointBackgroundColor: '#B5CBEB',
+                        },
+                        {
+                            label: 'K-Pop', /* Changed order for staggered animation */
+                            data: [9, 6, 9, 5, 4, 6],
+                            fill: true,
+                            backgroundColor: 'rgba(96, 211, 148, 0.2)', /* Green color */
+                            borderColor: '#60D394',
+                            pointBackgroundColor: '#60D394',
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                            pointLabels: { color: '#FFFFFF', font: { size: 12 } },
+                            ticks: {
+                                color: '#1A1A1A',
+                                backdropColor: 'rgba(255, 255, 255, 0.8)',
+                                stepSize: 2
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#FFFFFF' } },
+                        tooltip: {
+                            callbacks: {
+                                title: (ctx) => ctx[0].label
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart',
+                        delay: (context) => {
+                            // Stagger animation for each dataset in the radar chart
+                            let delay = 0;
+                            // K-Food (index 0) -> 0ms delay
+                            // K-Drama (index 1) -> 100ms delay
+                            // K-Pop (index 2) -> 200ms delay
+                            if (context.datasetIndex === 0) delay = 0; // K-Food (Blue)
+                            else if (context.datasetIndex === 1) delay = 100; // K-Drama (White/Light Blue)
+                            else if (context.datasetIndex === 2) delay = 200; // K-Pop (Green)
+                            return delay;
+                        }
+                    }
+                }
+            });
+            chartsInitialized.hallyuWaveChart = true;
+        }
+
+        function createPhStreamingChart() {
+            // Destroy existing chart instance if it.exists
+            if (charts.phStreamingChart) {
+                charts.phStreamingChart.destroy();
+                charts.phStreamingChart = null;
+            }
+            const ctx = document.getElementById('phStreamingChart').getContext('2d');
+            charts.phStreamingChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: processLabels(['Netflix', 'Other Platforms']),
+                    datasets: [{
+                        data: [34, 66],
+                        backgroundColor: ['#E50914', '#2B78BF'],
+                        borderColor: '#282828',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#FFFFFF' } },
+                        tooltip: {
+                            callbacks: {
+                                title: (ctx) => ctx[0].label
+                            }
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+            chartsInitialized.phStreamingChart = true;
+        }
+        
+        function createMetaverseMarketChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.metaverseMarketChart) {
+                charts.metaverseMarketChart.destroy();
+                charts.metaverseMarketChart = null;
+            }
+            const ctx = document.getElementById('metaverseMarketChart').getContext('2d');
+            charts.metaverseMarketChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: processLabels(['2021', '2030 (Projected)']),
+                    datasets: [{
+                        label: 'Global Market Value (Trillions USD)',
+                        data: [0.04, 1.6],
+                        fill: true,
+                        borderColor: '#60D394',
+                        backgroundColor: 'rgba(96, 211, 148, 0.3)', // Initial fill color
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: globalScales,
+                    plugins: globalPlugins,
+                    animation: {
+                        opacity: { // Animate opacity for the entire dataset
+                            type: 'number',
+                            from: 0,
+                            to: 1,
+                            duration: 1000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                }
+            });
+            chartsInitialized.metaverseMarketChart = true;
+        }
+
+        function createConsumerValuesChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.consumerValuesChart) {
+                charts.consumerValuesChart.destroy();
+                charts.consumerValuesChart = null;
+            }
+            const ctx = document.getElementById('consumerValuesChart').getContext('2d');
+            charts.consumerValuesChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: processLabels(['Prefer Experiences', 'Prefer Material Goods']),
+                    datasets: [{
+                        data: [73, 27],
+                        backgroundColor: ['#F7E598', '#2B78BF'],
+                        borderColor: '#282828',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'center',
+                            labels: {
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 11,
+                                    lineHeight: 1.5
+                                },
+                                boxWidth: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: (ctx) => ctx[0].label
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Consumer Preference Shift (2024)',
+                            color: '#FFFFFF',
+                            font: { size: 16 }
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+            chartsInitialized.consumerValuesChart = true;
+        }
+
+        const chartCreationMap = {
+            'engagementRateChart': createEngagementRateChart,
+            'virtualConcertsChart': createVirtualConcertsChart,
+            'hallyuWaveChart': createHallyuWaveChart,
+            'phStreamingChart': createPhStreamingChart,
+            'metaverseMarketChart': createMetaverseMarketChart,
+            'consumerValuesChart': createConsumerValuesChart
+        };
+
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add 'is-visible' class to trigger CSS animations
+                        entry.target.classList.add('is-visible');
+                        
+                        // Handle chart initialization/re-initialization
+                        if (entry.target.classList.contains('chart-section')) {
+                            const chartId = entry.target.dataset.chartId;
+                            if (chartCreationMap[chartId]) {
+                                chartCreationMap[chartId]();
+                            }
+                        }
+
+                        // Handle stat number animation
+                        if (entry.target.querySelector('[data-animate="stat-number"]')) {
+                            const statNumbers = entry.target.querySelectorAll('[data-animate="stat-number"]');
+                            statNumbers.forEach(num => {
+                                num.style.transitionDelay = `0ms`; // No delay for simultaneous
+                                num.classList.add('is-visible');
+                            });
+                        }
+
+                        // Handle flowchart node animation (simultaneous)
+                        if (entry.target.classList.contains('flowchart-section')) {
+                            const flowchartNodes = entry.target.querySelectorAll('.flowchart-node');
+                            flowchartNodes.forEach(node => {
+                                node.style.transitionDelay = `0ms`; // No delay for simultaneous
+                                node.classList.add('is-visible');
+                            });
+                        }
+
+                        // Handle timeline item animation (simultaneous)
+                        if (entry.target.classList.contains('timeline-section')) {
+                            const timelineItems = entry.target.querySelectorAll('.timeline-item');
+                            timelineItems.forEach(item => {
+                                item.style.transitionDelay = `0ms`; // No delay for simultaneous
+                                item.classList.add('is-visible');
+                            });
+                        }
+
+                    } else {
+                        // Remove 'is-visible' class when element leaves viewport
+                        entry.target.classList.remove('is-visible');
+                        // Reset transition delay and transform for stat numbers when they leave view
+                        if (entry.target.querySelector('[data-animate="stat-number"]')) {
+                            const statNumbers = entry.target.querySelectorAll('[data-animate="stat-number"]');
+                            statNumbers.forEach(num => {
+                                num.style.transitionDelay = `0ms`;
+                                num.classList.remove('is-visible'); // Ensure opacity and transform reset via CSS
+                            });
+                        }
+                        // Reset transition delay and transform for flowchart nodes
+                        if (entry.target.classList.contains('flowchart-section')) {
+                            const flowchartNodes = entry.target.querySelectorAll('.flowchart-node');
+                            flowchartNodes.forEach(node => {
+                                node.style.transitionDelay = `0ms`;
+                                node.classList.remove('is-visible'); // Ensure opacity and transform reset via CSS
+                            });
+                        }
+                         // Reset transition delay and transform for timeline items
+                        if (entry.target.classList.contains('timeline-section')) {
+                            const timelineItems = entry.target.querySelectorAll('.timeline-item');
+                            timelineItems.forEach(item => {
+                                item.style.transitionDelay = `0ms`;
+                                item.classList.remove('is-visible'); // Ensure opacity and transform reset via CSS
+                            });
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for general fade-in animation
+            document.querySelectorAll('h1, h2, p, .bg-spotify-card:not(.chart-section), .flowchart-section, .timeline-section').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Observe chart sections for animation re-triggering
+            document.querySelectorAll('.chart-section').forEach(element => {
+                observer.observe(element);
+            });
         });
     </script>
 </body>
