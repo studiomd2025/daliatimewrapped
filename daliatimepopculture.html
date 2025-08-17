@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞𝙢𝙚𝙒𝙧𝙖𝙥𝙥𝙚𝙙 : popculture</title>
+    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞m𝙚𝙒�𝙖𝙥𝙥𝙚𝙙 : popculture</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -51,7 +51,7 @@
         .chart-container {
             position: relative;
             width: 100%;
-            /* Removed max-width: 600px; */
+            max-width: 500px; /* Adjusted max-width to be slightly smaller for better fit */
             margin-left: auto;
             margin-right: auto;
             height: 350px;
@@ -251,7 +251,7 @@
                         </div>
                         <div class="text-center">
                             <p class="text-2xl font-bold">Alamat</p>
-                            <p class="text-gray-400">� Fusing native sounds & dances</p>
+                            <p class="text-gray-400">? Fusing native sounds & dances</p>
                         </div>
                     </div>
                      <p class="text-center text-gray-400 mt-4">P-Pop groups gained significant international recognition, blending global pop aesthetics with distinct Filipino cultural pride.</p>
@@ -684,18 +684,30 @@
             charts.consumerValuesChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: processLabels(['Prefer Experiences', 'Prefer Material Goods']),
+                    // Reordered labels and data to put 'Prefer Experiences' first
+                    labels: processLabels(['Experiences', 'Material Goods']),
                     datasets: [{
                         data: [73, 27],
                         backgroundColor: ['#F7E598', '#2B78BF'],
                         borderColor: '#282828',
-                        borderWidth: 4
+                        borderWidth: 5
                     }]
                 },
                 options: {
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#FFFFFF' } },
+                        legend: {
+                            position: 'top',
+                            align: 'center', // Added missing comma here
+                            labels: {
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 11, // Slightly smaller font for legend labels
+                                    lineHeight: 1.5 // Increased line height for wrapped text
+                                },
+                                boxWidth: 20 // Reduce box width to give more space for text
+                            }
+                        },
                         tooltip: {
                             callbacks: {
                                 title: (ctx) => ctx[0].label
