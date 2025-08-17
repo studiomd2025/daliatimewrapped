@@ -12,15 +12,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         /* Google Font for Headings: Comfortaa */
         @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
-        /* Heading Font: Exo 2 (kept as an option, but not applied) */
-        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
-
 
         body {
             font-family: 'Inter', sans-serif;
         }
         /* Apply Comfortaa font to headings */
-        h1, h2, h3 { /* Added h3 for consistency, as some titles use h3 */
+        h1, h2, h3 {
             font-family: 'Comfortaa', cursive; /* Fallback to cursive if Comfortaa isn't loaded */
         }
 
@@ -55,7 +52,6 @@
             100% { background-position: 0% 50%; }
         }
         .animated-text-gradient {
-            /* Updated gradient to include a lighter blue */
             background: linear-gradient(90deg, #ffffb0, #a0bce8 30%, #67e8f9 70%, #6ef0a1);
             background-size: 200% auto;
             -webkit-background-clip: text;
@@ -104,17 +100,6 @@
         }
         .animate-fade-in-up {
             animation: fade-in-up 0.8s ease-out forwards;
-        }
-        /* Keyframes for wipe-right animation (kept for potential future use or if user changes mind) */
-        @keyframes wipe-right {
-            0% {
-                opacity: 0;
-                transform: translateX(-100%); /* Start off-screen to the left */
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0); /* End at its natural position */
-            }
         }
         /* Era card content animation */
         .era-card-content {
@@ -210,9 +195,114 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Styles for the audio player wrapper */
+        #audio-player-wrapper {
+            /* Initial minimized state: compact and circular */
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px; /* rounded-full */
+            overflow: hidden; /* Hide overflow content */
+            transition: all 0.3s ease-in-out; /* Smooth transition for size/shape */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align content to the left */
+        }
+
+        #audio-player-wrapper.expanded {
+            /* Expanded state: wider, takes on a rectangular shape with rounded corners */
+            width: 320px; /* Adjust based on desired player width */
+            height: auto; /* Let height adjust to content */
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.08); /* Apply glass panel base */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Styles for the toggle button/bar */
+        #audio-player-toggle {
+            background-color: rgba(255, 255, 255, 0.08); /* Default for minimized */
+            backdrop-filter: blur(10px); /* Default for minimized */
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Default for minimized */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Default for minimized */
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            flex-shrink: 0; /* Prevent it from shrinking in expanded state */
+        }
+
+        #audio-player-wrapper.expanded #audio-player-toggle {
+            /* When wrapper is expanded, the toggle bar's appearance changes */
+            width: 100%; /* Take full width of expanded wrapper */
+            border-radius: 12px 12px 0 0; /* Only top corners rounded */
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly less translucent for header */
+            box-shadow: none; /* Remove shadow from toggle when expanded, rely on content area's shadow */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Separator line */
+            padding: 0.5rem 1rem; /* Adjust padding for expanded state */
+            justify-content: flex-start; /* Align content to start */
+            height: auto;
+            border-top: none; /* Remove top border if it was present on the wrapper */
+            border-left: none;
+            border-right: none;
+        }
+
+        /* Styles for the chevron icon rotation */
+        #toggle-chevron.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Styles for the Elfsight player content area */
+        #elfsight-player-content {
+            /* Initially hidden */
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            width: 100%; /* Take full width of parent wrapper */
+            box-sizing: border-box; /* Include padding/border in width */
+            padding: 0; /* Will be set to 0.5rem for top when expanded below */
+            flex-grow: 1; /* Allow it to take up remaining space */
+        }
+
+        #elfsight-player-content.visible {
+            /* When visible */
+            max-height: 400px; /* A safe maximum height for the player */
+            opacity: 1;
+            padding-top: 0.5rem; /* Space between toggle and player */
+        }
+
+        #elfsight-player-content > div { /* Target the inner div within content area for glass panel */
+            border-radius: 0 0 12px 12px; /* Only bottom corners rounded */
+            padding: 0; /* Ensure no extra padding within the player's direct container */
+        }
+
+        /* Ensure Elfsight app itself occupies available space */
+        .elfsight-app-ebf1fad7-6c7f-4556-97fe-4b573d22ca07 {
+            width: 100%;
+            /* Elfsight app height is often dynamic or fixed by their script. */
+        }
     </style>
 </head>
 <body class="frutiger-aero-bg text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
+
+    <!-- Elfsight Audio Player Container -->
+    <div id="audio-player-wrapper" class="fixed top-4 left-4 z-[2001] transition-all duration-300 ease-in-out">
+        <div id="audio-player-toggle" class="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer shadow-lg">
+            <span id="player-status-icon" class="text-white text-2xl">﹀</span>
+            <span id="player-status-text" class="text-white text-lg font-bold ml-2 hidden"></span>
+            <button id="toggle-chevron" class="text-white text-xl ml-auto mr-2 hidden transform transition-transform duration-300">&#9660;</button>
+        </div>
+        <div id="elfsight-player-content" class="mt-2 overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+            <div class="glass-panel p-2"> <!-- Apply glass-panel here for the player's content area -->
+                <div class="elfsight-app-ebf1fad7-6c7f-4556-97fe-4b573d22ca07" data-elfsight-app-lazy></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
 
     <div id="app" class="w-full max-w-4xl">
         <!-- Content will be rendered here by JavaScript -->
@@ -226,11 +316,6 @@
             <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen style="display:none;"></iframe> <!-- Hidden until loaded -->
         </div>
     </div>
-
-    <!-- Elfsight Audio Player | Untitled Audio Player (Moved to the very end of body) -->
-    <script src="https://elfsightcdn.com/platform.js" async></script>
-    <div class="elfsight-app-ebf1fad7-6c7f-4556-97fe-4b573d22ca07" data-elfsight-app-lazy style="position: fixed; top: 1rem; left: 1rem; z-index: 2001;"></div>
-
 
     <script>
         const DALIATIME_DATA = {
@@ -290,7 +375,6 @@
                         { name: 'BAD VILLAIN', link: 'https://kprofiles.com/badvillain-members-profile/' },
                         { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' },
                         { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
-                        // Updated ALLIN link
                         { name: 'ALLIN', link: 'https://sites.google.com/view/pmdofficial/allin' }
                     ],
                     color: 'linear-gradient(135deg, rgba(110, 240, 161, 0.8), rgba(255, 255, 176, 0.8))',
@@ -318,7 +402,6 @@
                         { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
                         { name: 'KICKFLIP', link: 'https://kprofiles.com/kickflip-members-profile/' },
                         { name: 'MADEIN', link: 'https://kprofiles.com/madein-members-profile/' },
-                        // Updated Hi TiME link
                         { name: 'Hi TiME', link: 'https://sites.google.com/view/pmdofficial/hi-time' }
                     ],
                     color: 'linear-gradient(135deg, rgba(255, 255, 176, 0.8), rgba(160, 188, 232, 0.8))',
@@ -363,14 +446,12 @@
                         { name: 'ITZY', link: 'https://kprofiles.com/itzy-members-profile/' },
                         { name: 'SF9', link: 'https://kprofiles.com/sf9-members-profile/' },
                         { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
-                        // Added TWS and NCT WISH
                         { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
                         { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
                         { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
                         { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
-                        // Added ILLIT and UNIS
                         { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
-                        { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' }, // Updated UNIS link
+                        { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' },
                         { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
                         { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
                         { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
@@ -613,6 +694,69 @@
             }
         });
 
+        // Audio Player elements
+        const audioPlayerWrapper = document.getElementById('audio-player-wrapper');
+        const audioPlayerToggle = document.getElementById('audio-player-toggle');
+        const elfsightPlayerContent = document.getElementById('elfsight-player-content');
+        const toggleChevron = document.getElementById('toggle-chevron');
+        const playerStatusIcon = document.getElementById('player-status-icon');
+        const playerStatusText = document.getElementById('player-status-text');
+
+        audioPlayerToggle.addEventListener('click', () => {
+            const isExpanded = !audioPlayerWrapper.classList.contains('expanded'); // Determine target state
+            audioPlayerWrapper.classList.toggle('expanded', isExpanded);
+            elfsightPlayerContent.classList.toggle('visible', isExpanded);
+            toggleChevron.classList.toggle('rotated', isExpanded);
+
+            if (isExpanded) {
+                // When expanding, make toggle bar a header with text and chevron
+                audioPlayerToggle.classList.remove('rounded-full', 'glass-panel');
+                audioPlayerToggle.classList.add('rounded-t-2xl');
+                audioPlayerToggle.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'; // Slightly less translucent
+                audioPlayerToggle.style.boxShadow = 'none';
+                audioPlayerToggle.style.borderColor = 'transparent'; // Remove individual borders
+                audioPlayerToggle.style.borderBottom = '1px solid rgba(255, 255, 255, 0.15)'; // Add separator
+                audioPlayerToggle.style.width = '100%'; // Ensure it takes full width of wrapper
+                audioPlayerToggle.style.justifyContent = 'flex-start'; // Align content left
+                audioPlayerToggle.style.height = 'auto'; // Adjust height
+                audioPlayerToggle.style.padding = '0.5rem 1rem'; // Add padding
+
+                playerStatusIcon.style.display = 'none';
+                playerStatusText.style.display = 'block';
+                toggleChevron.style.display = 'block';
+
+            } else {
+                // When minimizing, revert toggle bar to small circle with icon
+                audioPlayerToggle.classList.remove('rounded-t-2xl');
+                audioPlayerToggle.classList.add('rounded-full', 'glass-panel'); // Re-add glass-panel for minimized state
+                audioPlayerToggle.style.backgroundColor = ''; // Revert to CSS default (from glass-panel)
+                audioPlayerToggle.style.boxShadow = ''; // Revert to CSS default (from glass-panel)
+                audioPlayerToggle.style.borderColor = ''; // Revert to CSS default (from glass-panel)
+                audioPlayerToggle.style.borderBottom = '';
+                audioPlayerToggle.style.width = '48px';
+                audioPlayerToggle.style.height = '48px';
+                audioPlayerToggle.style.justifyContent = 'center';
+                audioPlayerToggle.style.padding = '';
+
+                playerStatusIcon.style.display = 'block';
+                playerStatusText.style.display = 'none';
+                toggleChevron.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial state for audio player: minimized
+            audioPlayerWrapper.classList.remove('expanded'); // Ensure it starts minimized
+            elfsightPlayerContent.classList.remove('visible'); // Ensure content is hidden
+            playerStatusIcon.style.display = 'block'; // Ensure icon is visible
+            playerStatusText.style.display = 'none'; // Ensure text is hidden
+            toggleChevron.style.display = 'none'; // Ensure chevron is hidden
+
+            // Apply glass-panel properties to the initial toggle bar
+            audioPlayerToggle.classList.add('glass-panel');
+
+            render();
+        });
 
         const render = () => {
             // Clear previous content
@@ -748,7 +892,7 @@
         const renderEras = () => {
             const data = DALIATIME_DATA.eras;
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         Your Daliatime Eras
                     </h2>
@@ -872,12 +1016,12 @@
             
             const firstTimersData = [
                 { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
-                { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' }, // Added TWS
-                { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' }, // Added NCT WISH
+                { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
+                { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
                 { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
                 { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
-                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' }, // Added ILLIT
-                { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' }, // Updated UNIS link
+                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
+                { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' },
                 { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
                 { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
                 { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
@@ -926,7 +1070,7 @@
             `).join('');
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         Events
                     </h2>
@@ -977,39 +1121,38 @@
             let currentShowIndex = 0;
             
             const updateCarousel = () => {
-              const carouselElement = document.getElementById('md-live-carousel');
-              carouselElement.innerHTML = `
-                <div class="glass-panel rounded-2xl shadow-xl p-4 flex flex-col items-center">
-                  <div class="relative w-full pb-[56.25%]">
-                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                  </div>
-                  <h3 class="text-xl sm:text-2xl font-bold text-green-custom text-center mt-4">
-                    ${shows[currentShowIndex].name}
-                  </h3>
-                </div>
-                <div class="absolute inset-0 flex justify-between items-center px-4 z-10">
-                  <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
-                    &#10094;
-                  </button>
-                  <button id="next-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
-                    &#10095;
-                  </button>
-                </div>
-              `;
+                const carouselElement = document.getElementById('md-live-carousel');
+                carouselElement.innerHTML = `
+                    <div class="glass-panel rounded-2xl shadow-xl p-4 flex flex-col items-center">
+                        <div class="relative w-full pb-[56.25%]">
+                            <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-green-custom text-center mt-4">
+                            ${shows[currentShowIndex].name}
+                        </h3>
+                    </div>
+                    <div class="absolute inset-0 flex justify-between items-center px-4 z-10">
+                        <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
+                            &#10094;
+                        </button>
+                        <button id="next-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
+                            &#10095;
+                        </button>
+                    </div>
+                `;
 
-              document.getElementById('prev-show-btn').addEventListener('click', () => {
-                currentShowIndex = (currentShowIndex - 1 + shows.length) % shows.length;
-                updateCarousel();
-              });
-              // FIX: Added 'click' event type for next-show-btn
-              document.getElementById('next-show-btn').addEventListener('click', () => {
-                currentShowIndex = (currentShowIndex + 1) % shows.length;
-                updateCarousel();
-              });
+                document.getElementById('prev-show-btn').addEventListener('click', () => {
+                    currentShowIndex = (currentShowIndex - 1 + shows.length) % shows.length;
+                    updateCarousel();
+                });
+                document.getElementById('next-show-btn').addEventListener('click', () => {
+                    currentShowIndex = (currentShowIndex + 1) % shows.length;
+                    updateCarousel();
+                });
             };
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         My Diaries Live
                     </h2>
@@ -1084,7 +1227,7 @@
             };
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         The Daliatime Zeitgeist
                     </h2>
@@ -1152,7 +1295,7 @@
             };
 
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8">
                         <span class="animated-text-gradient">The Future of Daliatime</span> <br/>
                         <span class="text-2xl font-extrabold text-green-custom">
@@ -1170,7 +1313,7 @@
                     </div>
 
                     <div class="p-6 glass-panel rounded-2xl shadow-xl mb-12 text-left">
-                        <h3 class="text-2xl font-bold text-yellow-custom mb-4">Upcoming ZEROBASEONE Activities</h3>
+                        <h3 class="text-2xl font-bold text-[#ffffb0] mb-4">Upcoming ZEROBASEONE Activities</h3>
                         <ul class="list-disc list-inside text-lg text-gray-300">
                             ${data.upcomingZerobaseone.map(item => `<li>${item}</li>`).join('')}
                         </ul>
@@ -1210,7 +1353,7 @@
         const renderConclusion = () => {
             const data = DALIATIME_DATA;
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         Mega Conclusion: The Daliatime Report
                     </h2>
@@ -1274,7 +1417,7 @@
         // New function for the FINALE section
         const renderFinale = () => {
             app.innerHTML = `
-                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
                         FINALE
                     </h2>
@@ -1314,10 +1457,6 @@
                 window.scrollTo(0, 0);
             });
         };
-
-        document.addEventListener('DOMContentLoaded', () => {
-            render();
-        });
     </script>
 </body>
 </html>
