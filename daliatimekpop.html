@@ -1,882 +1,855 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-F-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞𝙢𝙚𝙒𝙧𝙖𝙥𝙥𝙚𝙙 : kpop</title>
+    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞𝙢𝙚𝙒𝙧𝙖𝙥𝙥𝙚𝙙 : popculture</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Inter font for body text -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <!-- Comfortaa font for headers -->
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png"> <!-- Favicon added -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Comfortaa:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* Custom CSS for Frutiger Aero / City Pop dark mode aesthetics */
         body {
             font-family: 'Inter', sans-serif;
-            /* Fixed Frutiger Aero inspired gradient background */
-            background: linear-gradient(135deg, #1A202C 0%, #3474B2 100%),
-                        radial-gradient(circle at top left, #9DC3E7 0%, transparent 50%),
-                        radial-gradient(circle at bottom right, #70E093 0%, transparent 50%);
-            background-blend-mode: overlay, screen, normal; /* Blends gradients nicely */
-            background-attachment: fixed; /* Makes the background fixed */
-            color: #E2E8F0; /* Light gray for main text */
-            min-height: 100vh; /* Ensure body takes full height for gradient */
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 0; /* Removed padding for fixed-nav-bottom */
+            color: #FFFFFF;
+            padding-bottom: 80px; /* Added back for footer */
+            /* Frutiger Aero inspired gradient */
+            background: radial-gradient(at top left, #2B78BF 0%, #1A1A1A 50%, #60D394 100%), 
+                        linear-gradient(135deg, #1A1A1A 0%, #2B78BF 70%, #60D394 100%);
+            background-blend-mode: multiply;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .spotify-green { color: #60D394; }
+        .spotify-pink { color: #B5CBEB; }
+        .spotify-blue { color: #2B78BF; }
+        .spotify-yellow { color: #F7E598; }
+
+        .bg-spotify-dark { background-color: transparent; }
+        
+        /* Glassmorphism for panels */
+        .bg-spotify-card {
+            background-color: rgba(40, 40, 40, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
         }
 
-        /* Apply Comfortaa to all header tags */
-        h1, h2, h3, h4 {
-            font-family: 'Comfortaa', sans-serif;
+        .header-glow {
+            text-shadow: 0 0 8px rgba(96, 211, 148, 0.7), 0 0 10px rgba(96, 211, 148, 0.5);
+        }
+        .stat-number {
+            font-weight: 900;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            display: inline-block; /* To allow transform on span */
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .stat-number.is-visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            height: 400px;
-            max-height: 50vh;
+            max-width: 500px; /* Adjusted max-width to be slightly smaller for better fit */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
         }
         @media (max-width: 768px) {
             .chart-container {
-                height: 350px;
-                max-height: 60vh;
+                height: 300px;
             }
         }
-        .stat-card {
-            /* Enhanced Glassmorphism effect */
-            background-color: rgba(255, 255, 255, 0.08); /* More transparent background */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Slightly more prominent border */
-            backdrop-filter: blur(20px); /* Increased blur for stronger glass effect */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Added subtle shadow */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
         }
-        /* Gradient card backgrounds using the new palette for a vibrant look */
-        .gradient-card-blue {
-            background-image: linear-gradient(135deg, #3474B2, #9DC3E7); /* Rich Blue to Soft Light Blue */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: #60D394;
+            opacity: 0.3;
         }
-        .gradient-card-yellow {
-            background-image: linear-gradient(135deg, #FBF8B2, #70E093); /* Bright Yellow to Vibrant Green */
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 1rem 2rem;
+            box-sizing: border-box;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transition properties */
         }
-        .gradient-card-green {
-            background-image: linear-gradient(135deg, #70E093, #3474B2); /* Vibrant Green to Rich Blue */
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .genre-icon {
-            width: 4rem;
-            height: 4rem;
-            background-color: #9DC3E7; /* Soft Light Blue from new palette */
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 4rem;
+            text-align: right;
+        }
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 4rem;
+            text-align: left;
+        }
+        .timeline-dot {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #60D394;
+            border: 4px solid #1A1A1A;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        .flowchart-node {
+            border: 2px solid #60D394;
+            background-color: rgba(40, 40, 40, 0.6);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            width: 200px; /* Fixed width for uniformity */
+            height: 120px; /* Fixed height for uniformity */
+            display: flex; /* Use flexbox for vertical centering */
+            flex-direction: column;
             justify-content: center;
-            font-size: 2.5rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            opacity: 0; /* Initial state for animation */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Transition properties */
         }
-        /* Image styling for MV covers (16:9) */
-        .video-cover {
-            max-width: 160px; /* Adjust max width as needed */
-            width: 100%; /* Make it responsive within its container */
-            height: auto; /* Maintain aspect ratio */
-            aspect-ratio: 16 / 9; /* Set aspect ratio to 16:9 */
-            object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
-            border-radius: 8px; /* Slightly rounded corners for the image */
-            margin-bottom: 0.5rem; /* Space between image and text */
+        /* Specific animations for flowchart nodes */
+        .flowchart-node.slide-from-left {
+            transform: translateX(-100px);
         }
-        /* Image styling for album covers (1:1) */
-        .album-cover {
-            max-width: 100px; /* Adjust max width as needed */
-            width: 100%; /* Make it responsive within its container */
-            height: auto; /* Maintain aspect ratio */
-            aspect-ratio: 1 / 1; /* Set aspect ratio to 1:1 (square) */
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
+        .flowchart-node.slide-from-right {
+            transform: translateX(100px);
         }
-        /* Styling for the profile image in the Sung Hanbin section */
-        .profile-img {
-            width: 150px; /* Increased size */
-            height: 150px; /* Increased size */
-            object-fit: cover;
-            border-radius: 8px; /* Square with rounded corners */
-            margin-right: 1.5rem; /* More space from text */
-            flex-shrink: 0; /* Prevent shrinking on smaller screens */
+        .flowchart-node.scale-in-center { /* Changed class name to avoid conflict */
+            transform: scale(0.8);
+        }
+
+        .flowchart-node.is-visible {
+            opacity: 1;
+            transform: translateX(0) scale(1); /* Reset to original position/scale */
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #60D394;
+            margin: 0 1rem;
+            align-self: center;
+        }
+        /* Removed fixed-nav-bottom and back-button CSS */
+
+        /* Comfortaa font for headers */
+        h1, h2 {
+            font-family: 'Comfortaa', cursive;
         }
     </style>
 </head>
-<body class="bg-[#121820] text-[#E2E8F0]">
+<body class="bg-spotify-dark">
 
-    <div class="container mx-auto p-4 md:p-8 flex-grow">
+    <header class="text-center p-8 md:p-16">
+        <h1 class="text-4xl md:text-6xl font-black mb-2 header-glow">DALIATIME</h1>
+        <h2 class="text-2xl md:text-4xl font-bold spotify-green">POP CULTURE WRAPPED</h2>
+        <p class="text-lg text-gray-400 mt-2">Your recap of Dec 2023 - June 2025</p>
+    </header>
 
-        <header class="text-center my-12">
-            <h1 class="text-5xl md:text-7xl font-black text-[#FBF8B2] tracking-tighter">K-POP DALIATIME REWIND</h1> <!-- Main title header -->
-            <p class="text-xl md:text-2xl font-semibold text-[#A0AEC0] mt-2">Chapter 1: The Foundation (2023.12.12 - 2025.06.10)</p>
-            <p class="text-md text-[#A0AEC0] mt-4">A look back at the artists, trends, and defining moments that shaped a pivotal era in K-Pop, and a glimpse into Chapter 2.</p>
-        </header>
+    <main class="container mx-auto px-4">
 
-        <main>
-            <section id="titans" class="my-16">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">The Titans of Daliatime</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">From industry veterans to explosive rookies, the Daliatime period was defined by artists who consistently dominated charts, shattered records, and captured global attention. Here's a look at the top performers who shaped the sound and spectacle of the era.</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top Performing Artists</h3>
-                        <div class="chart-container">
-                            <canvas id="topArtistsChart"></canvas>
-                        </div>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top Songs (Daliatime Releases)</h3>
-                           <div class="chart-container">
-                                <canvas id="topSongsChart"></canvas>
-                            </div>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl lg:col-span-2">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Most Viewed MVs (Daliatime Releases)</h3>
-                        <div class="chart-container">
-                            <canvas id="topMVsChart"></canvas>
-                        </div>
-                    </article>
+        <section id="global-hits" class="py-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8"><span class="spotify-pink">Global Hits:</span> The World's Top Tracks</h2>
+            <p class="text-center max-w-3xl mx-auto text-gray-300 mb-12">
+                From viral trends to paradigm shifts, these were the cultural phenomena that defined the global conversation during Daliatime.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 flex flex-col justify-center items-center">
+                    <h3 class="text-2xl font-bold mb-4 text-center">The Creator Economy Boom</h3>
+                    <p class="stat-number spotify-green"><span data-animate="stat-number">$16B</span></p>
+                    <p class="text-center text-gray-400 mt-2">Estimated value of the influencer market, a testament to the shift from traditional media to individual creators.</p>
                 </div>
-            </section>
 
-            <hr class="my-12 border-gray-700">
-
-            <section id="zerobaseone" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Spotlight: ZEROBASEONE</h2>
-                   <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]"><strong>ZEROBASEONE</strong> solidified their status as a powerhouse of the 5th generation. Their journey through Daliatime was marked by million-selling albums, chart-topping singles, and an ever-expanding global reach, with leader <strong>Sung Hanbin</strong> playing a pivotal role in their public presence.</p>
-                <div class="bg-[#3474B2] rounded-xl p-8 shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1">
-                        <h3 class="text-3xl font-bold text-[#FBF8B2]">Key Highlights</h3>
-                        <p class="text-sm mt-4 text-[#CBD5E0]">The group's releases during this period were met with immense commercial and critical success. Their third EP, 'You Had Me at HELLO', was a major highlight, leading to their first tour. Their Japanese debut, 'Yura Yura (Unmei no Hana)', was also a massive success.</p>
-                        <p class="text-sm mt-4 text-[#CBD5E0]">The group also demonstrated their positive influence by donating ₩100 million to a children's hospital, showcasing their dedication to philanthropy.</p>
-                    </div>
-                    <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <article class="stat-card rounded-lg p-4 text-center flex flex-col items-center justify-center">
-                            <!-- MV Cover Image with 16:9 aspect ratio -->
-                            <img src="https://i.ytimg.com/vi/L9Ts6kiEAts/mqdefault.jpg" alt="ZEROBASEONE - Feel the Pop MV Cover" class="video-cover">
-                            <h4 class="text-lg font-semibold text-[#FBF8B2] mt-2">Most Viewed MV</h4>
-                            <p class="text-4xl font-extrabold">Feel the Pop</p>
-                            <p class="text-[#A0AEC0]">~115M Views</p>
-                        </article>
-                        <article class="stat-card rounded-lg p-4 text-center flex flex-col items-center justify-center">
-                            <!-- Album Cover Image with 1:1 aspect ratio -->
-                            <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Zerobaseone_-_You_Had_Me_at_Hello.png" alt="You Had Me at HELLO Album Cover" class="album-cover">
-                            <h4 class="text-lg font-semibold text-[#FBF8B2] mt-2">Top Selling Album (Daliatime)</h4>
-                            <p class="text-4xl font-extrabold">You Had Me at HELLO</p>
-                            <p class="text-[#A0AEC0]">~1.38M Sales</p>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-            
-            <section id="hanbin" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Spotlight on a Leader: Sung Hanbin</h2>
-                <div class="flex flex-col md:flex-row items-center md:items-start max-w-3xl mx-auto mb-12">
-                    <img src="https://i.ibb.co/p5P7QW8/Uad5k4-i-400x400.jpg" alt="Sung Hanbin Profile" class="profile-img mb-4 md:mb-0">
-                    <p class="text-center md:text-left text-[#CBD5E0]">As both the leader of ZEROBASEONE and ALLIN and a prominent public figure, <strong>Sung Hanbin</strong>'s activities throughout Daliatime cemented his status as Dalia, leader of the current era. His diverse roles helped him connect with a broader audience and showcased his multifaceted talents beyond his group's releases.</p>
-                </div>
-                <article class="stat-card rounded-xl p-6 shadow-2xl">
-                    <div class="overflow-x-auto"> <!-- Added for horizontal scrolling -->
-                        <table class="w-full text-left table-auto min-w-full"> <!-- min-w-full to ensure table takes full width -->
-                            <thead class="text-[#9DC3E7] border-b-2 border-gray-600">
-                                <tr>
-                                    <th class="p-4">Activity</th>
-                                    <th class="p-4">Description</th>
-                                    <th class="p-4">Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-gray-700">
-                                    <td class="p-3 flex items-center space-x-2">
-                                        <span class="text-2xl">🎤</span> <p>M Countdown MC</p>
-                                    </td>
-                                    <td class="p-3">Became a beloved triple MC for the popular music show, increasing his public profile.</td>
-                                    <td class="p-3">2024.01 - present</td>
-                                </tr>
-                                <tr class="border-b border-gray-700">
-                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">📸</span> <p>Magazine Features</p></td>
-                                    <td class="p-3">Starred in numerous solo magazine covers and editorials, showcasing his visual appeal and fashion influence.</td>
-                                    <td class="p-3">Throughout the era</td>
-                                </tr>
-                                <tr class="border-b border-gray-700">
-                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">🕺🏻</span> <p>Studio Choom "Artist of the Month"</p></td>
-                                    <td class="p-3">For July 2024 with self-written original song, "Bad Boy". He also worked with top-tier choreographers in the Korean dance industry.</td>
-                                    <td class="p-3">2024.07</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
-                                    <td class="p-3">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
-                                    <td class="p-3">2024.07</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </article>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="industry" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Industry Dynamics & Key Shifts</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Daliatime Chapter 1 was not just about music; it was a period of significant change. Album sales experienced a noticeable dip, while the industry's landscape became more polarized, with major agencies solidifying their dominance. Amid these shifts, nostalgic trends like group reunions and the rise of new genres took hold.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl flex flex-col items-center">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Genre Snapshot</h3>
-                        <div class="chart-container">
-                            <canvas id="genreChart"></canvas>
-                        </div>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Pop:</strong> The foundational genre, evolving with modern twists. Subgenres like UK Garage (UKG) and Miami Bass became popular, with artists experimenting with new sounds. <br> <strong>Example:</strong> `Like Magic` (<strong>M.O.N.T</strong>), `Bubble Gum` (<strong>NewJeans</strong>), `Magnetic` (<strong>ILLIT</strong>).</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>R&B/Soul:</strong> A constant presence, often fused with modern beats and smooth vocals. <br> <strong>Example:</strong> `Only Cry in the Rain` (<strong>Chuu</strong>), `Elevator` (<strong>BAEKHYUN</strong>), `Soñar (Breaker)` (<strong>NMIXX</strong>).</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Hip-Hop:</strong> Both traditional and experimental forms saw success, with artists showcasing their rapping and production skills. <br> <strong>Example:</strong> `Chk Chk Boom` (<strong>Stray Kids</strong>), `Spot!` (<strong>ZICO</strong> ft. <strong>JENNIE</strong>), `Hate to Love` (<strong>Jackson Wang</strong>).</p>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl flex flex-col items-center">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Concept Snapshot</h3>
-                        <div class="chart-container">
-                            <canvas id="conceptChart"></canvas>
-                        </div>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Y2K Nostalgia:</strong> This concept, pioneered by groups like <strong>NewJeans</strong>, dominated the era. It blends late '90s and early 2000s aesthetics, sounds, and fashion, creating a sense of comforting retro familiarity. <br> <strong>Example:</strong> <strong>NewJeans</strong>' entire visual and sonic identity.</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Futuristic/AI:</strong> A concept that explores technology and a hyper-real universe, often accompanied by complex lore and visual effects. <br> <strong>Example:</strong> <strong>aespa</strong>'s `Supernova` and <strong>PLAVE</strong>'s digital identity.</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Girl Crush:</strong> A confident, powerful, and often edgy concept that focuses on female empowerment and self-love. <br> <strong>Example:</strong> <strong>I-DLE</strong>'s `Super Lady`, <strong>LE SSERAFIM</strong>'s `Easy`, `DASH` (<strong>NMIXX</strong>).</p>
-                    </article>
-                </div>
-                <article class="stat-card rounded-xl p-6 shadow-2xl mt-12">
-                    <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Significant Industry Events</h3>
-                    <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                        <li><strong>Global Festival Participation:</strong> Major K-Pop acts, including <strong>ATEEZ</strong>, <strong>Stray Kids</strong>, and <strong>LE SSERAFIM</strong>, made waves with headlining performances at Coachella, solidifying K-Pop's mainstream presence.</li>
-                        <li><strong>NewJeans Legal Disputes:</strong> An ongoing legal battle involving the group's management label, ADOR, and parent company HYBE dominated headlines, highlighting tensions within the industry.</li>
-                        <li><strong>Group Disbandments:</strong> The dissolution of veteran groups like <strong>Cherry Bullet</strong> and <strong>Weki Meki</strong> marked the end of an era for many fans, shifting the landscape.</li>
-                        <li><strong>Virtual Artist Agency:</strong> The formation of dedicated agencies and labels for virtual idols, such as VLAST for <strong>PLAVE</strong>, signaled a growing investment in the genre.</li>
-                    </ul>
-                </article>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="year-eras" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">A Year-by-Year Breakdown</h2>
-                   <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Daliatime Chapter 1 can be broken down into two distinct periods, each with its own defining metrics and narrative. The first was a year of new beginnings, while the second was a shorter but powerful voyage of comebacks and new talent.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Year 1: <span class="text-[#70E093]">New Start</span></h3>
-                        <p class="text-sm text-[#CBD5E0] text-center mb-4">(2023.12.12 - 2024.12.31)</p>
-                        <div class="flex justify-around items-center my-6">
-                            <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">38</p>
-                                <p class="text-lg text-[#CBD5E0]">Group Debuts</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">~150</p>
-                                <p class="text-lg text-[#CBD5E0]">Total Releases</p>
-                            </div>
-                        </div>
-                        <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                                <li><strong>Notable Debuts:</strong> <strong>TWS</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong>, <strong>MEOVV</strong></li>
-                                <li><strong>Notable Songs:</strong> `Super Lady` (<strong>I-DLE</strong>), `Easy` (<strong>LE SSERAFIM</strong>), `Magnetic` (<strong>ILLIT</strong>)</li>
-                        </ul>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Year 2: <span class="text-[#70E093]">Voyage</span></h3>
-                        <p class="text-sm text-[#CBD5E0] text-center mb-4">(2025.01.01 - 2025.06.10)</p>
-                        <div class="flex justify-around items-center my-6">
-                               <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">7</p>
-                                <p class="text-lg text-[#CBD5E0]">Group Debuts</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">~50</p>
-                                <p class="text-lg text-[#CBD5E0]">Total Releases</p>
-                            </div>
-                        </div>
-                        <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                                <li><strong>Notable Debuts:</strong> <strong>Hearts2Hearts</strong>, <strong>KiiiKiii</strong>, <strong>Close Your Eyes</strong></li>
-                                <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="new-guard" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">The New Guard: Debuts & Rookies</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Chapter 1 was a period of fresh faces and new beginnings. <strong>45</strong> new groups debuted, with <strong>39 (87%)</strong> remaining active as of 2025.06.10. This shows a high rate of successful integration for new talent. Several prominent rookies emerged from this period, showcasing the talent pipeline from survival programs and major agencies.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Debut & Activity Stats</h3>
-                        <div class="flex justify-around items-center my-6">
-                            <div class="text-center">
-                                <p class="text-5xl font-extrabold text-[#70E093]">45</p>
-                                <p class="text-lg text-[#CBD5E0]">Group Debuts<br>in Daliatime</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-5xl font-extrabold text-[#70E093]">39</p>
-                                <p class="text-lg text-[#CBD5E0]">Active as of<br>2025.06.10</p>
-                            </div>
-                        </div>
-                        <ul class="list-disc list-inside mt-6 space-y-2 text-[#CBD5E0]">
-                            <li><strong>Notable Rookies:</strong> <strong>ILLIT</strong>, <strong>TWS</strong>, <strong>UNIS</strong>, <strong>BADVILLAIN</strong></li>
-                            <li><strong>Survival Groups:</strong> Several successful groups were formed through prominent survival programs during this time, including <strong>izna</strong> (from I-LAND 2) and <strong>Close Your Eyes</strong> (from Project 7).</li>
-                        </ul>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Prominent Survival Programs</h3>
-                        <div class="space-y-4 text-[#CBD5E0]">
-                            <div class="bg-gray-800 rounded-lg p-4 text-[#CBD5E0]">
-                                <p class="font-bold text-xl text-[#FBF8B2]">I-LAND 2</p>
-                                <p class="text-sm">Formed girl group <strong>izna</strong>, who debuted in November 2024.</p>
-                            </div>
-                            <div class="bg-gray-800 rounded-lg p-4 text-[#CBD5E0]">
-                                <p class="font-bold text-xl text-[#FBF8B2]">Project 7</p>
-                                <p class="text-sm">Formed boy group <strong>Close Your Eyes</strong>, who debuted on April 2, 2025.</p>
-                            </div>
-                            <div class="bg-gray-800 rounded-lg p-4 text-[#CBD5E0]">
-                                <p class="font-bold text-xl text-[#FBF8B2]">Universe League</p>
-                                <p class="text-sm">Formed the group <strong>AHOF</strong>, whose official debut is set for July 2025. (in Daliatime Chapter 2)</p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="music-shows" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Music Show Champions</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Music show wins remain a key benchmark for a comeback's success. During Daliatime, these songs consistently claimed trophies, demonstrating immense popularity and dedicated fan support across various broadcast platforms.</p>
-                <article class="stat-card rounded-xl p-6 shadow-2xl">
-                    <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top 10 Songs by Music Show Wins</h3>
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="engagementRateChart">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Micro-Influencer Engagement</h3>
                     <div class="chart-container">
-                        <canvas id="musicShowWinsChart"></canvas>
+                        <canvas id="engagementRateChart"></canvas>
                     </div>
-                </article>
-            </section>
+                    <p class="text-center text-gray-400 mt-4">This chart shows why authenticity wins. Micro-influencers drove significantly higher engagement rates, proving that genuine connection is more valuable than sheer follower count.</p>
+                </div>
 
-            <hr class="my-12 border-gray-700">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Nostalgia's Enduring Power</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <p class="text-5xl font-black spotify-blue"><span data-animate="stat-number">$70%</span></p>
+                            <p class="mt-2 text-gray-400">Increase in searches for vintage aesthetics on Pinterest, fueling Y2K fashion revivals.</p>
+                        </div>
+                        <div>
+                            <p class="text-5xl font-black spotify-blue"><span data-animate="stat-number">$300M</span></p>
+                            <p class="mt-2 text-gray-400">Estimated value of Bob Dylan's catalog sale, highlighting music's timeless value.</p>
+                        </div>
+                        <div>
+                            <p class="text-5xl font-black spotify-blue"><span data-animate="stat-number">50%</span></p>
+                            <p class="mt-2 text-gray-400">of consumers cited nostalgia as a factor in their 2024 buying decisions.</p>
+                        </div>
+                    </div>
+                </div>
 
-            <section id="timeline" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Daliatime Milestones: Firsts & Lasts</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">The 18-month Daliatime period was framed by significant beginnings and endings. Here are the key moments that marked the start and conclusion of this vibrant chapter in K-Pop history.</p>
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="virtualConcertsChart">
+                    <h3 class="text-2xl font-bold mb-4 text-center">The Digital-Physical Fusion</h3>
+                     <div class="chart-container">
+                        <canvas id="virtualConcertsChart"></canvas>
+                    </div>
+                    <p class="text-center text-gray-400 mt-4">Virtual concerts on platforms like Fortnite attracted millions, blurring the lines between online and offline social experiences.</p>
+                </div>
+
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 flex flex-col justify-center items-center">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Brand Purpose Resonates</h3>
+                    <p class="stat-number spotify-pink"><span data-animate="stat-number">69%</span></p>
+                    <p class="text-center text-gray-400 mt-2">Faster growth of Unilever's "Sustainable Living Brands," proving that consumers increasingly support companies committed to positive environmental impact.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="regional-rhythms" class="py-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8"><span class="spotify-yellow">Regional Rhythms:</span> Spotlights on SK & PH</h2>
+            <p class="text-center max-w-3xl mx-auto text-gray-300 mb-12">
+                While global trends set the beat, South Korea and the Philippines grooved to their own unique rhythms, exporting their culture to the world stage.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 md:col-span-2 chart-section" data-chart-id="hallyuWaveChart">
+                    <h3 class="text-2xl font-bold mb-4 text-center">The Hallyu Wave's Global Reach</h3>
+                     <div class="chart-container h-[450px] max-h-[500px]">
+                        <canvas id="hallyuWaveChart"></canvas>
+                    </div>
+                    <p class="text-center text-gray-400 mt-4">The Korean Wave showed nuanced global appeal. This chart illustrates which facet of Hallyu resonated most in different countries, from K-Pop in Southeast Asia to K-Food in the West.</p>
+                </div>
+
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-center">P-Pop's Rising Stardom</h3>
+                    <div class="space-y-4">
+                        <div class="text-center">
+                            <p class="text-2xl font-bold">SB19</p>
+                            <p class="text-gray-400">🏆 Best Asia Act, MTV EMA</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold">BINI</p>
+                            <p class="text-gray-400">🎤 "Voices of Asia," Billboard</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-bold">Alamat</p>
+                            <p class="text-gray-400">💃 Fusing native sounds & dances</p>
+                        </div>
+                    </div>
+                     <p class="text-center text-gray-400 mt-4">P-Pop groups gained significant international recognition, blending global pop aesthetics with distinct Filipino cultural pride.</p>
+                </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <!-- First Album / Last Album -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Album Release</p>
-                        <p class="text-xl font-bold">NewJeans - NJWMX</p>
-                        <p class="text-sm text-gray-400">2023.12.19</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Album Release</p>
-                        <p class="text-xl font-bold">ITZY - Girls Will Be Girls</p>
-                        <p class="text-sm text-gray-400">2025.06.09</p>
-                    </article>
-
-                    <!-- First MV / Last MV -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall MV Release</p>
-                        <p class="text-xl font-bold">Taemin - The Rizzness</p>
-                        <p class="text-sm text-gray-400">2023.12.15</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall MV Release</p>
-                        <p class="text-xl font-bold">ITZY - Girls Will Be Girls</p>
-                        <p class="text-sm text-gray-400">2025.06.09</p>
-                    </article>
-
-                    <!-- First Overall Debut (Group) / Last Overall Debut (Group) -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Debut (Group)</p>
-                        <p class="text-xl font-bold">tripleS NXT</p>
-                        <p class="text-sm text-gray-400">2023.12.23</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Debut (Group)</p>
-                        <p class="text-xl font-bold">USPEER</p>
-                        <p class="text-sm text-gray-400">2025.06.04</p>
-                    </article>
-
-                    <!-- First Overall Debut (Solo) / Last Overall Debut (Solo) -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Debut (Solo)</p>
-                        <p class="text-xl font-bold">Lee Sung Kyoung</p>
-                        <p class="text-sm text-gray-400">2024.01.13</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Debut (Solo)</p>
-                        <p class="text-xl font-bold">Mark (of NCT)</p>
-                        <p class="text-sm text-gray-400">2025.04.07</p>
-                    </article>
-
-                    <!-- First Girl Group Debut / Last Girl Group Debut -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Girl Group Debut</p>
-                        <p class="text-xl font-bold">Geenius</p>
-                        <p class="text-sm text-gray-400">2024.01.05</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Girl Group Debut</p>
-                        <p class="text-xl font-bold">USPEER</p>
-                        <p class="text-sm text-gray-400">2025.06.04</p>
-                    </article>
-
-                    <!-- First Boy Group Debut / Last Boy Group Debut -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Boy Group Debut</p>
-                        <p class="text-xl font-bold">Waker</p>
-                        <p class="text-sm text-gray-400">2024.01.08</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Boy Group Debut</p>
-                        <p class="text-xl font-bold">Close Your Eyes</p>
-                        <p class="text-sm text-gray-400">2025.04.02</p>
-                    </article>
-
-                    <!-- First Major Event / Last Major Event -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Major Event</p>
-                        <p class="text-xl font-bold">2023 Asia Artist Awards</p>
-                        <p class="text-sm text-gray-400">2023.12.14</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Major Event</p>
-                        <p class="text-xl font-bold">KCON Japan 2025</p>
-                        <p class="text-sm text-gray-400">2025.05.10-12</p>
-                    </article>
-
-                    <!-- First Song Release / Last Song Release -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Song Release</p>
-                        <p class="text-xl font-bold">ITZY - Born to Be</p>
-                        <p class="text-sm text-gray-400">2023.12.17</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Song Release</p>
-                        <p class="text-xl font-bold">ITZY - Girls Will Be Girls</p>
-                        <p class="text-sm text-gray-400">2025.06.09</p>
-                    </article>
-                </div>
-
-                <!-- ITZY Comment -->
-                <div class="flex justify-center mt-8">
-                    <article class="stat-card rounded-lg p-4 text-center max-w-md">
-                        <p class="text-lg font-bold text-[#70E093]">Yes MIDZYs, ITZY really bookended Daliatime Chapter 1 😭</p>
-                    </article>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="eras" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">A Journey Through Eras</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">The Daliatime period was segmented into distinct eras, each with its own unique flavor and flurry of activity. The "Cinema Paradise" era emerged as the most prolific, boasting the highest concentration of comebacks and major events, signaling a peak in industry output. The era titles are now named after ZEROBASEONE’s title tracks that served as key anchor points for the fandom.</p>
-                <article class="stat-card rounded-xl p-6 shadow-2xl mb-12">
-                    <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Activity by Comeback Era</h3>
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="phStreamingChart">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Philippine Streaming Market Growth</h3>
                     <div class="chart-container">
-                        <canvas id="eraActivityChart"></canvas>
+                        <canvas id="phStreamingChart"></canvas>
                     </div>
-                </article>
-                <div class="space-y-8">
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Inaugural</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2023.12.12 - 2024.05.12)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'With You-th' (<strong>TWICE</strong>), 'DREAM()SCAPE' (<strong>NCT DREAM</strong>), 'minisode 3: TOMORROW' (<strong>TXT</strong>), 'Ive Switch' (<strong>IVE</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Born to Be' (<strong>ITZY</strong>), 'Super Lady' (<strong>I-DLE</strong>), 'Easy' (<strong>LE SSERAFIM</strong>), 'Magnetic' (<strong>ILLIT</strong>), 'Sweat' (<strong>ZEROBASEONE</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Waker</strong>, <strong>All(H)Ours</strong>, <strong>DXMON</strong>, <strong>Rescene</strong>, <strong>TWS</strong>, <strong>Geenius</strong >, <strong>ILLIT</strong>, <strong>UNIS</strong></p>
-                    </article>
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">You Had Me At Hello</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2024.05.13 - 2024.08.25)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'You Had Me at HELLO' (<strong>ZEROBASEONE</strong>), 'Armageddon' (<strong>aespa</strong>), 'Cosmic' (<strong>Red Velvet</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'How Sweet' (<strong>NewJeans</strong>), 'Supernova' (<strong>aespa</strong>), 'Chk Chk Boom' (<strong>Stray Kids</strong>), 'WALK' (<strong>NCT 127</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>UNICODE</strong>, <strong>B.D.U</strong>, <strong>BADVILLAIN</strong>, <strong>KATSEYE</strong>, <strong>ARrC</strong></p>
-                    </article>
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Cinema Paradise</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2024.08.26 - 2025.02.23)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'CINEMA PARADISE' (<strong>ZEROBASEONE</strong>), 'IVE EMPATHY' (<strong>IVE</strong>), 'Amortage' (<strong>JISOO</strong>), 'SPILL THE FEELS' (<strong>SEVENTEEN</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Good So Bad' (<strong>ZEROBASEONE</strong>), `Rebel Heart` (<strong>IVE</strong>), 'earthquake' (<strong>JISOO</strong>), 'STRATEGY' (<strong>TWICE</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>I:Mond</strong>, <strong>izna</strong>, <strong>MEOVV</strong>, <strong>Madein</strong></p>
-                    </article>
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Blue Paradise</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2025.02.24 - 2025.06.10)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'Blue Paradise' (<strong>ZEROBASEONE</strong>), 'Ruby' (<strong>JENNIE</strong>), 'Fe3O4: FORWARD' (<strong>NMIXX</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Blue' (<strong>ZEROBASEONE</strong>), 'HOT' (<strong>LE SSERAFIM</strong>), 'Rebel Heart' (<strong>IVE</strong>), 'I Feel Good` (<strong>BoyNextDoor</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Close Your Eyes</strong>, <strong>USPEER</strong>, <strong>KiiiKiii</strong>, <strong>Hearts2Hearts</strong></p>
-                    </article>
+                    <p class="text-center text-gray-400 mt-4">The Philippine streaming market saw explosive growth, with Netflix leading the charge by investing in local content, proving regional relevance drives engagement.</p>
                 </div>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="future" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#FBF8B2]">Daliatime Chapter 2: The Horizon</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">The conclusion of Daliatime Chapter 1 sets the stage for an exciting new period. Chapter 2 promises a continuation of key trends and a host of anticipated comebacks, tours, and fresh faces. Here’s a look at what the industry has to look forward to.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <article class="gradient-card-blue rounded-xl p-6 shadow-2xl flex flex-col justify-between">
-                        <h3 class="text-2xl font-bold mb-4 text-white">Group Returns</h3>
-                        <p class="text-gray-100">Fans are anticipating reunions and comebacks from veteran groups like <strong>BTS</strong>, <strong>MONSTA X</strong>, <strong>CLC</strong>, and <strong>I.O.I.</strong> as they navigate their own career paths in Chapter 2. Additionally, <strong>BLACKPINK</strong> is expected to have a new album and world tour, which would be a major highlight of the new period.</p>
-                    </article>
-                    <article class="gradient-card-yellow rounded-xl p-6 shadow-2xl flex flex-col justify-between">
-                        <h3 class="text-2xl font-bold mb-4 text-[#1E1E1E]">Tours & Global Expansion</h3>
-                        <p class="text-[#1E1E1E]">The industry continues to prioritize a global presence. Upcoming tours are a major focus, bringing top acts such as <strong>ENHYPEN</strong> to fans in Asia, North America, and beyond. This trend, already cemented in Chapter 1, will only intensify.</p>
-                    </article>
-                    <article class="gradient-card-green rounded-xl p-6 shadow-2xl flex flex-col justify-between">
-                        <h3 class="text-2xl font-bold mb-4 text-[#1E1E1E]">New Survival Groups</h3>
-                        <p class="text-[#1E1E1E]">Survival shows continue to be a vital pipeline for new talent. As seen with shows like `Boys Planet`, which produced <strong>ZEROBASEONE</strong>, the industry will continue to rely on these platforms to discover and launch the next generation of K-Pop stars. Look for new and innovative survival formats in Chapter 2.</p>
-                    </article>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="wrapped" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#FBF8B2]">Daliatime Chapter 1 Wrapped</h2>
-                <article class="gradient-card-blue rounded-2xl p-8 shadow-2xl text-center">
-                    <h3 class="text-5xl md:text-6xl font-black text-white tracking-tighter mb-4" style="font-family: 'Inter', sans-serif;">The Numbers Tell the Story</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#70E093]">45</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">New Groups Debuted</p>
-                        </div>
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#FBF8B2]">87%</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">Active as of 2025.06.10</p>
-                        </div>
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#A7D9FF]">-15%</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">Album Sales Dip (2024 vs. 2023)</p>
-                        </div>
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#FBF8B2]">~100</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">Music Show Wins by Top Songs</p>
-                        </div>
-                    </div>
-                    <p class="text-center max-w-4xl mx-auto text-white leading-relaxed text-lg mt-8">Daliatime Chapter 1 was a whirlwind of innovation and legacy. We witnessed the undisputed chart dominance of artists like <strong>SEVENTEEN</strong> and <strong>Stray Kids</strong>, while new hits like <strong>aespa's "Supernova"</strong> and <strong>ROSÉ's "APT."</strong> captured the global zeitgeist.</p>
-                    <p class="text-center max-w-4xl mx-auto text-white leading-relaxed text-lg mt-4">The industry saw a fascinating blend of old and new: a drop in overall album sales was countered by the electrifying rise of <strong>virtual idols</strong> and a powerful wave of <strong>nostalgic reunions</strong> from iconic groups. The foundation of Daliatime was built on a new generation of talent. As we enter Chapter 2, the stage is set for a future defined by these trends, with global tours, veteran comebacks, and new stars promising to continue the evolution of the K-Pop world.</p>
-                </article>
-            </section>
-        </main>
+            </div>
+        </section>
 
-    </div>
+        <section id="tech-beat" class="py-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8"><span class="spotify-blue">The Tech Beat:</span> Innovations Shaping Culture</h2>
+            <p class="text-center max-w-3xl mx-auto text-gray-300 mb-12">
+                Technology was the underlying rhythm that propelled pop culture forward, with AI, immersive streaming, and the metaverse composing the soundtrack of our digital lives.
+            </p>
+
+            <div class="bg-spotify-card rounded-lg shadow-lg p-6 mb-8 flowchart-section">
+                <h3 class="text-2xl font-bold mb-6 text-center">AI: The New Creative Partner</h3>
+                <div class="flex flex-col md:flex-row justify-center items-center">
+                    <div class="flowchart-node slide-from-left" data-animate="flowchart-node-simultaneous">
+                        <p class="font-bold">Brainstorming & Scripting</p>
+                        <p class="text-sm text-gray-400">AI tools assist writers</p>
+                    </div>
+                    <div class="flowchart-arrow hidden md:block">&rarr;</div>
+                    <div class="flowchart-arrow md:hidden my-4">&darr;</div>
+                    <div class="flowchart-node scale-in-center" data-animate="flowchart-node-simultaneous">
+                        <p class="font-bold">Automated Post-Production</p>
+                        <p class="text-sm text-gray-400">Agentic AI handles tedious tasks</p>
+                    </div>
+                    <div class="flowchart-arrow hidden md:block">&rarr;</div>
+                    <div class="flowchart-arrow md:hidden my-4">&darr;</div>
+                    <div class="flowchart-node slide-from-right" data-animate="flowchart-node-simultaneous">
+                        <p class="font-bold">Hyper-Personalization</p>
+                        <p class="text-sm text-gray-400">AI curates user experiences</p>
+                    </div>
+                </div>
+                <p class="text-center text-gray-400 mt-6">AI transformed creative workflows, from initial idea generation to final content delivery, enabling greater efficiency and personalization across the entertainment industry.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="metaverseMarketChart">
+                    <h3 class="text-2xl font-bold mb-4 text-center">The Metaverse Economy</h3>
+                    <div class="chart-container">
+                        <canvas id="metaverseMarketChart"></canvas>
+                    </div>
+                    <p class="text-center text-gray-400 mt-4">The global metaverse market is projected to see astronomical growth, with e-commerce, virtual learning, and gaming set to be the biggest beneficiaries.</p>
+                </div>
+                <div class="bg-spotify-card rounded-lg shadow-lg p-6 chart-section" data-chart-id="consumerValuesChart">
+                    <h3 class="text-2xl font-bold mb-4 text-center">The Shift in Consumer Values</h3>
+                    <div class="chart-container">
+                        <canvas id="consumerValuesChart"></canvas>
+                    </div>
+                    <p class="text-center text-gray-400 mt-4">Consumers, especially Gen Z, are prioritizing experiences over possessions and embracing sustainability, driving growth in the secondhand market and challenging fast fashion.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="viral-moments" class="py-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8"><span class="spotify-green">Viral Rewind:</span> Unforgettable Moments</h2>
+            <p class="text-center max-w-3xl mx-auto text-gray-300 mb-12">
+                A look back at the beefs, memes, and moments that had everyone talking.
+            </p>
+            <div class="timeline timeline-section">
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
+                    <div class="timeline-dot"></div>
+                    <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg spotify-pink">Kendrick vs. Drake</h4>
+                        <p class="text-sm text-gray-400">The rap beef that dominated 2024, with "Not Like Us" becoming a viral anthem.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
+                    <div class="timeline-dot"></div>
+                    <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg spotify-yellow">"Brat Summer"</h4>
+                        <p class="text-sm text-gray-400">Charli XCX ushered in an era of hedonism, a sharp turn from "quiet luxury."</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
+                    <div class="timeline-dot"></div>
+                    <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg spotify-blue">Moo Deng the Hippo</h4>
+                        <p class="text-sm text-gray-400">Thailand's baby pygmy hippo captured hearts worldwide with 500M+ TikTok views.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-animate="timeline-item-simultaneous">
+                    <div class="timeline-dot"></div>
+                    <div class="p-4 bg-spotify-card rounded-lg shadow-lg">
+                        <h4 class="font-bold text-lg spotify-pink">"Wala po akong maalala"</h4>
+                        <p class="text-sm text-gray-400">A viral meme in the Philippines sparked by a political controversy, reflecting public discourse.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-8 text-gray-500">
+        <p>Daliatime Pop Culture Wrapped | 2023-2025</p>
+        <p class="text-xs mt-2">Data synthesized from the "Daliatime Pop Culture Wrapped" analysis report.</p>
+    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // New dark mode color palette for charts
-            const FONT_COLOR = '#E2E8F0'; // Light gray for chart text
-            const GRID_COLOR = 'rgba(255, 255, 255, 0.1)'; // Light transparent for grid lines
-            const PALETTE = {
-                blue: '#3474B2', // Rich Blue
-                green: '#70E093', // Vibrant Green
-                yellow: '#FBF8B2', // Bright Yellow
-                pink: '#9DC3E7', // Soft Light Blue
-                darkBlue: '#1A202C', // Deep charcoal (for tooltip background)
-                lightPink: '#C4DFF8', // Lighter shade of light blue
-                teal: '#A7D9FF', // Another light blue
-                orange: '#FFD54F', // Brighter yellow-orange
-                purple: '#B39DDB', // Brighter purple
-                red: '#EF9A9A' // Softer red
-            };
-            // Ensure COLORS array uses the new palette for chart segments
-            const COLORS = [
-                PALETTE.green, PALETTE.blue, PALETTE.yellow, PALETTE.pink, PALETTE.teal,
-                PALETTE.orange, PALETTE.purple, PALETTE.red, PALETTE.lightPink, '#81E6D9' /* A custom light teal */
-            ];
+        // Store references to Chart.js instances
+        const charts = {};
+        const chartsInitialized = {};
 
-            // Map to store active Chart.js instances
-            const chartInstances = {};
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
 
-            // Reusable function to create chart configurations
-            const createChart = (canvasId, type, data, options = {}) => {
-                // Destroy existing chart instance if it exists to allow re-animation
-                if (chartInstances[canvasId]) {
-                    chartInstances[canvasId].destroy();
-                    delete chartInstances[canvasId];
+        const processLabels = (labels) => {
+            return labels.map(label => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const newLabel = [];
+                    let line = '';
+                    words.forEach(word => {
+                        if ((line + word).length > 16 && line.length > 0) {
+                            newLabel.push(line.trim());
+                            line = '';
+                        }
+                        line += word + ' ';
+                    });
+                    newLabel.push(line.trim());
+                    return newLabel;
                 }
+                return label;
+            });
+        };
+        
+        const globalPlugins = {
+            legend: {
+                labels: {
+                    color: '#FFFFFF'
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    title: tooltipTitleCallback
+                }
+            }
+        };
+        
+        const globalScales = {
+            y: {
+                ticks: { color: '#FFFFFF', beginAtZero: true },
+                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+                ticks: { color: '#FFFFFF' },
+                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+        };
 
-                const defaultOptions = {
+        const pieDoughnutAnimation = {
+            animateRotate: true,
+            animateScale: true,
+            duration: 1000,
+            easing: 'easeInOutQuart'
+        };
+
+        // Chart creation functions
+        function createEngagementRateChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.engagementRateChart) {
+                charts.engagementRateChart.destroy();
+                charts.engagementRateChart = null;
+            }
+            const ctx = document.getElementById('engagementRateChart').getContext('2d');
+            charts.engagementRateChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: processLabels(['Micro-Influencers (<15k followers)', 'Macro-Influencers (>1M followers)']),
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: [3.86, 1.21],
+                        backgroundColor: ['#60D394', '#B5CBEB'],
+                        borderColor: ['#60D394', '#B5CBEB'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
                     maintainAspectRatio: false,
-                    animation: {
-                        duration: 1000, // Duration of the animation in milliseconds
-                        easing: 'easeOutQuart' // Easing function for the animation
-                    },
+                    indexAxis: 'y', // This makes it a horizontal bar chart
                     scales: {
-                        x: {
-                            ticks: { color: FONT_COLOR, font: { weight: '600' } },
-                            grid: { color: GRID_COLOR }
+                        x: { // Numerical scale for horizontal bars
+                            min: 0, // Ensure it starts from 0
+                            ticks: { color: '#FFFFFF' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
                         },
-                        y: {
-                            ticks: { color: FONT_COLOR, font: { weight: '600' } },
-                            grid: { color: GRID_COLOR }
+                        y: { // Categorical scale for horizontal bars
+                            ticks: { color: '#FFFFFF' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        }
+                    },
+                    plugins: globalPlugins,
+                    animation: {
+                        x: { // Animate x (width) for horizontal bars
+                            type: 'number',
+                            easing: 'easeOutQuart',
+                            from: (context) => context.chart.scales.x.left, // Start from the left edge of the chart area
+                            duration: 700
+                        },
+                        opacity: { // Animate opacity simultaneously
+                            type: 'number',
+                            from: 0,
+                            to: 1,
+                            duration: 700
+                        }
+                    }
+                }
+            });
+            chartsInitialized.engagementRateChart = true;
+        }
+
+        function createVirtualConcertsChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.virtualConcertsChart) {
+                charts.virtualConcertsChart.destroy();
+                charts.virtualConcertsChart = null;
+            }
+            const ctx = document.getElementById('virtualConcertsChart').getContext('2d');
+            charts.virtualConcertsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: processLabels(['Marshmello (2019)', 'Travis Scott (2020)', 'The Big Bang (2023)']),
+                    datasets: [{
+                        label: 'Concurrent Viewers (Millions)',
+                        data: [10, 12, 3],
+                        backgroundColor: ['#2B78BF', '#B5CBEB', '#F7E598'],
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { // Numerical scale for vertical bars
+                            min: 0, // Ensure it starts from 0
+                            ticks: { color: '#FFFFFF', beginAtZero: true },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        x: { // Categorical scale for vertical bars
+                            ticks: { color: '#FFFFFF' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        }
+                    },
+                    plugins: globalPlugins,
+                    animation: {
+                        y: { // Animate y (height) for vertical bars
+                            type: 'number',
+                            easing: 'easeOutQuart',
+                            from: (context) => context.chart.scales.y.bottom, // Start from the bottom edge of the chart area
+                            duration: 700
+                        },
+                        opacity: { // Animate opacity simultaneously
+                            type: 'number',
+                            from: 0,
+                            to: 1,
+                            duration: 700
+                        }
+                    }
+                }
+            });
+            chartsInitialized.virtualConcertsChart = true;
+        }
+
+        function createHallyuWaveChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.hallyuWaveChart) {
+                charts.hallyuWaveChart.destroy();
+                charts.hallyuWaveChart = null;
+            }
+            const ctx = document.getElementById('hallyuWaveChart').getContext('2d');
+            charts.hallyuWaveChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: processLabels(['India', 'USA', 'Thailand', 'Turkey', 'Nigeria', 'UK']),
+                    datasets: [
+                        {
+                            label: 'K-Food', /* Changed order for staggered animation */
+                            data: [6, 9, 5, 6, 9, 9],
+                            fill: true,
+                            backgroundColor: 'rgba(43, 120, 191, 0.2)', /* Blue color */
+                            borderColor: '#2B78BF',
+                            pointBackgroundColor: '#2B78BF',
+                        },
+                        {
+                            label: 'K-Drama', /* Changed order for staggered animation */
+                            data: [7, 8, 7, 9, 6, 7],
+                            fill: true,
+                            backgroundColor: 'rgba(181, 203, 235, 0.2)', /* White/Light Blue color */
+                            borderColor: '#B5CBEB',
+                            pointBackgroundColor: '#B5CBEB',
+                        },
+                        {
+                            label: 'K-Pop', /* Changed order for staggered animation */
+                            data: [9, 6, 9, 5, 4, 6],
+                            fill: true,
+                            backgroundColor: 'rgba(96, 211, 148, 0.2)', /* Green color */
+                            borderColor: '#60D394',
+                            pointBackgroundColor: '#60D394',
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                            pointLabels: { color: '#FFFFFF', font: { size: 12 } },
+                            ticks: {
+                                color: '#1A1A1A',
+                                backdropColor: 'rgba(255, 255, 255, 0.8)',
+                                stepSize: 2
+                            }
                         }
                     },
                     plugins: {
-                        legend: { display: false }, // Default to false, overridden for specific charts
+                        legend: { labels: { color: '#FFFFFF' } },
                         tooltip: {
-                            backgroundColor: PALETTE.darkBlue, // Deep charcoal tooltip background
-                            titleColor: PALETTE.yellow, // Bright yellow for tooltip title
-                            bodyColor: FONT_COLOR, // Light gray for tooltip body
-                            borderColor: PALETTE.pink, // Soft light blue border for tooltip
-                            borderWidth: 1,
-                            padding: 10,
                             callbacks: {
-                                title: (tooltipItems) => {
-                                    const item = tooltipItems[0];
-                                    const label = item.chart.data.labels[item.dataIndex];
-                                    return Array.isArray(label) ? label.join(' ') : label;
+                                title: (ctx) => ctx[0].label
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart',
+                        delay: (context) => {
+                            // Stagger animation for each dataset in the radar chart
+                            let delay = 0;
+                            // K-Food (index 0) -> 0ms delay
+                            // K-Drama (index 1) -> 100ms delay
+                            // K-Pop (index 2) -> 200ms delay
+                            if (context.datasetIndex === 0) delay = 0; // K-Food (Blue)
+                            else if (context.datasetIndex === 1) delay = 100; // K-Drama (White/Light Blue)
+                            else if (context.datasetIndex === 2) delay = 200; // K-Pop (Green)
+                            return delay;
+                        }
+                    }
+                }
+            });
+            chartsInitialized.hallyuWaveChart = true;
+        }
+
+        function createPhStreamingChart() {
+            // Destroy existing chart instance if it.exists
+            if (charts.phStreamingChart) {
+                charts.phStreamingChart.destroy();
+                charts.phStreamingChart = null;
+            }
+            const ctx = document.getElementById('phStreamingChart').getContext('2d');
+            charts.phStreamingChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: processLabels(['Netflix', 'Other Platforms']),
+                    datasets: [{
+                        data: [34, 66],
+                        backgroundColor: ['#E50914', '#2B78BF'],
+                        borderColor: '#282828',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#FFFFFF' } },
+                        tooltip: {
+                            callbacks: {
+                                title: (ctx) => ctx[0].label
+                            }
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+            chartsInitialized.phStreamingChart = true;
+        }
+        
+        function createMetaverseMarketChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.metaverseMarketChart) {
+                charts.metaverseMarketChart.destroy();
+                charts.metaverseMarketChart = null;
+            }
+            const ctx = document.getElementById('metaverseMarketChart').getContext('2d');
+            charts.metaverseMarketChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: processLabels(['2021', '2030 (Projected)']),
+                    datasets: [{
+                        label: 'Global Market Value (Trillions USD)',
+                        data: [0.04, 1.6],
+                        fill: true,
+                        borderColor: '#60D394',
+                        backgroundColor: 'rgba(96, 211, 148, 0.3)', // Initial fill color
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: globalScales,
+                    plugins: globalPlugins,
+                    animation: {
+                        opacity: { // Animate opacity for the entire dataset
+                            type: 'number',
+                            from: 0,
+                            to: 1,
+                            duration: 1000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                }
+            });
+            chartsInitialized.metaverseMarketChart = true;
+        }
+
+        function createConsumerValuesChart() {
+            // Destroy existing chart instance if it exists
+            if (charts.consumerValuesChart) {
+                charts.consumerValuesChart.destroy();
+                charts.consumerValuesChart = null;
+            }
+            const ctx = document.getElementById('consumerValuesChart').getContext('2d');
+            charts.consumerValuesChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: processLabels(['Experiences', 'Material Goods']),
+                    datasets: [{
+                        data: [73, 27],
+                        backgroundColor: ['#F7E598', '#2B78BF'],
+                        borderColor: '#282828',
+                        borderWidth: 4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            align: 'center',
+                            labels: {
+                                color: '#FFFFFF',
+                                font: {
+                                    size: 11,
+                                    lineHeight: 1.5
                                 },
-                                label: (tooltipItem) => {
-                                   if (['pie', 'doughnut'].includes(tooltipItem.chart.config.type)) {
-                                       return `${tooltipItem.label}: ${tooltipItem.raw}%`;
-                                   }
-                                   return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
-                                }
+                                boxWidth: 20
                             }
-                        }
-                    }
-                };
-
-                const finalOptions = Chart.helpers.merge(defaultOptions, options);
-                
-                // Special handling for pie/doughnut charts (no scales, legend visible)
-                if (type === 'pie' || type === 'doughnut') {
-                    finalOptions.scales = {}; // Remove scales for circular charts
-                    finalOptions.plugins.legend = {
-                        position: 'bottom',
-                        labels: { 
-                            color: FONT_COLOR, 
-                            font: { weight: '600' },
-                            padding: 12 // Add padding between pie and legend
                         },
-                        onClick: (e, legendItem, legend) => { // Custom onClick for doughnut charts
-                            const chart = legend.chart;
-                            const datasetIndex = legendItem.datasetIndex;
-                            const meta = chart.getDatasetMeta(datasetIndex);
-                            meta.hidden = meta.hidden === null ? !chart.data.datasets[datasetIndex].hidden : null;
-                            chart.update();
-                        }
-                    };
-                }
-                
-                // Special handling for Era Activity Chart to enable clickable legend
-                if (canvasId === 'eraActivityChart') {
-                    finalOptions.plugins.legend = {
-                        position: 'top',
-                        labels: { color: FONT_COLOR, font: { weight: '600' } },
-                        onClick: (e, legendItem, legend) => {
-                            const index = legendItem.datasetIndex;
-                            const ci = legend.chart;
-                            if (ci.isDatasetVisible(index)) {
-                                ci.hide(index);
-                                legendItem.hidden = true;
-                            } else {
-                                ci.show(index);
-                                legendItem.hidden = false;
+                        tooltip: {
+                            callbacks: {
+                                title: (ctx) => ctx[0].label
                             }
-                            ci.update();
-                        }
-                    };
-                }
-
-
-                // Store the new chart instance
-                chartInstances[canvasId] = new Chart(document.getElementById(canvasId), { type, data, options: finalOptions });
-            };
-
-            // Helper function to wrap long labels
-            const wrapLabel = (label) => {
-                const maxLength = 16;
-                if (label.length <= maxLength) return label;
-                const words = label.split(' ');
-                const lines = [];
-                let currentLine = '';
-                for (const word of words) {
-                    if ((currentLine + word).length > maxLength) {
-                        lines.push(currentLine.trim());
-                        currentLine = '';
-                    }
-                    currentLine += word + ' ';
-                }
-                lines.push(currentLine.trim());
-                return lines;
-            };
-
-            // Chart Data and Configurations
-            const chartsData = [
-                {
-                    id: 'topArtistsChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['SEVENTEEN', 'Stray Kids', 'aespa', 'IVE', 'NewJeans', 'LE SSERAFIM', 'ZEROBASEONE', 'NCT DREAM', 'TWICE', 'TXT'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Overall Impact Score',
-                            data: [98, 95, 92, 90, 88, 85, 82, 80, 78, 75],
-                            backgroundColor: COLORS,
-                            borderColor: PALETTE.darkBlue, /* Border color for bars */
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    }
-                },
-                {
-                    id: 'topSongsChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['aespa - Supernova', 'ZICO - SPOT! (feat. JENNIE)', 'ILLIT - Magnetic', 'IVE - HEYA', 'LE SSERAFIM - Smart', 'NewJeans - How Sweet', 'ZEROBASEONE - Feel the Pop', 'ROSÉ, Bruno Mars - APT.', 'JISOO - earthquake', 'TWICE - ONE SPARK'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Popularity Score',
-                            data: [99, 97, 94, 91, 89, 86, 84, 82, 80, 78],
-                            backgroundColor: COLORS.slice().reverse(), /* Reversed colors for variety */
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    }
-                },
-                {
-                    id: 'topMVsChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['ROSÉ - APT.', 'aespa - Whiplash', 'JISOO - earthquake', 'JENNIE - Mantra', 'ZEROBASEONE - Feel the Pop', 'Stray Kids - Chk Chk Boom', 'IVE - Accendio', 'LE SSERAFIM - HOT', 'NewJeans - Bubble Gum', 'TWICE - STRATEGY'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Views (in Millions)',
-                            data: [450, 410, 380, 350, 115, 112, 105, 102, 98, 95],
-                            backgroundColor: COLORS,
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    }
-                },
-                {
-                    id: 'genreChart',
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Pop', 'R&B/Soul', 'Hip-Hop', 'Ballad/Acoustic', 'Rock'],
-                        datasets: [{
-                            label: 'Genre Distribution',
-                            data: [40, 25, 20, 10, 5],
-                            backgroundColor: [PALETTE.yellow, PALETTE.blue, PALETTE.pink, PALETTE.green, PALETTE.orange],
-                            borderColor: PALETTE.darkBlue, /* Border color for doughnut segments */
-                            borderWidth: 2,
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true
-                        }
-                    }
-                },
-                {
-                    id: 'conceptChart',
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Y2K Nostalgia', 'Futuristic/AI', 'Girl Crush', 'Bright & Playful', 'Cinematic', 'Band Sound'],
-                        datasets: [{
-                            label: 'Concept Distribution',
-                            data: [30, 20, 15, 15, 10, 10],
-                            backgroundColor: [PALETTE.yellow, PALETTE.blue, PALETTE.pink, PALETTE.green, PALETTE.orange, PALETTE.purple],
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true
-                        }
-                    }
-                },
-                {
-                    id: 'musicShowWinsChart',
-                    type: 'bar',
-                    data: {
-                        // Sorted by most to least wins
-                        labels: ['I-DLE - Super Lady', 'LE SSERAFIM - Easy', 'LE SSERAFIM - Smart', 'IVE - HEYA', 'aespa - Supernova', 'ZEROBASEONE - Feel the Pop', 'NCT DREAM - Smoothie', 'ILLIT - Magnetic', 'TWICE - ONE SPARK', 'TWS - plot twist'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Total Wins',
-                            data: [13, 11, 10, 10, 10, 9, 9, 8, 8, 7],
-                            backgroundColor: COLORS.slice().reverse(),
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    },
-                    options: {
-                        indexAxis: 'y'
-                    }
-                },
-                {
-                    id: 'eraActivityChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['Inaugural', ['You Had Me', 'At Hello'], 'Cinema Paradise', 'Blue Paradise'],
-                        datasets: [{
-                            label: 'Releases',
-                            data: [45, 40, 65, 55],
-                            backgroundColor: PALETTE.green,
-                        }, {
-                            label: 'Debuts',
-                            data: [12, 8, 15, 10],
-                            backgroundColor: PALETTE.yellow,
-                        }, {
-                            label: 'Events',
-                            data: [20, 25, 35, 30],
-                            backgroundColor: PALETTE.pink,
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            x: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } },
-                            y: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } }
                         },
-                        // Legend click handled in createChart function for this specific ID
+                        title: {
+                            display: true,
+                            text: 'Consumer Preference Shift (2024)',
+                            color: '#FFFFFF',
+                            font: { size: 16 }
+                        }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
                     }
                 }
-            ];
+            });
+            chartsInitialized.consumerValuesChart = true;
+        }
 
-            // Intersection Observer setup
+        const chartCreationMap = {
+            'engagementRateChart': createEngagementRateChart,
+            'virtualConcertsChart': createVirtualConcertsChart,
+            'hallyuWaveChart': createHallyuWaveChart,
+            'phStreamingChart': createPhStreamingChart,
+            'metaverseMarketChart': createMetaverseMarketChart,
+            'consumerValuesChart': createConsumerValuesChart
+        };
+
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
             const observerOptions = {
-                root: null, // viewport
+                root: null,
                 rootMargin: '0px',
-                threshold: 0 // Trigger when 0% of the item is visible (i.e., any part of it is in view)
+                threshold: 0.1
             };
 
-            const chartObserver = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
-                    const chartConfig = chartsData.find(c => c.id === entry.target.id);
-                    if (!chartConfig) return;
-
                     if (entry.isIntersecting) {
-                        // Element is in view, create/re-create chart
-                        if (!chartInstances[chartConfig.id]) { // Only create if not already present (prevents redundant creation on minor scrolls)
-                            createChart(chartConfig.id, chartConfig.type, chartConfig.data, chartConfig.options);
-                        } else {
-                            // If chart already exists and was off-screen, trigger update to re-animate
-                            chartInstances[chartConfig.id].update();
+                        // Add 'is-visible' class to trigger CSS animations
+                        entry.target.classList.add('is-visible');
+                        
+                        // Handle chart initialization/re-initialization
+                        if (entry.target.classList.contains('chart-section')) {
+                            const chartId = entry.target.dataset.chartId;
+                            if (chartCreationMap[chartId]) {
+                                chartCreationMap[chartId]();
+                            }
                         }
+
+                        // Handle stat number animation
+                        if (entry.target.querySelector('[data-animate="stat-number"]')) {
+                            const statNumbers = entry.target.querySelectorAll('[data-animate="stat-number"]');
+                            statNumbers.forEach(num => {
+                                num.style.transitionDelay = `0ms`; // No delay for simultaneous
+                                num.classList.add('is-visible');
+                            });
+                        }
+
+                        // Handle flowchart node animation (simultaneous)
+                        if (entry.target.classList.contains('flowchart-section')) {
+                            const flowchartNodes = entry.target.querySelectorAll('.flowchart-node');
+                            flowchartNodes.forEach(node => {
+                                node.style.transitionDelay = `0ms`; // No delay for simultaneous
+                                node.classList.add('is-visible');
+                            });
+                        }
+
+                        // Handle timeline item animation (simultaneous)
+                        if (entry.target.classList.contains('timeline-section')) {
+                            const timelineItems = entry.target.querySelectorAll('.timeline-item');
+                            timelineItems.forEach(item => {
+                                item.style.transitionDelay = `0ms`; // No delay for simultaneous
+                                item.classList.add('is-visible');
+                            });
+                        }
+
                     } else {
-                        // Element is completely out of view, destroy chart to enable re-animation on scroll back
-                        if (chartInstances[chartConfig.id]) {
-                            chartInstances[chartConfig.id].destroy();
-                            delete chartInstances[chartConfig.id];
+                        // Remove 'is-visible' class when element leaves viewport
+                        entry.target.classList.remove('is-visible');
+                        // Reset transition delay and transform for stat numbers when they leave view
+                        if (entry.target.querySelector('[data-animate="stat-number"]')) {
+                            const statNumbers = entry.target.querySelectorAll('[data-animate="stat-number"]');
+                            statNumbers.forEach(num => {
+                                num.style.transitionDelay = `0ms`;
+                                num.classList.remove('is-visible'); // Ensure opacity and transform reset via CSS
+                            });
+                        }
+                        // Reset transition delay and transform for flowchart nodes
+                        if (entry.target.classList.contains('flowchart-section')) {
+                            const flowchartNodes = entry.target.querySelectorAll('.flowchart-node');
+                            flowchartNodes.forEach(node => {
+                                node.style.transitionDelay = `0ms`;
+                                node.classList.remove('is-visible'); // Ensure opacity and transform reset via CSS
+                            });
+                        }
+                         // Reset transition delay and transform for timeline items
+                        if (entry.target.classList.contains('timeline-section')) {
+                            const timelineItems = entry.target.querySelectorAll('.timeline-item');
+                            timelineItems.forEach(item => {
+                                item.style.transitionDelay = `0ms`;
+                                item.classList.remove('is-visible'); // Ensure opacity and transform reset via CSS
+                            });
                         }
                     }
                 });
             }, observerOptions);
 
-            // Observe each chart canvas
-            chartsData.forEach(chart => {
-                const canvas = document.getElementById(chart.id);
-                if (canvas) {
-                    chartObserver.observe(canvas);
-                }
+            // Observe elements for general fade-in animation
+            document.querySelectorAll('h1, h2, p, .bg-spotify-card:not(.chart-section), .flowchart-section, .timeline-section').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Observe chart sections for animation re-triggering
+            document.querySelectorAll('.chart-section').forEach(element => {
+                observer.observe(element);
             });
         });
     </script>
