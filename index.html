@@ -203,29 +203,22 @@
             height: 48px;
             border-radius: 9999px; /* rounded-full */
             overflow: hidden; /* Hide overflow content */
-            transition: all 0.3s ease-in-out; /* Smooth transition for size/shape */
+            transition: width 0.3s ease-in-out, height 0.3s ease-in-out, background-color 0.3s ease-in-out, border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align content to the left */
+            align-items: center; /* Center horizontally in minimized state */
         }
 
         #audio-player-wrapper.expanded {
             /* Expanded state: wider, takes on a rectangular shape with rounded corners */
-            width: 320px; /* Adjust based on desired player width */
-            height: auto; /* Let height adjust to content */
-            border-radius: 12px;
-            background-color: rgba(255, 255, 255, 0.08); /* Apply glass panel base */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            /* Width, height, border-radius, background, shadow, backdrop-filter handled by JS for animation */
         }
 
         /* Styles for the toggle button/bar */
         #audio-player-toggle {
-            background-color: rgba(255, 255, 255, 0.08); /* Default for minimized */
-            backdrop-filter: blur(10px); /* Default for minimized */
-            border: 1px solid rgba(255, 255, 255, 0.15); /* Default for minimized */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Default for minimized */
+            background-color: transparent; /* Default transparent for minimized */
+            border: none; /* No border for minimized */
+            box-shadow: none; /* No shadow for minimized */
             width: 48px;
             height: 48px;
             display: flex;
@@ -234,6 +227,7 @@
             cursor: pointer;
             transition: all 0.3s ease-in-out;
             flex-shrink: 0; /* Prevent it from shrinking in expanded state */
+            border-radius: 9999px; /* Rounded full initially */
         }
 
         #audio-player-wrapper.expanded #audio-player-toggle {
@@ -241,10 +235,10 @@
             width: 100%; /* Take full width of expanded wrapper */
             border-radius: 12px 12px 0 0; /* Only top corners rounded */
             background-color: rgba(255, 255, 255, 0.15); /* Slightly less translucent for header */
-            box-shadow: none; /* Remove shadow from toggle when expanded, rely on content area's shadow */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); /* Add shadow for expanded toggle */
             border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Separator line */
             padding: 0.5rem 1rem; /* Adjust padding for expanded state */
-            justify-content: flex-start; /* Align content to start */
+            justify-content: space-between; /* Align content to start */
             height: auto;
             border-top: none; /* Remove top border if it was present on the wrapper */
             border-left: none;
@@ -290,13 +284,13 @@
 <body class="frutiger-aero-bg text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
 
     <!-- Elfsight Audio Player Container -->
-    <div id="audio-player-wrapper" class="fixed top-4 left-4 z-[2001] transition-all duration-300 ease-in-out">
-        <div id="audio-player-toggle" class="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer shadow-lg">
-            <span id="player-status-icon" class="text-white text-2xl">﹀</span>
-            <span id="player-status-text" class="text-white text-lg font-bold ml-2 hidden"></span>
-            <button id="toggle-chevron" class="text-white text-xl ml-auto mr-2 hidden transform transition-transform duration-300">&#9660;</button>
+    <div id="audio-player-wrapper" class="fixed top-4 left-4 z-[2001]">
+        <div id="audio-player-toggle" class="rounded-full w-12 h-12 flex items-center justify-center cursor-pointer">
+            <span id="player-status-icon" class="text-white text-2xl">🔊</span> <!-- Speaker emoji -->
+            <span id="player-status-text" class="text-white text-lg ml-2 hidden">❮</span>
+            <span id="toggle-chevron" class="text-white text-xl ml-auto mr-2 hidden transform transition-transform duration-300"></span> <!-- Empty chevron for expanded state -->
         </div>
-        <div id="elfsight-player-content" class="mt-2 overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out">
+        <div id="elfsight-player-content" class="mt-2 overflow-hidden max-height-0 opacity-0 transition-all duration-300 ease-in-out">
             <div class="glass-panel p-2"> <!-- Apply glass-panel here for the player's content area -->
                 <div class="elfsight-app-ebf1fad7-6c7f-4556-97fe-4b573d22ca07" data-elfsight-app-lazy></div>
             </div>
@@ -420,7 +414,7 @@
                     notableSongs: [
                         { name: 'BEBE', link: 'https://open.spotify.com/track/5iXD5rOKV99XGtkaiucM?si=5fe87fb666ab4d76' },
                         { name: 'LOOSE', link: 'https://open.spotify.com/track/3YNjvUXgfQznx5IZHAXk6i?si=a9f99ffe553644e1' },
-                        { name: 'SIGN', link: 'https://open.spotify.com/track/6vBVBzf0VeRO4aPwABnohX?si=ecd0d802edf64893' },
+                        { name: 'SIGN', link: 'https://open.spotify.2com/track/6vBVBzf0VeRO4aPwABnohX?si=ecd0d802edf64893' },
                         { name: 'I FEEL GOOD', link: 'https://open.spotify.com/track/1klePVubVctBqhlKJvibil?si=252286bab336413e' },
                         { name: 'BLUE', link: 'https://open.spotify.com/track/5YR199TRrcmxY39l43ovI1?si=a1cfabfd7c2546cd' },
                     ],
@@ -535,6 +529,47 @@
                     ],
                     link: 'https://linktr.ee/allinday429'
                 },
+                topEventParticipantsList: [
+                    { name: 'ONF', count: 3, link: 'https://kprofiles.com/onf-members-profile/' },
+                    { name: 'I-DLE', count: 2, link: 'https://kprofiles.com/idle-members-profile/' },
+                    { name: 'UNIS', count: 2, link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' },
+                    { name: 'TWS', count: 2, link: 'https://kprofiles.com/tws-members-profile/' },
+                    { name: 'NCT WISH', count: 2, link: 'https://kprofiles.com/nct-wish-members-profile/' },
+                    { name: 'XIKERS', count: 2, link: 'https://kprofiles.com/xikers-members-profile/' },
+                    { name: 'ILLIT', count: 2, link: 'https://kprofiles.com/illit-members-profile/' },
+                    { name: 'IVE', count: 2, link: 'https://kprofiles.com/ive-members-profile/' },
+                    { name: 'BOYNEXTDOOR', count: 2, link: 'https://kprofiles.com/boynextdoor-members-profile/' },
+                    { name: 'EVNNE', count: 2, link: 'https://kprofiles.com/evnne-members-profile/' },
+                    { name: 'ENHYPEN', count: 2, link: 'https://kprofiles.com/enhypen-members-profile/' },
+                ],
+                firstTimersInDaliatimeList: [
+                    { name: 'YENA', link: 'https://kprofiles.com/yena-ex-izone-profile' },
+                    { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
+                    { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
+                    { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersone-members-profile' },
+                    { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
+                    { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
+                    { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' },
+                    { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
+                    { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
+                    { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
+                    { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
+                    { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chaeyeon-profile-facts' },
+                    { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
+                    { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' }, // Restored KATSEYE
+                    { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
+                    { name: 'MINNIE (I-DLE)', link: 'https://kprofiles.com/minnie-g-i-dle-profile/' },
+                    { name: 'P1HARMONY', link: 'https://kprofiles.com/p1harmony-members-profile/' },
+                    { name: 'WEI', link: 'https://kprofiles.com/wei-members-profile/' },
+                    { name: 'N.SSIGN', link: 'https://kprofiles.com/nssign-members-profile/' },
+                    { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
+                    { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
+                    { name: 'NOWZ', link: 'https://kprofiles.com/nowadays-members-profile/' },
+                    { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' },
+                    { name: 'RESCENE', link: 'https://kprofiles.com/rescene-members-profile/' },
+                    { name: 'MADEIN', link: 'https://kprofiles.com/madein-members-profile/' },
+                    { name: 'MEOVV', link: 'https://kprofiles.com/meovv-members-profile/' },
+                ]
             },
             mdLive: {
                 description: "<b>My Diaries Live</b>, also known as MD Live and formerly known as MDTV (2019-2024) and BE Live (2020-2024), was relaunched on May 27, 2024. Known for streaming events and activities, it was the first platform to have a <b>multistream</b> format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our events.<br><br>As of 2025.06.10, <b>6 shows</b> have been streamed.",
@@ -703,57 +738,78 @@
         const playerStatusText = document.getElementById('player-status-text');
 
         audioPlayerToggle.addEventListener('click', () => {
-            const isExpanded = !audioPlayerWrapper.classList.contains('expanded'); // Determine target state
+            const isExpanded = !audioPlayerWrapper.classList.contains('expanded');
             audioPlayerWrapper.classList.toggle('expanded', isExpanded);
             elfsightPlayerContent.classList.toggle('visible', isExpanded);
-            toggleChevron.classList.toggle('rotated', isExpanded);
 
             if (isExpanded) {
-                // When expanding, make toggle bar a header with text and chevron
-                audioPlayerToggle.classList.remove('rounded-full', 'glass-panel');
-                audioPlayerToggle.classList.add('rounded-t-2xl');
-                audioPlayerToggle.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'; // Slightly less translucent
-                audioPlayerToggle.style.boxShadow = 'none';
-                audioPlayerToggle.style.borderColor = 'transparent'; // Remove individual borders
-                audioPlayerToggle.style.borderBottom = '1px solid rgba(255, 255, 255, 0.15)'; // Add separator
-                audioPlayerToggle.style.width = '100%'; // Ensure it takes full width of wrapper
-                audioPlayerToggle.style.justifyContent = 'flex-start'; // Align content left
-                audioPlayerToggle.style.height = 'auto'; // Adjust height
-                audioPlayerToggle.style.padding = '0.5rem 1rem'; // Add padding
+                // Expanding state: Expand wrapper horizontally and apply glassmorphism
+                audioPlayerWrapper.style.width = '320px'; // Expanded width
+                audioPlayerWrapper.style.height = 'auto'; // Let height adjust to content
+                audioPlayerWrapper.classList.add('glass-panel'); // Apply glass-panel styles
+                audioPlayerWrapper.style.borderRadius = '12px'; // Ensure rounded corners for expanded wrapper
 
-                playerStatusIcon.style.display = 'none';
-                playerStatusText.style.display = 'block';
-                toggleChevron.style.display = 'block';
+                audioPlayerToggle.classList.remove('rounded-full');
+                audioPlayerToggle.classList.add('rounded-t-2xl'); // Only top corners rounded for header
+                audioPlayerToggle.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'; // Header background
+                audioPlayerToggle.style.boxShadow = '0 8px 32px 0 rgba(0, 0, 0, 0.3)'; // No shadow on toggle itself
+                audioPlayerToggle.style.border = '1px solid rgba(255, 255, 255, 0.15)'; // Add border to toggle
+                audioPlayerToggle.style.justifyContent = 'space-between'; // Align items
+
+                playerStatusIcon.style.display = 'none'; // Hide speaker emoji
+                playerStatusText.style.display = 'block'; // Show "Music" text
+                toggleChevron.style.display = 'block'; // Show chevron
+                toggleChevron.textContent = ''; // Empty string for no chevron icon
 
             } else {
-                // When minimizing, revert toggle bar to small circle with icon
-                audioPlayerToggle.classList.remove('rounded-t-2xl');
-                audioPlayerToggle.classList.add('rounded-full', 'glass-panel'); // Re-add glass-panel for minimized state
-                audioPlayerToggle.style.backgroundColor = ''; // Revert to CSS default (from glass-panel)
-                audioPlayerToggle.style.boxShadow = ''; // Revert to CSS default (from glass-panel)
-                audioPlayerToggle.style.borderColor = ''; // Revert to CSS default (from glass-panel)
-                audioPlayerToggle.style.borderBottom = '';
-                audioPlayerToggle.style.width = '48px';
-                audioPlayerToggle.style.height = '48px';
-                audioPlayerToggle.style.justifyContent = 'center';
-                audioPlayerToggle.style.padding = '';
+                // Minimizing state: Collapse wrapper horizontally and remove glassmorphism
+                audioPlayerWrapper.style.width = '48px'; // Revert to initial width
+                audioPlayerWrapper.style.height = '48px'; // Revert to initial height
+                audioPlayerWrapper.classList.remove('glass-panel'); // Remove glass-panel styles
+                audioPlayerWrapper.style.borderRadius = '9999px'; // Revert to circular
+                audioPlayerWrapper.style.backgroundColor = 'transparent'; // Make transparent
+                audioPlayerWrapper.style.backdropFilter = 'none'; // No backdrop filter
+                audioPlayerWrapper.style.border = 'none'; // Remove border
+                audioPlayerWrapper.style.boxShadow = 'none'; // No shadow
 
-                playerStatusIcon.style.display = 'block';
-                playerStatusText.style.display = 'none';
-                toggleChevron.style.display = 'none';
+                audioPlayerToggle.classList.remove('rounded-t-2xl');
+                audioPlayerToggle.classList.add('rounded-full'); // Revert to circular
+                audioPlayerToggle.style.backgroundColor = 'transparent'; // Make transparent
+                audioPlayerToggle.style.boxShadow = 'none'; // No shadow
+                audioPlayerToggle.style.border = 'none'; // Remove border from toggle
+                audioPlayerToggle.style.justifyContent = 'center'; // Center the speaker emoji
+
+                playerStatusIcon.style.display = 'block'; // Show speaker emoji
+                playerStatusText.style.display = 'none'; // Hide "Music" text
+                toggleChevron.style.display = 'none'; // Hide chevron
+                toggleChevron.textContent = ''; // Clear chevron text
             }
         });
 
+        // Initial DOMContentLoaded listener
         document.addEventListener('DOMContentLoaded', () => {
-            // Set initial state for audio player: minimized
-            audioPlayerWrapper.classList.remove('expanded'); // Ensure it starts minimized
-            elfsightPlayerContent.classList.remove('visible'); // Ensure content is hidden
-            playerStatusIcon.style.display = 'block'; // Ensure icon is visible
-            playerStatusText.style.display = 'none'; // Ensure text is hidden
-            toggleChevron.style.display = 'none'; // Ensure chevron is hidden
+            audioPlayerWrapper.classList.remove('expanded');
+            elfsightPlayerContent.classList.remove('visible');
 
-            // Apply glass-panel properties to the initial toggle bar
-            audioPlayerToggle.classList.add('glass-panel');
+            // Set initial state for minimized player
+            audioPlayerWrapper.style.width = '48px';
+            audioPlayerWrapper.style.height = '48px';
+            audioPlayerWrapper.style.borderRadius = '9999px';
+            audioPlayerWrapper.style.backgroundColor = 'transparent';
+            audioPlayerWrapper.style.backdropFilter = 'none';
+            audioPlayerWrapper.style.border = 'none';
+            audioPlayerWrapper.style.boxShadow = 'none';
+            audioPlayerWrapper.classList.remove('glass-panel'); // Ensure it's not applied initially
+
+            audioPlayerToggle.style.backgroundColor = 'transparent';
+            audioPlayerToggle.style.boxShadow = 'none';
+            audioPlayerToggle.style.border = 'none'; // Ensure no border initially
+            audioPlayerToggle.style.justifyContent = 'center';
+
+            playerStatusIcon.style.display = 'block'; // Show speaker emoji
+            playerStatusText.style.display = 'none'; // Hide "Music" text
+            toggleChevron.style.display = 'none'; // Hide chevron
+            toggleChevron.textContent = ''; // Clear chevron text initially
 
             render();
         });
@@ -1001,69 +1057,14 @@
                 }
             };
             
-            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
-            
-            const getTopParticipants = () => {
-                const allNames = allArtistsInDaliatime.map(a => a.name);
-                const counts = allNames.reduce((acc, curr) => {
-                    acc[curr] = (acc[curr] || 0) + 1;
-                    return acc;
-                }, {});
-                const sorted = Object.entries(counts).sort(([, countA], [, countB]) => countB - countA);
-                return sorted.filter(([, count]) => count > 1);
-            };
-            const topParticipants = getTopParticipants();
-            
-            const firstTimersData = [
-                { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
-                { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
-                { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
-                { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
-                { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
-                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
-                { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' },
-                { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
-                { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
-                { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
-                { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
-                { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
-                { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
-                { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
-                { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
-                { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
-                { name: 'LIGHTSUM', link: 'https://kprofiles.com/lightsum-members-profile/' },
-                { name: 'YOUNG POSSE', link: 'https://kprofiles.com/young-posse-members-profile/' },
-                { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
-                { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
-            ];
-
-            const eventCards = Object.entries(data).map(([key, event]) => `
-                <a href="${event.link}" target="_blank" class="glass-panel p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
-                    <h3 class="text-xl font-bold text-gray-200 mb-2">${getEventName(key)}</h3>
-                    <p class="text-sm text-cyan-300">${event.date}</p><br>
-                    <div class="text-center">
-                        <span class="text-3xl font-extrabold text-green-custom">${event.totalArtists}</span>
-                        <p class="text-sm text-gray-300">Total Artists</p>
-                    </div>
-                    <div class="text-center mt-2">
-                        <span class="text-3xl font-extrabold text-green-custom">${event.firstTimers}</span>
-                        <p class="text-sm text-gray-300">Event First-Timers</p>
-                    </div>
-                </a>
+            const topParticipantsHtml = data.topEventParticipantsList.map(artist => `
+                <li class="flex items-center space-x-2">
+                    <a href="${artist.link}" target="_blank" class="font-semibold text-lg text-white hover:text-[#ffffb0] transition-colors duration-200">${artist.name}</a>
+                    <span class="text-sm text-gray-300">(${artist.count} events)</span>
+                </li>
             `).join('');
-
-            const topParticipantsHtml = topParticipants.map(([artistName, count]) => {
-                const artistData = firstTimersData.find(a => a.name === artistName); // Use firstTimersData to find link
-                const artistLink = artistData && artistData.link ? artistData.link : '#';
-                return `
-                    <li class="flex items-center space-x-2">
-                        <a href="${artistLink}" target="_blank" class="font-semibold text-lg text-white hover:text-[#ffffb0] transition-colors duration-200">${artistName}</a>
-                        <span class="text-sm text-gray-300">(${count} events)</span>
-                    </li>
-                `;
-            }).join('');
             
-            const firstTimersHtml = firstTimersData.map(artist => `
+            const firstTimersHtml = data.firstTimersInDaliatimeList.map(artist => `
                 <a href="${artist.link}" target="_blank" class="bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-all duration-200 transform hover:scale-110">
                     ${artist.name}
                 </a>
@@ -1075,7 +1076,20 @@
                         Events
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        ${eventCards}
+                        ${Object.entries(data).filter(([key]) => key.startsWith('#')).map(([key, event]) => `
+                            <a href="${event.link}" target="_blank" class="glass-panel p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
+                                <h3 class="text-xl font-bold text-gray-200 mb-2">${getEventName(key)}</h3>
+                                <p class="text-sm text-cyan-300">${event.date}</p><br>
+                                <div class="text-center">
+                                    <span class="text-3xl font-extrabold text-green-custom">${event.totalArtists}</span>
+                                    <p class="text-sm text-gray-300">Total Artists</p>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span class="text-3xl font-extrabold text-green-custom">${event.firstTimers}</span>
+                                    <p class="text-sm text-gray-300">Event First-Timers</p>
+                                </div>
+                            </a>
+                        `).join('')}
                     </div>
                     <!-- Two-panel layout for participants and first-timers -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
