@@ -1,106 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-F-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞𝙢𝙚𝙒𝙧𝙖𝙥𝙥𝙚𝙙 : kpop</title>
+    <title>#𝘿𝙖𝙡𝙞𝙖𝙩𝙞𝙢𝙚𝙒𝙧𝙖𝙥𝙥𝙚𝙙 : 2023-2025</title>
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/png">
+    <!-- Tailwind CSS CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon.png"> <!-- Favicon added -->
     <style>
-        /* Custom CSS for Frutiger Aero / City Pop dark mode aesthetics */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        /* Google Font for Headings: Comfortaa */
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+        /* Heading Font: Exo 2 (kept as an option, but not applied) */
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+
+
         body {
             font-family: 'Inter', sans-serif;
-            /* Fixed Frutiger Aero inspired gradient background */
-            background: linear-gradient(135deg, #1A202C 0%, #3474B2 100%),
-                        radial-gradient(circle at top left, #9DC3E7 0%, transparent 50%),
-                        radial-gradient(circle at bottom right, #70E093 0%, transparent 50%);
-            background-blend-mode: overlay, screen, normal; /* Blends gradients nicely */
-            background-attachment: fixed; /* Makes the background fixed */
-            color: #E2E8F0; /* Light gray for main text */
-            min-height: 100vh; /* Ensure body takes full height for gradient */
-            display: flex;
-            flex-direction: column;
-            padding-bottom: 80px; /* Adjusted padding for fixed-nav-bottom */
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            height: 400px;
-            max-height: 50vh;
+        /* Apply Comfortaa font to headings */
+        h1, h2, h3 { /* Added h3 for consistency, as some titles use h3 */
+            font-family: 'Comfortaa', cursive; /* Fallback to cursive if Comfortaa isn't loaded */
         }
-        @media (max-width: 768px) {
-            .chart-container {
-                height: 350px;
-                max-height: 60vh;
-            }
+
+        /* Keyframes for button animation */
+        @keyframes pulse-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .stat-card {
-            /* Enhanced Glassmorphism effect */
-            background-color: rgba(255, 255, 255, 0.08); /* More transparent background */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Slightly more prominent border */
-            backdrop-filter: blur(20px); /* Increased blur for stronger glass effect */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Added subtle shadow */
+        .animate-pulse-gradient {
+            background-size: 200% 200%;
+            animation: pulse-gradient 4s ease infinite;
         }
-        /* Gradient card backgrounds using the new palette for a vibrant look */
-        .gradient-card-blue {
-            background-image: linear-gradient(135deg, #3474B2, #9DC3E7); /* Rich Blue to Soft Light Blue */
+        /* Custom Frutiger Aero-inspired background - STATIC LINEAR */
+        .frutiger-aero-bg {
+            background: linear-gradient(135deg, #001a33, #3cb371 25%, #2b74b6 45%, #001a33);
+            background-size: cover; /* Ensure it covers the entire background */
+            background-attachment: fixed; /* Keep background fixed during scroll */
         }
-        .gradient-card-yellow {
-            background-image: linear-gradient(135deg, #FBF8B2, #70E093); /* Bright Yellow to Vibrant Green */
+        /* Glassmorphism panel styling */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.08); /* Light translucent white */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 12px; /* Rounded corners for glass effect */
         }
-        .gradient-card-green {
-            background-image: linear-gradient(135deg, #70E093, #3474B2); /* Vibrant Green to Rich Blue */
+        /* Animated text gradient for headers */
+        @keyframes text-gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .genre-icon {
-            width: 4rem;
-            height: 4rem;
-            background-color: #9DC3E7; /* Soft Light Blue from new palette */
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
+        .animated-text-gradient {
+            /* Updated gradient to include a lighter blue */
+            background: linear-gradient(90deg, #ffffb0, #a0bce8 30%, #67e8f9 70%, #6ef0a1);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-gradient-animation 5s linear infinite;
         }
-        /* Image styling for MV covers (16:9) */
-        .video-cover {
-            max-width: 160px; /* Adjust max width as needed */
-            width: 100%; /* Make it responsive within its container */
-            height: auto; /* Maintain aspect ratio */
-            aspect-ratio: 16 / 9; /* Set aspect ratio to 16:9 */
-            object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
-            border-radius: 8px; /* Slightly rounded corners for the image */
-            margin-bottom: 0.5rem; /* Space between image and text */
+        /* Specific cyan-blue for numbers and dates */
+        .text-cyan-300 {
+            color: #67e8f9; /* Tailwind's cyan-300 */
         }
-        /* Image styling for album covers (1:1) */
-        .album-cover {
-            max-width: 100px; /* Adjust max width as needed */
-            width: 100%; /* Make it responsive within its container */
-            height: auto; /* Maintain aspect ratio */
-            aspect-ratio: 1 / 1; /* Set aspect ratio to 1:1 (square) */
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
+        /* Specific green for numbers */
+        .text-green-custom {
+            color: #6ef0a1; /* Bright green from palette */
         }
-        /* Styling for the profile image in the Sung Hanbin section */
-        .profile-img {
-            width: 150px; /* Increased size */
-            height: 150px; /* Increased size */
-            object-fit: cover;
-            border-radius: 8px; /* Square with rounded corners */
-            margin-right: 1.5rem; /* More space from text */
-            flex-shrink: 0; /* Prevent shrinking on smaller screens */
+        /* Specific yellow for headings */
+        .text-yellow-custom {
+            color: #ffffb0; /* Yellow from palette */
         }
+
         /* Fixed navigation bar at the bottom */
         .fixed-nav-bottom {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background */
+            background-color: rgba(0, 0, 0, 0.2); /* More transparent dark background */
             backdrop-filter: blur(5px);
             padding: 1rem 0; /* Vertical padding */
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
@@ -109,803 +90,1233 @@
             justify-content: center;
             gap: 1rem; /* Space between buttons */
         }
-        .fixed-nav-button {
-            background-image: linear-gradient(45deg, #FBF8B2, #70E093); /* Yellow to Green gradient */
-            color: #121820; /* Dark text for contrast */
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px; /* Fully rounded */
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            /* Removed transition for hover effect to comply with "charts only" animation request */
-            cursor: pointer; /* Indicate it's clickable */
+
+        /* Keyframes for fade-in-up animation */
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .fixed-nav-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+        /* Keyframes for wipe-right animation (kept for potential future use or if user changes mind) */
+        @keyframes wipe-right {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%); /* Start off-screen to the left */
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0); /* End at its natural position */
+            }
+        }
+        /* Era card content animation */
+        .era-card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 0;
+        }
+        .era-card-content.expanded {
+            max-height: 1000px; /* Sufficiently large value to cover content */
+            opacity: 1;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+            height: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-content iframe {
+            flex-grow: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 2001;
+            transition: background-color 0.2s;
+        }
+        .modal-close-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Loading spinner styles */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -20px; /* Half of height */
+            margin-left: -20px; /* Half of width */
+            z-index: 2002;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="bg-[#121820] text-[#E2E8F0]">
+<body class="frutiger-aero-bg text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
 
-    <div class="container mx-auto p-4 md:p-8 flex-grow">
-
-        <header class="text-center my-12">
-            <h1 class="text-5xl md:text-7xl font-black text-[#FBF8B2] tracking-tighter">K-POP DALIATIME REWIND</h1> <!-- Main title header -->
-            <p class="text-xl md:text-2xl font-semibold text-[#A0AEC0] mt-2">Chapter 1: The Foundation (2023.12.12 - 2025.06.10)</p>
-            <p class="text-md text-[#A0AEC0] mt-4">A look back at the artists, trends, and defining moments that shaped a pivotal era in K-Pop, and a glimpse into Chapter 2.</p>
-        </header>
-
-        <main>
-            <section id="titans" class="my-16">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">The Titans of Daliatime</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">From industry veterans to explosive rookies, the Daliatime period was defined by artists who consistently dominated charts, shattered records, and captured global attention. Here's a look at the top performers who shaped the sound and spectacle of the era.</p>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top Performing Artists</h3>
-                        <div class="chart-container">
-                            <canvas id="topArtistsChart"></canvas>
-                        </div>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top Songs (Daliatime Releases)</h3>
-                           <div class="chart-container">
-                                <canvas id="topSongsChart"></canvas>
-                            </div>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl lg:col-span-2">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Most Viewed MVs (Daliatime Releases)</h3>
-                        <div class="chart-container">
-                            <canvas id="topMVsChart"></canvas>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="zerobaseone" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Spotlight: ZEROBASEONE</h2>
-                   <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]"><strong>ZEROBASEONE</strong> solidified their status as a powerhouse of the 5th generation. Their journey through Daliatime was marked by million-selling albums, chart-topping singles, and an ever-expanding global reach, with leader <strong>Sung Hanbin</strong> playing a pivotal role in their public presence.</p>
-                <div class="bg-[#3474B2] rounded-xl p-8 shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                    <div class="md:col-span-1">
-                        <h3 class="text-3xl font-bold text-[#FBF8B2]">Key Highlights</h3>
-                        <p class="text-sm mt-4 text-[#CBD5E0]">The group's releases during this period were met with immense commercial and critical success. Their third EP, 'You Had Me at HELLO', was a major highlight, leading to their first tour. Their Japanese debut, 'Yura Yura (Unmei no Hana)', was also a massive success.</p>
-                        <p class="text-sm mt-4 text-[#CBD5E0]">The group also demonstrated their positive influence by donating ₩100 million to a children's hospital, showcasing their dedication to philanthropy.</p>
-                    </div>
-                    <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <article class="stat-card rounded-lg p-4 text-center flex flex-col items-center justify-center">
-                            <!-- MV Cover Image with 16:9 aspect ratio -->
-                            <img src="https://i.ytimg.com/vi/L9Ts6kiEAts/mqdefault.jpg" alt="ZEROBASEONE - Feel the Pop MV Cover" class="video-cover">
-                            <h4 class="text-lg font-semibold text-[#FBF8B2] mt-2">Most Viewed MV</h4>
-                            <p class="text-4xl font-extrabold">Feel the Pop</p>
-                            <p class="text-[#A0AEC0]">~115M Views</p>
-                        </article>
-                        <article class="stat-card rounded-lg p-4 text-center flex flex-col items-center justify-center">
-                            <!-- Album Cover Image with 1:1 aspect ratio -->
-                            <img src="https://upload.wikimedia.org/wikipedia/en/2/21/Zerobaseone_-_You_Had_Me_at_Hello.png" alt="You Had Me at HELLO Album Cover" class="album-cover">
-                            <h4 class="text-lg font-semibold text-[#FBF8B2] mt-2">Top Selling Album (Daliatime)</h4>
-                            <p class="text-4xl font-extrabold">You Had Me at HELLO</p>
-                            <p class="text-[#A0AEC0]">~1.38M Sales</p>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-            
-            <section id="hanbin" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Spotlight on a Leader: Sung Hanbin</h2>
-                <div class="flex flex-col md:flex-row items-center md:items-start max-w-3xl mx-auto mb-12">
-                    <img src="https://i.ibb.co/p5P7QW8/Uad5k4-i-400x400.jpg" alt="Sung Hanbin Profile" class="profile-img mb-4 md:mb-0">
-                    <p class="text-center md:text-left text-[#CBD5E0]">As both the leader of ZEROBASEONE and ALLIN and a prominent public figure, <strong>Sung Hanbin</strong>'s activities throughout Daliatime cemented his status as Dalia, leader of the current era. His diverse roles helped him connect with a broader audience and showcased his multifaceted talents beyond his group's releases.</p>
-                </div>
-                <article class="stat-card rounded-xl p-6 shadow-2xl">
-                    <div class="overflow-x-auto"> <!-- Added for horizontal scrolling -->
-                        <table class="w-full text-left table-auto min-w-full"> <!-- min-w-full to ensure table takes full width -->
-                            <thead class="text-[#9DC3E7] border-b-2 border-gray-600">
-                                <tr>
-                                    <th class="p-4">Activity</th>
-                                    <th class="p-4">Description</th>
-                                    <th class="p-4">Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-b border-gray-700">
-                                    <td class="p-3 flex items-center space-x-2">
-                                        <span class="text-2xl">🎤</span> <p>M Countdown MC</p>
-                                    </td>
-                                    <td class="p-3">Became a beloved triple MC for the popular music show, increasing his public profile.</td>
-                                    <td class="p-3">2024.01 - present</td>
-                                </tr>
-                                <tr class="border-b border-gray-700">
-                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">📸</span> <p>Magazine Features</p></td>
-                                    <td class="p-3">Starred in numerous solo magazine covers and editorials, showcasing his visual appeal and fashion influence.</td>
-                                    <td class="p-3">Throughout the era</td>
-                                </tr>
-                                <tr class="border-b border-gray-700">
-                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">🕺🏻</span> <p>Studio Choom "Artist of the Month"</p></td>
-                                    <td class="p-3">For July 2024 with self-written original song, "Bad Boy". He also worked with top-tier choreographers in the Korean dance industry.</td>
-                                    <td class="p-3">2024.07</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
-                                    <td class="p-3">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
-                                    <td class="p-3">2023.07</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </article>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="industry" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Industry Dynamics & Key Shifts</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Daliatime Chapter 1 was not just about music; it was a period of significant change. Album sales experienced a noticeable dip, while the industry's landscape became more polarized, with major agencies solidifying their dominance. Amid these shifts, nostalgic trends like group reunions and the rise of new genres took hold.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl flex flex-col items-center justify-center">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Genre Snapshot</h3>
-                        <div class="chart-container !h-64 !max-h-[300px]">
-                            <canvas id="genreChart"></canvas>
-                        </div>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Pop:</strong> The foundational genre, evolving with modern twists. Subgenres like UK Garage (UKG) and Miami Bass became popular, with artists experimenting with new sounds. <br> <strong>Example:</strong> `Like Magic` (<strong>M.O.N.T</strong>), `Bubble Gum` (<strong>NewJeans</strong>), `Magnetic` (<strong>ILLIT</strong>).</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>R&B/Soul:</strong> A constant presence, often fused with modern beats and smooth vocals. <br> <strong>Example:</strong> `Only Cry in the Rain` (<strong>Chuu</strong>), `Elevator` (<strong>BAEKHYUN</strong>), `Soñar (Breaker)` (<strong>NMIXX</strong>).</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Hip-Hop:</strong> Both traditional and experimental forms saw success, with artists showcasing their rapping and production skills. <br> <strong>Example:</strong> `Chk Chk Boom` (<strong>Stray Kids</strong>), `Spot!` (<strong>ZICO</strong> ft. <strong>JENNIE</strong>), `Hate to Love` (<strong>Jackson Wang</strong>).</p>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl flex flex-col items-center justify-center">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Concept Snapshot</h3>
-                        <div class="chart-container !h-64 !max-h-[300px]">
-                            <canvas id="conceptChart"></canvas>
-                        </div>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Y2K Nostalgia:</strong> This concept, pioneered by groups like <strong>NewJeans</strong>, dominated the era. It blends late '90s and early 2000s aesthetics, sounds, and fashion, creating a sense of comforting retro familiarity. <br> <strong>Example:</strong> <strong>NewJeans</strong>' entire visual and sonic identity.</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Futuristic/AI:</strong> A concept that explores technology and a hyper-real universe, often accompanied by complex lore and visual effects. <br> <strong>Example:</strong> <strong>aespa</strong>'s `Supernova` and <strong>PLAVE</strong>'s digital identity.</p>
-                        <p class="text-[#CBD5E0] text-sm mt-4 text-center"><strong>Girl Crush:</strong> A confident, powerful, and often edgy concept that focuses on female empowerment and self-love. <br> <strong>Example:</strong> <strong>I-DLE</strong>'s `Super Lady`, <strong>LE SSERAFIM</strong>'s `Easy`, `DASH` (<strong>NMIXX</strong>).</p>
-                    </article>
-                </div>
-                <article class="stat-card rounded-xl p-6 shadow-2xl mt-12">
-                    <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Significant Industry Events</h3>
-                    <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                        <li><strong>Global Festival Participation:</strong> Major K-Pop acts, including <strong>ATEEZ</strong>, <strong>Stray Kids</strong>, and <strong>LE SSERAFIM</strong>, made waves with headlining performances at Coachella, solidifying K-Pop's mainstream presence.</li>
-                        <li><strong>NewJeans Legal Disputes:</strong> An ongoing legal battle involving the group's management label, ADOR, and parent company HYBE dominated headlines, highlighting tensions within the industry.</li>
-                        <li><strong>Group Disbandments:</strong> The dissolution of veteran groups like <strong>Cherry Bullet</strong> and <strong>Weki Meki</strong> marked the end of an era for many fans, shifting the landscape.</li>
-                        <li><strong>Virtual Artist Agency:</strong> The formation of dedicated agencies and labels for virtual idols, such as VLAST for <strong>PLAVE</strong>, signaled a growing investment in the genre.</li>
-                    </ul>
-                </article>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="year-eras" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">A Year-by-Year Breakdown</h2>
-                   <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Daliatime Chapter 1 can be broken down into two distinct periods, each with its own defining metrics and narrative. The first was a year of new beginnings, while the second was a shorter but powerful voyage of comebacks and new talent.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Year 1: <span class="text-[#70E093]">New Start</span></h3>
-                        <p class="text-sm text-[#CBD5E0] text-center mb-4">(2023.12.12 - 2024.12.31)</p>
-                        <div class="flex justify-around items-center my-6">
-                            <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">38</p>
-                                <p class="text-lg text-[#CBD5E0]">Group Debuts</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">~150</p>
-                                <p class="text-lg text-[#CBD5E0]">Total Releases</p>
-                            </div>
-                        </div>
-                        <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                                <li><strong>Notable Debuts:</strong> <strong>TWS</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong>, <strong>MEOVV</strong></li>
-                                <li><strong>Notable Songs:</strong> `Super Lady` (<strong>I-DLE</strong>), `Easy` (<strong>LE SSERAFIM</strong>), `Magnetic` (<strong>ILLIT</strong>)</li>
-                        </ul>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Year 2: <span class="text-[#70E093]">Voyage</span></h3>
-                        <p class="text-sm text-[#CBD5E0] text-center mb-4">(2025.01.01 - 2025.06.10)</p>
-                        <div class="flex justify-around items-center my-6">
-                               <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">7</p>
-                                <p class="text-lg text-[#CBD5E0]">Group Debuts</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-4xl font-extrabold text-[#FBF8B2]">~50</p>
-                                <p class="text-lg text-[#CBD5E0]">Total Releases</p>
-                            </div>
-                        </div>
-                        <ul class="list-disc list-inside mt-4 space-y-2 text-[#CBD5E0]">
-                                <li><strong>Notable Debuts:</strong> <strong>Hearts2Hearts</strong>, <strong>KiiiKiii</strong>, <strong>Close Your Eyes</strong></li>
-                                <li><strong>Notable Songs:</strong> `Blue` (<strong>ZEROBASEONE</strong>), `Rebel Heart` (<strong>IVE</strong>), `I Feel Good` (<strong>BoyNextDoor</strong>)</li>
-                        </ul>
-                    </article>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="new-guard" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">The New Guard: Debuts & Rookies</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Chapter 1 was a period of fresh faces and new beginnings. <strong>45</strong> new groups debuted, with <strong>39 (87%)</strong> remaining active as of 2025.06.10. This shows a high rate of successful integration for new talent. Several prominent rookies emerged from this period, showcasing the talent pipeline from survival programs and major agencies.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Debut & Activity Stats</h3>
-                        <div class="flex justify-around items-center my-6">
-                            <div class="text-center">
-                                <p class="text-5xl font-extrabold text-[#70E093]">45</p>
-                                <p class="text-lg text-[#CBD5E0]">Group Debuts<br>in Daliatime</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-5xl font-extrabold text-[#70E093]">39</p>
-                                <p class="text-lg text-[#CBD5E0]">Active as of<br>2025.06.10</p>
-                            </div>
-                        </div>
-                        <ul class="list-disc list-inside mt-6 space-y-2 text-[#CBD5E0]">
-                            <li><strong>Notable Rookies:</strong> <strong>ILLIT</strong>, <strong>TWS</strong>, <strong>UNIS</strong>, <strong>BADVILLAIN</strong></li>
-                            <li><strong>Survival Groups:</strong> Several successful groups were formed through prominent survival programs during this time, including <strong>izna</strong> (from I-LAND 2) and <strong>Close Your Eyes</strong> (from Project 7).</li>
-                        </ul>
-                    </article>
-                    <article class="stat-card rounded-xl p-6 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Prominent Survival Programs</h3>
-                        <div class="space-y-4 text-[#CBD5E0]">
-                            <div class="bg-gray-800 rounded-lg p-4 text-[#CBD5E0]">
-                                <p class="font-bold text-xl text-[#FBF8B2]">I-LAND 2</p>
-                                <p class="text-sm">Formed girl group <strong>izna</strong>, who debuted in November 2024.</p>
-                            </div>
-                            <div class="bg-gray-800 rounded-lg p-4 text-[#CBD5E0]">
-                                <p class="font-bold text-xl text-[#FBF8B2]">Project 7</p>
-                                <p class="text-sm">Formed boy group <strong>Close Your Eyes</strong>, who debuted on April 2, 2025.</p>
-                            </div>
-                            <div class="bg-gray-800 rounded-lg p-4 text-[#CBD5E0]">
-                                <p class="font-bold text-xl text-[#FBF8B2]">Universe League</p>
-                                <p class="text-sm">Formed the group <strong>AHOF</strong>, whose official debut is set for July 2025. (in Daliatime Chapter 2)</p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="music-shows" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Music Show Champions</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">Music show wins remain a key benchmark for a comeback's success. During Daliatime, these songs consistently claimed trophies, demonstrating immense popularity and dedicated fan support across various broadcast platforms.</p>
-                <article class="stat-card rounded-xl p-6 shadow-2xl">
-                    <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Top 10 Songs by Music Show Wins</h3>
-                    <div class="chart-container">
-                        <canvas id="musicShowWinsChart"></canvas>
-                    </div>
-                </article>
-            </section>
-
-            <hr class="my-12 border-gray-700">
-
-            <section id="timeline" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">Daliatime Milestones: Firsts & Lasts</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">The 18-month Daliatime period was framed by significant beginnings and endings. Here are the key moments that marked the start and conclusion of this vibrant chapter in K-Pop history.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <!-- First Album / Last Album -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Album Release</p>
-                        <p class="text-xl font-bold">NewJeans - NJWMX</p>
-                        <p class="text-sm text-gray-400">2023.12.19</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Album Release</p>
-                        <p class="text-xl font-bold">ITZY - Girls Will Be Girls</p>
-                        <p class="text-sm text-gray-400">2025.06.09</p>
-                    </article>
-
-                    <!-- First MV / Last MV -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall MV Release</p>
-                        <p class="text-xl font-bold">Taemin - The Rizzness</p>
-                        <p class="text-sm text-gray-400">2023.12.15</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall MV Release</p>
-                        <p class="text-xl font-bold">ITZY - Girls Will Be Girls</p>
-                        <p class="text-sm text-gray-400">2025.06.09</p>
-                    </article>
-
-                    <!-- First Overall Debut (Group) / Last Overall Debut (Group) -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Debut (Group)</p>
-                        <p class="text-xl font-bold">tripleS NXT</p>
-                        <p class="text-sm text-gray-400">2023.12.23</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Debut (Group)</p>
-                        <p class="text-xl font-bold">USPEER</p>
-                        <p class="text-sm text-gray-400">2025.06.04</p>
-                    </article>
-
-                    <!-- First Overall Debut (Solo) / Last Overall Debut (Solo) -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Debut (Solo)</p>
-                        <p class="text-xl font-bold">Lee Sung Kyoung</p>
-                        <p class="text-sm text-gray-400">2024.01.13</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Debut (Solo)</p>
-                        <p class="text-xl font-bold">Mark (of NCT)</p>
-                        <p class="text-sm text-gray-400">2025.04.07</p>
-                    </article>
-
-                    <!-- First Girl Group Debut / Last Girl Group Debut -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Girl Group Debut</p>
-                        <p class="text-xl font-bold">Geenius</p>
-                        <p class="text-sm text-gray-400">2024.01.05</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Girl Group Debut</p>
-                        <p class="text-xl font-bold">USPEER</p>
-                        <p class="text-sm text-gray-400">2025.06.04</p>
-                    </article>
-
-                    <!-- First Boy Group Debut / Last Boy Group Debut -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Boy Group Debut</p>
-                        <p class="text-xl font-bold">Waker</p>
-                        <p class="text-sm text-gray-400">2024.01.08</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Boy Group Debut</p>
-                        <p class="text-xl font-bold">Close Your Eyes</p>
-                        <p class="text-sm text-gray-400">2025.04.02</p>
-                    </article>
-
-                    <!-- First Major Event / Last Major Event -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Major Event</p>
-                        <p class="text-xl font-bold">2023 Asia Artist Awards</p>
-                        <p class="text-sm text-gray-400">2023.12.14</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Major Event</p>
-                        <p class="text-xl font-bold">KCON Japan 2025</p>
-                        <p class="text-sm text-gray-400">2025.05.10-12</p>
-                    </article>
-
-                    <!-- First Song Release / Last Song Release -->
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">First Overall Song Release</p>
-                        <p class="text-xl font-bold">ITZY - Born to Be</p>
-                        <p class="text-sm text-gray-400">2023.12.17</p>
-                    </article>
-                    <article class="stat-card rounded-lg p-4">
-                        <p class="text-sm text-[#A0AEC0]">Last Overall Song Release</p>
-                        <p class="text-xl font-bold">ITZY - Girls Will Be Girls</p>
-                        <p class="text-sm text-gray-400">2025.06.09</p>
-                    </article>
-                </div>
-
-                <!-- ITZY Comment -->
-                <div class="flex justify-center mt-8">
-                    <article class="stat-card rounded-lg p-4 text-center max-w-md">
-                        <p class="text-lg font-bold text-[#70E093]">Yes MIDZYs, ITZY really bookended Daliatime Chapter 1 😭</p>
-                    </article>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="eras" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#70E093]">A Journey Through Eras</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">The Daliatime period was segmented into distinct eras, each with its own unique flavor and flurry of activity. The "Cinema Paradise" era emerged as the most prolific, boasting the highest concentration of comebacks and major events, signaling a peak in industry output. The era titles are now named after ZEROBASEONE’s title tracks that served as key anchor points for the fandom.</p>
-                <article class="stat-card rounded-xl p-6 shadow-2xl mb-12">
-                    <h3 class="text-2xl font-bold mb-4 text-center text-[#9DC3E7]">Activity by Comeback Era</h3>
-                    <div class="chart-container">
-                        <canvas id="eraActivityChart"></canvas>
-                    </div>
-                </article>
-                <div class="space-y-8">
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Inaugural</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2023.12.12 - 2024.05.12)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'With You-th' (<strong>TWICE</strong>), 'DREAM()SCAPE' (<strong>NCT DREAM</strong>), 'minisode 3: TOMORROW' (<strong>TXT</strong>), 'Ive Switch' (<strong>IVE</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Born to Be' (<strong>ITZY</strong>), 'Super Lady' (<strong>I-DLE</strong>), 'Easy' (<strong>LE SSERAFIM</strong>), 'Magnetic' (<strong>ILLIT</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Waker</strong>, <strong>All(H)Ours</strong>, <strong>DXMON</strong>, <strong>Rescene</strong>, <strong>TWS</strong>, <strong>Geenius</strong >, <strong>ILLIT</strong>, <strong>UNIS</strong></p>
-                    </article>
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">You Had Me At Hello</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2024.05.13 - 2024.08.25)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'You Had Me at HELLO' (<strong>ZEROBASEONE</strong>), 'Armageddon' (<strong>aespa</strong>), 'Cosmic' (<strong>Red Velvet</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'How Sweet' (<strong>NewJeans</strong>), 'ATE' (<strong>Stray Kids</strong>), 'WALK' (<strong>NCT 127</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>UNICODE</strong>, <strong>B.D.U</strong>, <strong>BADVILLAIN</strong>, <strong>KATSEYE</strong>, <strong>ARrC</strong>, <strong>DragonPony</strong></p>
-                    </article>
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Cinema Paradise</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2024.08.26 - 2025.02.23)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'CINEMA PARADISE' (<strong>ZEROBASEONE</strong>), 'IVE EMPATHY' (<strong>IVE</strong>), 'Amortage' (<strong>JISOO</strong>), 'SPILL THE FEELS' (<strong>SEVENTEEN</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Good So Bad' (<strong>ZEROBASEONE</strong>), 'earthquake' (<strong>JISOO</strong>), 'STRATEGY' (<strong>TWICE</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>I:Mond</strong>, <strong>izna</strong>, <strong>MEOVV</strong>, <strong>Madein</strong></p>
-                    </article>
-                    <article>
-                        <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Blue Paradise</h3>
-                        <p class="text-[#A0AEC0] text-sm">(2025.02.24 - 2025.06.10)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'Blue Paradise' (<strong>ZEROBASEONE</strong>), 'Ruby' (<strong>JENNIE</strong>), 'Fe3O4: FORWARD' (<strong>NMIXX</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Blue' (<strong>ZEROBASEONE</strong>), 'HOT' (<strong>LE SSERAFIM</strong>), 'Rebel Heart' (<strong>IVE</strong>), 'I Feel Good` (<strong>BoyNextDoor</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Close Your Eyes</strong>, <strong>USPEER</strong>, <strong>KiiiKiii</strong>, <strong>Hearts2Hearts</strong></p>
-                    </article>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="future" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#FBF8B2]">Daliatime Chapter 2: The Horizon</h2>
-                <p class="text-center max-w-3xl mx-auto mb-12 text-[#CBD5E0]">The conclusion of Daliatime Chapter 1 sets the stage for an exciting new period. Chapter 2 promises a continuation of key trends and a host of anticipated comebacks, tours, and fresh faces. Here’s a look at what the industry has to look forward to.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <article class="gradient-card-blue rounded-xl p-6 shadow-2xl flex flex-col justify-between">
-                        <h3 class="text-2xl font-bold mb-4 text-white">Group Returns</h3>
-                        <p class="text-gray-100">Fans are anticipating reunions and comebacks from veteran groups like <strong>BTS</strong>, <strong>MONSTA X</strong>, <strong>CLC</strong>, and <strong>I.O.I.</strong> as they navigate their own career paths in Chapter 2. Additionally, <strong>BLACKPINK</strong> is expected to have a new album and world tour, which would be a major highlight of the new period.</p>
-                    </article>
-                    <article class="gradient-card-yellow rounded-xl p-6 shadow-2xl flex flex-col justify-between">
-                        <h3 class="text-2xl font-bold mb-4 text-[#1E1E1E]">Tours & Global Expansion</h3>
-                        <p class="text-[#1E1E1E]">The industry continues to prioritize a global presence. Upcoming tours are a major focus, bringing top acts such as <strong>ENHYPEN</strong> to fans in Asia, North America, and beyond. This trend, already cemented in Chapter 1, will only intensify.</p>
-                    </article>
-                    <article class="gradient-card-green rounded-xl p-6 shadow-2xl flex flex-col justify-between">
-                        <h3 class="text-2xl font-bold mb-4 text-[#1E1E1E]">New Survival Groups</h3>
-                        <p class="text-[#1E1E1E]">Survival shows continue to be a vital pipeline for new talent. As seen with shows like `Boys Planet`, which produced <strong>ZEROBASEONE</strong>, the industry will continue to rely on these platforms to discover and launch the next generation of K-Pop stars. Look for new and innovative survival formats in Chapter 2.</p>
-                    </article>
-                </div>
-            </section>
-            
-            <hr class="my-12 border-gray-700">
-            
-            <section id="wrapped" class="my-20">
-                <h2 class="text-4xl font-bold text-center mb-10 text-[#FBF8B2]">Daliatime Chapter 1 Wrapped</h2>
-                <article class="gradient-card-blue rounded-2xl p-8 shadow-2xl text-center">
-                    <h3 class="text-5xl md:text-6xl font-black text-white tracking-tighter mb-4">The Numbers Tell the Story</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#70E093]">45</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">New Groups Debuted</p>
-                        </div>
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#FBF8B2]">87%</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">Active as of 2025.06.10</p>
-                        </div>
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#A7D9FF]">-15%</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">Album Sales Dip (2024 vs. 2023)</p>
-                        </div>
-                        <div class="p-4 bg-white/10 rounded-lg backdrop-blur-sm">
-                            <p class="text-4xl font-black text-[#FBF8B2]">~100</p>
-                            <p class="text-sm font-semibold text-[#224b73] mt-1">Music Show Wins by Top Songs</p>
-                        </div>
-                    </div>
-                    <p class="text-center max-w-4xl mx-auto text-white leading-relaxed text-lg mt-8">Daliatime Chapter 1 was a whirlwind of innovation and legacy. We witnessed the undisputed chart dominance of artists like <strong>SEVENTEEN</strong> and <strong>Stray Kids</strong>, while new hits like <strong>aespa's "Supernova"</strong> and <strong>ROSÉ's "APT."</strong> captured the global zeitgeist.</p>
-                    <p class="text-center max-w-4xl mx-auto text-white leading-relaxed text-lg mt-4">The industry saw a fascinating blend of old and new: a drop in overall album sales was countered by the electrifying rise of <strong>virtual idols</strong> and a powerful wave of <strong>nostalgic reunions</strong> from iconic groups. The foundation of Daliatime was built on a new generation of talent. As we enter Chapter 2, the stage is set for a future defined by these trends, with global tours, veteran comebacks, and new stars promising to continue the evolution of the K-Pop world.</p>
-                </article>
-            </section>
-        </main>
-
-        <footer class="text-center mt-20 py-8 border-t border-gray-700">
-            <p class="text-gray-500">Daliatime K-Pop Rewind | Data compiled as of 2025.06.10.</p>
-        </footer>
-
-        <!-- Fixed navigation bar at the bottom -->
-        <div class="fixed-nav-bottom">
-            <button onclick="history.back(); return false;" class="fixed-nav-button">
-                BACK
-            </button>
-        </div>
-
+    <div id="app" class="w-full max-w-4xl">
+        <!-- Content will be rendered here by JavaScript -->
     </div>
 
+    <!-- Modal Structure -->
+    <div id="inline-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close">&times;</button>
+            <div id="modal-loader" class="loader"></div> <!-- Loading spinner -->
+            <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen style="display:none;"></iframe> <!-- Hidden until loaded -->
+        </div>
+    </div>
+
+    <!-- Elfsight Audio Player | Untitled Audio Player (Moved to the very end of body) -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-ebf1fad7-6c7f-4556-97fe-4b573d22ca07" data-elfsight-app-lazy style="position: fixed; top: 1rem; left: 1rem; z-index: 2001;"></div>
+
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // New dark mode color palette for charts
-            const FONT_COLOR = '#E2E8F0'; // Light gray for chart text
-            const GRID_COLOR = 'rgba(255, 255, 255, 0.1)'; // Light transparent for grid lines
-            const PALETTE = {
-                blue: '#3474B2', // Rich Blue
-                green: '#70E093', // Vibrant Green
-                yellow: '#FBF8B2', // Bright Yellow
-                pink: '#9DC3E7', // Soft Light Blue
-                darkBlue: '#1A202C', // Deep charcoal (for tooltip background)
-                lightPink: '#C4DFF8', // Lighter shade of light blue
-                teal: '#A7D9FF', // Another light blue
-                orange: '#FFD54F', // Brighter yellow-orange
-                purple: '#B39DDB', // Brighter purple
-                red: '#EF9A9A' // Softer red
-            };
-            // Ensure COLORS array uses the new palette for chart segments
-            const COLORS = [
-                PALETTE.green, PALETTE.blue, PALETTE.yellow, PALETTE.pink, PALETTE.teal,
-                PALETTE.orange, PALETTE.purple, PALETTE.red, PALETTE.lightPink, '#81E6D9' /* A custom light teal */
-            ];
-
-            // Map to store active Chart.js instances
-            const chartInstances = {};
-
-            // Reusable function to create chart configurations
-            const createChart = (canvasId, type, data, options = {}) => {
-                // Destroy existing chart instance if it exists to allow re-animation
-                if (chartInstances[canvasId]) {
-                    chartInstances[canvasId].destroy();
-                    delete chartInstances[canvasId];
-                }
-
-                const defaultOptions = {
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 1000, // Duration of the animation in milliseconds
-                        easing: 'easeOutQuart' // Easing function for the animation
-                    },
-                    scales: {
-                        x: {
-                            ticks: { color: FONT_COLOR, font: { weight: '600' } },
-                            grid: { color: GRID_COLOR }
-                        },
-                        y: {
-                            ticks: { color: FONT_COLOR, font: { weight: '600' } },
-                            grid: { color: GRID_COLOR }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false }, // Default to false, overridden for specific charts
-                        tooltip: {
-                            backgroundColor: PALETTE.darkBlue, // Deep charcoal tooltip background
-                            titleColor: PALETTE.yellow, // Bright yellow for tooltip title
-                            bodyColor: FONT_COLOR, // Light gray for tooltip body
-                            borderColor: PALETTE.pink, // Soft light blue border for tooltip
-                            borderWidth: 1,
-                            padding: 10,
-                            callbacks: {
-                                title: (tooltipItems) => {
-                                    const item = tooltipItems[0];
-                                    const label = item.chart.data.labels[item.dataIndex];
-                                    return Array.isArray(label) ? label.join(' ') : label;
-                                },
-                                label: (tooltipItem) => {
-                                   if (['pie', 'doughnut'].includes(tooltipItem.chart.config.type)) {
-                                       return `${tooltipItem.label}: ${tooltipItem.raw}%`;
-                                   }
-                                   return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
-                                }
-                            }
-                        }
-                    }
-                };
-
-                const finalOptions = Chart.helpers.merge(defaultOptions, options);
-                
-                // Special handling for pie/doughnut charts (no scales, legend visible)
-                if (type === 'pie' || type === 'doughnut') {
-                    finalOptions.scales = {}; // Remove scales for circular charts
-                    finalOptions.plugins.legend = {
-                        position: 'bottom',
-                        labels: { color: FONT_COLOR, font: { weight: '600' } },
-                        onClick: (e, legendItem, legend) => { // Custom onClick for doughnut charts
-                            const chart = legend.chart;
-                            const datasetIndex = legendItem.datasetIndex;
-                            const meta = chart.getDatasetMeta(datasetIndex);
-                            meta.hidden = meta.hidden === null ? !chart.data.datasets[datasetIndex].hidden : null;
-                            chart.update();
-                        }
-                    };
-                }
-                
-                // Special handling for Era Activity Chart to enable clickable legend
-                if (canvasId === 'eraActivityChart') {
-                    finalOptions.plugins.legend = {
-                        position: 'top',
-                        labels: { color: FONT_COLOR, font: { weight: '600' } },
-                        onClick: (e, legendItem, legend) => {
-                            const index = legendItem.datasetIndex;
-                            const ci = legend.chart;
-                            if (ci.isDatasetVisible(index)) {
-                                ci.hide(index);
-                                legendItem.hidden = true;
-                            } else {
-                                ci.show(index);
-                                legendItem.hidden = false;
-                            }
-                            ci.update();
-                        }
-                    };
-                }
-
-
-                // Store the new chart instance
-                chartInstances[canvasId] = new Chart(document.getElementById(canvasId), { type, data, options: finalOptions });
-            };
-
-            // Helper function to wrap long labels
-            const wrapLabel = (label) => {
-                const maxLength = 16;
-                if (label.length <= maxLength) return label;
-                const words = label.split(' ');
-                const lines = [];
-                let currentLine = '';
-                for (const word of words) {
-                    if ((currentLine + word).length > maxLength) {
-                        lines.push(currentLine.trim());
-                        currentLine = '';
-                    }
-                    currentLine += word + ' ';
-                }
-                lines.push(currentLine.trim());
-                return lines;
-            };
-
-            // Chart Data and Configurations
-            const chartsData = [
-                {
-                    id: 'topArtistsChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['SEVENTEEN', 'Stray Kids', 'aespa', 'IVE', 'NewJeans', 'LE SSERAFIM', 'ZEROBASEONE', 'NCT DREAM', 'TWICE', 'TXT'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Overall Impact Score',
-                            data: [98, 95, 92, 90, 88, 85, 82, 80, 78, 75],
-                            backgroundColor: COLORS,
-                            borderColor: PALETTE.darkBlue, /* Border color for bars */
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    }
+        const DALIATIME_DATA = {
+            overview: {
+                start: '2023.12.12',
+                end: '2025.06.10',
+                eras: 4,
+                promoEvents: 3,
+                pmdDebuts: 2,
+                leaderAddresses: 1,
+            },
+            eras: {
+                inaugural: {
+                    name: 'INAUGURAL',
+                    dates: '2023.12.12 – 2024.05.12',
+                    vibe: 'Melting Point & The Caralia Transition',
+                    highlights: [
+                        'Became transannual leader in just 21 days',
+                        'Official start of Daliatime amid a major transition',
+                        'ZB1 Japan debut with "Yura Yura"',
+                        'Era identity took shape with power pop & internet trends',
+                    ],
+                    notableSongs: [
+                        { name: 'SMART', link: 'https://open.spotify.com/track/4lR8sYGMGZPvthF2yUfo7T?si=6db992529bd449e5' },
+                        { name: 'WIFE', link: 'https://open.spotify.com/track/47Yw4FMl1WqkwCaL0JuWrW?si=dcc73c682a6548dc' },
+                        { name: 'MAGNETIC', link: 'https://open.spotify.com/track/1aKvZDoLGkNMxoRYgkckZG?si=52827f8605a34423' },
+                        { name: 'YURA YURA', link: 'https://open.spotify.com/track/3kkiffSH6ZRggYhu4lVxFR?si=35127e40245e42a8' },
+                    ],
+                    embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/76ccrVo2gipZvNAOriLkiD?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+                    debuts: [
+                        { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
+                        { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
+                        { name: 'RESCENE', link: 'https://kprofiles.com/rescene-members-profile/' },
+                        { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' }
+                    ],
+                    color: 'linear-gradient(135deg, rgba(43, 116, 182, 0.8), rgba(160, 188, 232, 0.8))',
                 },
-                {
-                    id: 'topSongsChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['aespa - Supernova', 'ZICO - SPOT! (feat. JENNIE)', 'ILLIT - Magnetic', 'IVE - HEYA', 'LE SSERAFIM - Smart', 'NewJeans - How Sweet', 'ZEROBASEONE - Feel the Pop', 'ROSÉ, Bruno Mars - APT.', 'JISOO - earthquake', 'TWICE - ONE SPARK'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Popularity Score',
-                            data: [99, 97, 94, 91, 89, 86, 84, 82, 80, 78],
-                            backgroundColor: COLORS.slice().reverse(), /* Reversed colors for variety */
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    }
+                youHadMeAtHello: {
+                    name: 'YOU HAD ME AT HELLO',
+                    dates: '2024.05.13 – 2024.08.25',
+                    vibe: 'The Good Life',
+                    highlights: [
+                        'Ceremonial start at #thegoodlife promo event',
+                        'July 2024 Artist of The Month appearance with an original song',
+                        'My Diaries brand re-launched with dashboard & MD Live',
+                        'ALLIN, PMD’s 2nd boy group, debuted',
+                        'First Dalia Birthday Live',
+                    ],
+                    notableSongs: [
+                        { name: 'SUPERNOVA', link: 'https://open.spotify.com/track/2VdSktBqFfkW7y6q5Ik4Z4?si=840bc9e69eb74f39' },
+                        { name: 'ABCD', link: 'https://open.spotify.com/track/0V2passWyAXnON67kfAj7y?si=ef81bc240dcd4e47' },
+                        { name: 'LOOP', link: 'https://open.spotify.com/track/1JNsKjaCFgTxjP3EkKfYZo?si=cae43b17f493427f' },
+                        { name: 'FEEL THE POP', link: 'https://open.spotify.com/track/3JnaRKReO6TFGEdhggFWZG?si=21d752d5f7154b9c' },
+                    ],
+                    embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1jZSfQlQIcs7rFNMZqEsFd?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+                    debuts: [
+                        { name: 'BAD VILLAIN', link: 'https://kprofiles.com/badvillain-members-profile/' },
+                        { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' },
+                        { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
+                        // Updated ALLIN link
+                        { name: 'ALLIN', link: 'https://sites.google.com/view/pmdofficial/allin' }
+                    ],
+                    color: 'linear-gradient(135deg, rgba(110, 240, 161, 0.8), rgba(255, 255, 176, 0.8))',
                 },
-                {
-                    id: 'topMVsChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['ROSÉ - APT.', 'aespa - Whiplash', 'JISOO - earthquake', 'JENNIE - Mantra', 'ZEROBASEONE - Feel the Pop', 'Stray Kids - Chk Chk Boom', 'IVE - Accendio', 'LE SSERAFIM - HOT', 'NewJeans - Bubble Gum', 'TWICE - STRATEGY'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Views (in Millions)',
-                            data: [450, 410, 380, 350, 115, 112, 105, 102, 98, 95],
-                            backgroundColor: COLORS,
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
-                    }
+                cinemaParadise: {
+                    name: 'CINEMA PARADISE',
+                    dates: '2024.08.26 – 2025.02.23',
+                    vibe: 'Brat Summer & The Homecoming',
+                    highlights: [
+                        'Reboot of forever.21 : The Homecoming with a new concept',
+                        'Timeless World tour from September to November',
+                        'Western pop dominated the global charts',
+                        'PMD’s 1st girl group, Hi TiME, debuted',
+                        'Daliatime 1st Anniversary & 3rd double transannual leader',
+                    ],
+                    notableSongs: [
+                        { name: 'CRAZY', link: 'https://open.spotify.com/track/3AoEQRuFf8zVXWq4SLo2UOi?si=1cb29508e0344674' },
+                        { name: 'DRIP', link: 'https://open.spotify.com/track/198zDKzyktXRG1PGpidY9h?si=1009a0ac97e94e48' },
+                        { name: 'PSYCHO AND BEAUTIFUL', link: 'https://open.spotify.com/track/66hTmSvvdanE90lCEp7ogV?si=8511f35bcc624abc' },
+                        { name: 'GOOD SO BAD', link: 'https://open.spotify.com/track/28HVi8XtrlKauIVUxSlc6q?si=929ac8abcc7a46e4' },
+                    ],
+                    embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/51ZqDbYC2818o9T3YZ0oKL?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+                    debuts: [
+                        { name: 'MEOVV', link: 'https://kprofiles.com/meovv-members-profile/' },
+                        { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
+                        { name: 'KICKFLIP', link: 'https://kprofiles.com/kickflip-members-profile/' },
+                        { name: 'MADEIN', link: 'https://kprofiles.com/madein-members-profile/' },
+                        // Updated Hi TiME link
+                        { name: 'Hi TiME', link: 'https://sites.google.com/view/pmdofficial/hi-time' }
+                    ],
+                    color: 'linear-gradient(135deg, rgba(255, 255, 176, 0.8), rgba(160, 188, 232, 0.8))',
                 },
-                {
-                    id: 'genreChart',
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Pop', 'R&B/Soul', 'Hip-Hop', 'Ballad/Acoustic', 'Rock'],
-                        datasets: [{
-                            label: 'Genre Distribution',
-                            data: [40, 25, 20, 10, 5],
-                            backgroundColor: [PALETTE.yellow, PALETTE.blue, PALETTE.pink, PALETTE.green, PALETTE.orange],
-                            borderColor: PALETTE.darkBlue, /* Border color for doughnut segments */
-                            borderWidth: 2,
-                            hoverOffset: 4
-                        }]
+                blueParadise: {
+                    name: 'BLUE PARADISE',
+                    dates: '2025.02.24 – 2025.08.31',
+                    vibe: 'New Paradise & Chapter 2',
+                    highlights: [
+                        'Ceremonial start at ALLINDAY Music Festival',
+                        'Dalia made solo debut with Champion (SWF 3 OST)',
+                        'STAY reunion, Cara\'s return from military service, released surprise reunion album',
+                        'ALLIN celebrated their 1st anniversary',
+                        'Launched the "Rising Stars Channel" on Channel 3',
+                    ],
+                    notableSongs: [
+                        { name: 'BEBE', link: 'https://open.spotify.com/track/5iXD5rOKV99XGtkaiucM?si=5fe87fb666ab4d76' },
+                        { name: 'LOOSE', link: 'https://open.spotify.com/track/3YNjvUXgfQznx5IZHAXk6i?si=a9f99ffe553644e1' },
+                        { name: 'SIGN', link: 'https://open.spotify.com/track/6vBVBzf0VeRO4aPwABnohX?si=ecd0d802edf64893' },
+                        { name: 'I FEEL GOOD', link: 'https://open.spotify.com/track/1klePVubVctBqhlKJvibil?si=252286bab336413e' },
+                        { name: 'BLUE', link: 'https://open.spotify.com/track/5YR199TRrcmxY39l43ovI1?si=a1cfabfd7c2546cd' },
+                    ],
+                    embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/75jczcoMc2R7B3XIY3Qxc5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+                    debuts: [
+                        { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
+                        { name: 'KIIIKIII', link: 'https://kprofiles.com/kiiikiii-members-profile/' },
+                        { name: 'NOUERA', link: 'https://kprofiles.com/nouera-members-profile/' },
+                        { name: 'CLOSE YOUR EYES', link: 'https://kprofiles.com/close-your-eyes-members-profile/' }
+                    ],
+                    color: 'linear-gradient(135deg, rgba(160, 188, 232, 0.8), rgba(43, 116, 182, 0.8))',
+                },
+            },
+            events: {
+                '#thegoodlife': {
+                    date: '2024.05.27',
+                    totalArtists: 22,
+                    firstTimers: 8,
+                    artists: [
+                        { name: 'ONF', link: 'https://kprofiles.com/onf-members-profile/' },
+                        { name: 'LE SSERAFIM', link: 'https://kprofiles.com/le-sserafim-members-profile/' },
+                        { name: 'TXT', link: 'https://kprofiles.com/txt-members-profile/' },
+                        { name: 'ITZY', link: 'https://kprofiles.com/itzy-members-profile/' },
+                        { name: 'SF9', link: 'https://kprofiles.com/sf9-members-profile/' },
+                        { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
+                        // Added TWS and NCT WISH
+                        { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
+                        { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
+                        { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
+                        { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
+                        // Added ILLIT and UNIS
+                        { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
+                        { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' }, // Updated UNIS link
+                        { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
+                        { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
+                        { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
+                        { name: 'FROMIS_9', link: 'https://kprofiles.com/fromis_9-members-profile/' },
+                        { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
+                        { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
+                        { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                        { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
+                        { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
+                        { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
+                        { name: 'LIGHTSUM', link: 'https://kprofiles.com/lightsum-members-profile/' },
+                        { name: 'YOUNG POSSE', link: 'https://kprofiles.com/young-posse-members-profile/' },
+                        { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
+                        { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
+                    ],
+                    link: 'https://mdthegoodlife.carrd.co'
+                },
+                '#forever21-the-homecoming': {
+                    date: '2024.08.21 & 26',
+                    totalArtists: 21,
+                    firstTimers: 9,
+                    artists: [
+                        { name: 'ONF', link: 'https://kprofiles.com/onf-members-profile/' },
+                        { name: 'DREAMCATCHER', link: 'https://kprofiles.com/dreamcatcher-members-profile/' },
+                        { name: 'SOMI', link: 'https://kprofiles.com/somi-kprofiles/' },
+                        { name: 'BABYMONSTER', link: 'https://kprofiles.com/babymonster-members/' },
+                        { name: 'ENHYPEN', link: 'https://kprofiles.com/enhypen-members-profile/' },
+                        { name: 'XG', link: 'https://kprofiles.com/xg-members-profile/' },
+                        { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
+                        { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
+                        { name: 'UNIS', link: 'https://kprofiles.com/unis-members-profile/' },
+                        { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
+                        { name: 'FROMIS_9', link: 'https://kprofiles.com/fromis_9-members-profile/' },
+                        { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
+                        { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
+                        { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                        { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
+                        { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
+                        { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
+                        { name: 'LIGHTSUM', link: 'https://kprofiles.com/lightsum-members-profile/' },
+                        { name: 'YOUNG POSSE', link: 'https://kprofiles.com/young-posse-members-profile/' },
+                        { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
+                        { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
+                    ],
+                    link: 'https://forever21thehomecoming.carrd.co'
+                },
+                '#allinday-music-festival': {
+                    date: '2025.02.24',
+                    totalArtists: 23,
+                    firstTimers: 11,
+                    artists: [
+                        { name: 'ATEEZ', link: 'https://kprofiles.com/ateez-members-profile/' },
+                        { name: 'ENHYPEN', link: 'https://kprofiles.com/enhypen-members-profile/' },
+                        { name: 'RIIZE', link: 'https://kprofiles.com/riize-members-profile/' },
+                        { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' },
+                        { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' },
+                        { name: 'XIKERS', link: 'https://kprofiles.com/xikers-members-profile/' },
+                        { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' },
+                        { name: 'IZNA', link: 'https://kprofiles.com/izna-members-profile/' },
+                        { name: 'GFRIEND', link: 'https://kprofiles.com/gfriend-members-profile/' },
+                        { name: 'GOT7', link: 'https://kprofiles.com/got7-members-profile/' },
+                        { name: 'ONF', link: 'https://kprofiles.com/onf-members-profile/' },
+                        { name: 'MINNIE (I-DLE)', link: 'https://kprofiles.com/minnie-g-i-dle-profile/' },
+                        { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
+                        { name: 'IVE', link: 'https://kprofiles.com/ive-members-profile/' },
+                        { name: 'AESPA', link: 'https://kprofiles.com/aespa-members-profile/' },
+                        { name: 'STAYC', link: 'https://kprofiles.com/stayc-members-profile/' },
+                        { name: 'BOYNEXTDOOR', link: 'https://kprofiles.com/boynextdoor-members-profile/' },
+                        { name: 'NOWZ', link: 'https://kprofiles.com/nowadays-members-profile/' },
+                        { name: 'P1HARMONY', link: 'https://kprofiles.com/p1harmony-members-profile/' },
+                        { name: 'CIX', link: 'https://kprofiles.com/cix-members-profile/' },
+                        { name: 'WEI', link: 'https://kprofiles.com/wei-members-profile/' },
+                        { name: 'BILLLIE', link: 'https://kprofiles.com/billlie-members-profile/' },
+                        { name: 'CLASS:Y', link: 'https://kprofiles.com/classy-members-profile/' },
+                        { name: 'ARTMS', link: 'https://kprofiles.com/artms-members-profile/' },
+                        { name: 'N.SSIGN', link: 'https://kprofiles.com/nssign-members-profile/' },
+                        { name: 'EVNNE', link: 'https://kprofiles.com/evnne-members-profile/' },
+                        { name: 'RESCENE', link: 'https://kprofiles.com/rescene-members-profile/' },
+                        { name: 'MADEIN', link: 'https://kprofiles.com/madein-members-profile/' },
+                        { name: 'MEOVV', link: 'https://kprofiles.com/meovv-members-profile/' },
+                    ],
+                    link: 'https://linktr.ee/allinday429'
+                },
+            },
+            mdLive: {
+                description: "<b>My Diaries Live</b>, also known as MD Live and formerly known as MDTV (2019-2024) and BE Live (2020-2024), was relaunched on May 27, 2024. Known for streaming events and activities, it was the first platform to have a <b>multistream</b> format, allowing for simultaneous streaming of content across different channels. It's like flipping channels on a television, but for our events.<br><br>As of 2025.06.10, <b>6 shows</b> have been streamed.",
+                shows: [
+                    { name: '#thegoodlife', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVGg1vExg0w91QjYRUuotHq' },
+                    { name: 'ALLIN Debut Live', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXoKgGS29brQqdbecI-JxD7' },
+                    { name: 'forever.21 : The Homecoming Part 1', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUU42o_J_jE4FXZOwC_TmAX' },
+                    { name: 'forever.21 : The Homecoming Part 2', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcVpCr1LQwcU5guZ2bozgeD_' },
+                    { name: 'Hi TiME Debut Show', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcXFe2p8ewZVRja7iVOaV1aQ' },
+                    { name: 'ALLINDAY Music Festival 2025', embed: 'https://www.youtube.com/embed/videoseries?list=PLsosZDdrwfcUBO2SD_U_zlCoDFhlUO7SG' },
+                ],
+                link: 'https://mdliveofficial.carrd.co'
+            },
+            zeitgeist: {
+                news: [
+                    {
+                        title: 'Global Economic Report',
+                        description: 'Global inflation is falling but unevenly. The global economy shows "tenuous resilience" amid uncertainty, with growth projected to slow in some regions.',
+                        icon: '📊',
                     },
-                    options: {
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true
-                        }
-                    }
-                },
-                {
-                    id: 'conceptChart',
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Y2K Nostalgia', 'Futuristic/AI', 'Girl Crush', 'Bright & Playful', 'Cinematic', 'Band Sound'],
-                        datasets: [{
-                            label: 'Concept Distribution',
-                            data: [30, 20, 15, 15, 10, 10],
-                            backgroundColor: [PALETTE.yellow, PALETTE.blue, PALETTE.pink, PALETTE.green, PALETTE.orange, PALETTE.purple],
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            hoverOffset: 4
-                        }]
+                    {
+                        title: 'Geopolitical Landscape',
+                        description: 'Ongoing global conflicts persist, but diplomatic efforts like the 2025 New York Peace Conference on Gaza show a push towards resolution.',
+                        icon: '🌍',
                     },
-                    options: {
-                        animation: {
-                            animateRotate: true,
-                            animateScale: true
-                        }
-                    }
-                },
-                {
-                    id: 'musicShowWinsChart',
-                    type: 'bar',
-                    data: {
-                        // Sorted by most to least wins
-                        labels: ['I-DLE - Super Lady', 'LE SSERAFIM - Easy', 'LE SSERAFIM - Smart', 'IVE - HEYA', 'aespa - Supernova', 'ZEROBASEONE - Feel the Pop', 'NCT DREAM - Smoothie', 'ILLIT - Magnetic', 'TWICE - ONE SPARK', 'TWS - plot twist'].map(wrapLabel),
-                        datasets: [{
-                            label: 'Total Wins',
-                            data: [13, 11, 10, 10, 10, 9, 9, 8, 8, 7],
-                            backgroundColor: COLORS.slice().reverse(),
-                            borderColor: PALETTE.darkBlue,
-                            borderWidth: 2,
-                            borderRadius: 5
-                        }]
+                    {
+                        title: '2025 Philippine & Korean Elections',
+                        description: 'Major national elections took place in key regions, shaping local and international discourse.',
+                        icon: '🗳️',
                     },
-                    options: {
-                        indexAxis: 'y'
-                    }
-                },
-                {
-                    id: 'eraActivityChart',
-                    type: 'bar',
-                    data: {
-                        labels: ['Inaugural', ['You Had Me', 'At Hello'], 'Cinema Paradise', 'Blue Paradise'],
-                        datasets: [{
-                            label: 'Releases',
-                            data: [45, 40, 65, 55],
-                            backgroundColor: PALETTE.green,
-                        }, {
-                            label: 'Debuts',
-                            data: [12, 8, 15, 10],
-                            backgroundColor: PALETTE.yellow,
-                        }, {
-                            label: 'Events',
-                            data: [20, 25, 35, 30],
-                            backgroundColor: PALETTE.pink,
-                        }]
+                    {
+                        title: 'Celebrity Deaths',
+                        description: 'The world mourned the passing of several notable figures, impacting popular culture and public sentiment.',
+                        icon: '🕊️',
                     },
-                    options: {
-                        scales: {
-                            x: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } },
-                            y: { stacked: true, ticks: { color: FONT_COLOR }, grid: { color: GRID_COLOR } }
-                        },
-                        // Legend click handled in createChart function for this specific ID
-                    }
-                }
-            ];
+                ],
+                popCulture: [
+                    {
+                        title: 'Candid Culture',
+                        description: 'A global shift where authenticity and honesty are more valued than curated perfection. People are craving "realness" over "sincerity signalling."',
+                        icon: '🗣️',
+                    },
+                    {
+                        title: 'Maximalism is Back',
+                        description: 'A cultural backlash against "quiet luxury" led to the rise of "Oasiscore" and a "more is more" aesthetic in fashion and design.',
+                        icon: '✨',
+                    },
+                    {
+                        title: 'Tinned Fish Tok',
+                        description: 'Social media trends influenced unexpected consumer habits, like the viral phenomenon of "tinned fish tok," leading to a rise in sales and new culinary trends.',
+                        icon: '🐟',
+                    },
+                    {
+                        title: 'Experientialism',
+                        description: 'The public is seeking immersive, real-world experiences designed for intense in-the-moment immersion, not just content capture.',
+                        icon: '🎉',
+                    },
+                ],
+                kpopIndustry: [
+                    {
+                        title: 'Global Soft Power',
+                        description: 'K-Pop continues its dominance as a major global force, influencing everything from fashion and beauty to tourism and local economies.',
+                        icon: '🌐',
+                        link: 'daliatimekpop.html'
+                    },
+                    {
+                        title: 'Rising Stars',
+                        description: 'The industry saw a flood of new talent, with Daliatime events showcasing 13 artists who debuted within the first 18 months.',
+                        icon: '🌟',
+                        link: null
+                    },
+                    {
+                        title: 'Tech & Engagement',
+                        description: 'Immersive exhibits like D\'Festa BGC and digital engagement strategies have become a new way to connect with fans globally.',
+                        icon: '📱',
+                        link: null
+                    },
+                    {
+                        title: 'Major Returns',
+                        description: 'The industry was rocked by major comebacks from groups like STAY with their reunion album, keeping the veteran presence strong.',
+                        icon: '👑',
+                        link: null
+                    },
+                ],
+            },
+            future: {
+                nextEra: 'NEVER SAY NEVER',
+                upcomingEvents: [
+                    'MY DIARIES AWARDS 2025',
+                    'ALLINDAY Music Festival 2025',
+                    'MY TURN season 3 (survival audition event)',
+                ],
+                upcomingPmdReleases: [
+                    'STAY NEW ALBUM and COMEBACK SHOW',
+                    'More releases from ALLIN and Hi TiME',
+                    'New CO-ED GROUP',
+                    'New SURVIVAL AUDITION EVENT',
+                    'New way to interact: PMDCU',
+                ],
+                upcomingZerobaseone: [
+                    'New album: NEVER SAY NEVER <a href="https://zb1.lnk.to/neversaynever" target="_blank" class="inline-block px-3 py-1 text-xs font-bold rounded-full" style="background: linear-gradient(80deg, #ffffb0, #6ef0a1 40%); background-size: 200% 200%; color: #121212;">pre-save</a>',
+                    'More events and activities',
+                    'The next chapter of SUNG HANBIN in 2026: Redebut? New group?',
+                ],
+            },
+        };
 
-            // Intersection Observer setup
-            const observerOptions = {
-                root: null, // viewport
-                rootMargin: '0px',
-                threshold: 0.5 // Trigger when 50% of the item is visible
-            };
+        const app = document.getElementById('app');
+        let currentSection = 'intro';
 
-            const chartObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    const chartConfig = chartsData.find(c => c.id === entry.target.id);
-                    if (!chartConfig) return;
+        // Modal elements
+        const inlineModal = document.getElementById('inline-modal');
+        const modalIframe = document.getElementById('modal-iframe');
+        const modalCloseBtn = document.getElementById('modal-close');
+        const modalLoader = document.getElementById('modal-loader'); // Get the loader element
 
-                    if (entry.isIntersecting) {
-                        // Element is in view, create/re-create chart
-                        if (!chartInstances[chartConfig.id]) { // Only create if not already present (prevents redundant creation on minor scrolls)
-                            createChart(chartConfig.id, chartConfig.type, chartConfig.data, chartConfig.options);
-                        } else {
-                            // If chart already exists and was off-screen, trigger update to re-animate
-                            chartInstances[chartConfig.id].update();
+        // Function to open the modal
+        const openModal = (url) => {
+            modalIframe.src = ''; // Clear src immediately to show loader
+            modalIframe.style.display = 'none'; // Hide iframe
+            modalLoader.style.display = 'block'; // Show loader
+
+            modalIframe.src = url; // Set new src
+            inlineModal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling background
+        };
+
+        // Function to close the modal
+        const closeModal = () => {
+            modalIframe.src = ''; // Clear iframe src to stop any media
+            inlineModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+            modalIframe.style.display = 'none'; // Ensure iframe is hidden
+            modalLoader.style.display = 'none'; // Ensure loader is hidden
+        };
+
+        // Event listener for iframe load
+        modalIframe.onload = () => {
+            modalLoader.style.display = 'none'; // Hide loader
+            modalIframe.style.display = 'block'; // Show iframe
+        };
+
+        // Close modal on overlay click
+        inlineModal.addEventListener('click', (event) => {
+            if (event.target === inlineModal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on close button click
+        modalCloseBtn.addEventListener('click', closeModal);
+
+        // Close modal on Escape key press
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && inlineModal.classList.contains('open')) {
+                closeModal();
+            }
+        });
+
+
+        const render = () => {
+            // Clear previous content
+            app.innerHTML = ''; 
+
+            // Render the current section content
+            switch (currentSection) {
+                case 'intro':
+                    renderIntro();
+                    break;
+                case 'overview':
+                    renderOverview();
+                    break;
+                case 'eras':
+                    renderEras();
+                    break;
+                case 'events':
+                    renderEvents();
+                    break;
+                case 'mdLive':
+                    renderMDLive();
+                    break;
+                case 'zeitgeist':
+                    renderZeitgeist();
+                    break;
+                case 'future':
+                    renderFuture();
+                    break;
+                case 'conclusion':
+                    renderConclusion();
+                    break;
+                case 'finale':
+                    renderFinale();
+                    break;
+            }
+            
+            // Add padding to body for fixed navigation so content isn't hidden behind it
+            if (currentSection !== 'intro') {
+                document.body.style.paddingBottom = '80px'; // Adjust this value as needed
+            } else {
+                document.body.style.paddingBottom = '0px';
+            }
+        };
+
+        const renderIntro = () => {
+            app.innerHTML = `
+                <div id="intro-panel" class="text-center p-8 sm:p-12 glass-panel rounded-3xl shadow-2xl transition-all duration-500 transform hover:scale-105 animate-fade-in-up">
+                    <h1 class="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] mb-4 animated-text-gradient">
+                        Daliatime Wrapped
+                    </h1>
+                    <h2 class="text-2xl sm:text-4xl font-bold mb-8">2023–2025</h2>
+                    <p class="text-lg sm:text-xl text-gray-300 mb-10">
+                        Welcome to your definitive recap. We've logged every era, every event, and every cultural shift to bring you the full story of Daliatime's first 18 months.
+                    </p>
+                    <button id="start-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 animate-pulse-gradient">
+                        BEGIN YOUR WRAPPED
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('start-btn').addEventListener('click', () => {
+                currentSection = 'overview';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        const renderOverview = () => {
+            const data = DALIATIME_DATA.overview;
+            app.innerHTML = `
+                <div class="text-center p-8 glass-panel rounded-3xl shadow-2xl min-h-[calc(100vh-124px)] animate-fade-in-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        The Daliatime Vibe Check
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-12 text-gray-200">
+                        A period of rapid growth and ambitious beginnings, shaped by a blend of nostalgia and futurism.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 sm:gap-10 mb-12">
+                        <div class="glass-panel p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                            <div class="text-3xl sm:text-5xl font-extrabold text-green-custom">
+                                ${data.eras}
+                            </div>
+                            <div class="text-sm sm:text-base text-gray-300 mt-2">Eras Logged</div>
+                        </div>
+                        <div class="glass-panel p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                            <div class="text-3xl sm:text-5xl font-extrabold text-green-custom">
+                                ${data.promoEvents}
+                            </div>
+                            <div class="text-sm sm:text-base text-gray-300 mt-2">Promo Events</div>
+                        </div>
+                        <div class="glass-panel p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                            <div class="text-3xl sm:text-5xl font-extrabold text-green-custom">
+                                ${data.pmdDebuts}
+                            </div>
+                            <div class="text-sm sm:text-base text-gray-300 mt-2">PMD Debuts</div>
+                        </div>
+                        <div class="glass-panel p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                            <div class="text-3xl sm:text-5xl font-extrabold text-green-custom">
+                                ${data.leaderAddresses}
+                            </div>
+                            <div class="text-sm sm:text-base text-gray-300 mt-2">Leader Addresses</div>
+                        </div>
+                    </div>
+                    <p class="text-lg text-white mb-6">
+                        Your journey was officially logged from <b>${data.start}</b> to <b>${data.end}</b>.
+                    </p>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="next-btn" class="px-8 py-4 bg-gradient-to-r from-[#6ef0a1] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50">
+                        YOUR ERAS
+                    </button>
+                </div>
+            `;
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'eras';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        const renderStatCard = (label, value) => {
+            return `
+                <div class="glass-panel p-4 sm:p-6 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <div class="text-3xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0]">
+                        ${value}
+                    </div>
+                    <div class="text-sm sm:text-base text-gray-300 mt-2">${label}</div>
+                </div>
+            `;
+        };
+
+        const renderEras = () => {
+            const data = DALIATIME_DATA.eras;
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        Your Daliatime Eras
+                    </h2>
+                    <div class="space-y-6 mb-8">
+                        ${Object.values(data).map(era => renderEraCard(era)).join('')}
+                    </div>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#6ef0a1] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        EVENTS
+                    </button>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'overview';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'events';
+                render();
+                window.scrollTo(0, 0);
+            });
+
+            document.querySelectorAll('.era-card-toggle').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const content = btn.nextElementSibling;
+                    const toggleIcon = btn.querySelector('.toggle-icon');
+
+                    // Collapse all other expanded era cards
+                    document.querySelectorAll('.era-card-content.expanded').forEach(expandedContent => {
+                        if (expandedContent !== content) {
+                            expandedContent.classList.remove('expanded');
+                            expandedContent.previousElementSibling.querySelector('.toggle-icon').textContent = '▼';
                         }
+                    });
+
+                    // Toggle the clicked era card
+                    if (content.classList.contains('expanded')) {
+                        content.classList.remove('expanded');
+                        toggleIcon.textContent = '▼';
                     } else {
-                        // Element is out of view, destroy chart to enable re-animation on scroll back
-                        if (chartInstances[chartConfig.id]) {
-                            chartInstances[chartConfig.id].destroy();
-                            delete chartInstances[chartConfig.id];
-                        }
+                        content.classList.add('expanded');
+                        toggleIcon.textContent = '▲';
                     }
                 });
-            }, observerOptions);
-
-            // Observe each chart canvas
-            chartsData.forEach(chart => {
-                const canvas = document.getElementById(chart.id);
-                if (canvas) {
-                    chartObserver.observe(canvas);
-                }
             });
+        };
+
+        const renderEraCard = (era) => {
+            const notableSongsHtml = era.notableSongs.map(song =>
+                song.link ?
+                `<a href="${song.link}" target="_blank" class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900 hover:bg-opacity-40 transition-all duration-200">${song.name}</a>`
+                :
+                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${song.name}</span>`
+            ).join('');
+
+            const debutsHtml = era.debuts.map(d =>
+                d.link ?
+                `<a href="${d.link}" target="_blank" class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900 hover:bg-opacity-40 transition-all duration-200">${d.name}</a>`
+                :
+                `<span class="bg-white bg-opacity-20 px-2 py-1 rounded-full text-gray-900">${d.name}</span>`
+            ).join('');
+
+            return `
+                <div class="p-6 rounded-2xl text-left shadow-lg" style="background: ${era.color};">
+                    <h3 class="text-xl sm:text-2xl font-bold flex justify-between items-center cursor-pointer era-card-toggle">
+                        ${era.name} <span class="text-sm text-gray-700">(${era.dates})</span>
+                        <span class="text-xl transform transition-transform duration-300 toggle-icon">▼</span>
+                    </h3>
+                    <div class="mt-4 space-y-2 text-gray-800 era-card-content">
+                        <p class="text-lg font-semibold">${era.vibe}</p>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            ${era.highlights.map(h => `<li>${h}</li>`).join('')}
+                        </ul>
+                        <p class="mt-3 font-semibold">Notable Songs:</p>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            ${notableSongsHtml}
+                        </div>
+                        <p class="mt-3 font-semibold">Debuts:</p>
+                        <div class="flex flex-wrap gap-2 text-xs mb-4">
+                            ${debutsHtml}
+                        </div>
+                        <div class="mt-6">
+                            ${era.embedCode}
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        const renderEvents = () => {
+            const data = DALIATIME_DATA.events;
+            const getEventName = (key) => {
+                switch (key) {
+                    case '#forever21-the-homecoming':
+                        return 'forever.21 : The Homecoming';
+                    case '#allinday-music-festival':
+                        return 'ALLINDAY Music Festival';
+                    default:
+                        return key;
+                }
+            };
+            
+            const allArtistsInDaliatime = Object.values(data).flatMap(event => event.artists);
+            
+            const getTopParticipants = () => {
+                const allNames = allArtistsInDaliatime.map(a => a.name);
+                const counts = allNames.reduce((acc, curr) => {
+                    acc[curr] = (acc[curr] || 0) + 1;
+                    return acc;
+                }, {});
+                const sorted = Object.entries(counts).sort(([, countA], [, countB]) => countB - countA);
+                return sorted.filter(([, count]) => count > 1);
+            };
+            const topParticipants = getTopParticipants();
+            
+            const firstTimersData = [
+                { name: 'YENA', link: 'https://kprofiles.com/yena-kprofiles/' },
+                { name: 'TWS', link: 'https://kprofiles.com/tws-members-profile/' }, // Added TWS
+                { name: 'NCT WISH', link: 'https://kprofiles.com/nct-wish-members-profile/' }, // Added NCT WISH
+                { name: 'AMPERS&ONE', link: 'https://kprofiles.com/ampersandone-members-profile/' },
+                { name: 'KISS OF LIFE', link: 'https://kprofiles.com/kiss-of-life-members-profile/' },
+                { name: 'ILLIT', link: 'https://kprofiles.com/illit-members-profile/' }, // Added ILLIT
+                { name: 'UNIS', link: 'https://kprofiles.com/unis-universe-ticket-members-profile/' }, // Updated UNIS link
+                { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
+                { name: 'SUPER JUNIOR-D&E', link: 'https://kprofiles.com/super-junior-de-members-profile/' },
+                { name: 'HYOLYN', link: 'https://kprofiles.com/hyolyn-profile/' },
+                { name: 'TAEMIN', link: 'https://kprofiles.com/taemin-shinee-profile/' },
+                { name: 'LEE CHAE YEON', link: 'https://kprofiles.com/lee-chae-yeon-profile/' },
+                { name: 'I-DLE', link: 'https://kprofiles.com/g-i-dle-members-profile/' },
+                { name: 'WEEEKLY', link: 'https://kprofiles.com/weeekly-members-profile/' },
+                { name: 'NCT 127', link: 'https://kprofiles.com/nct-127-members-profile/' },
+                { name: 'STRAY KIDS', link: 'https://kprofiles.com/stray-kids-members-profile/' },
+                { name: 'LIGHTSUM', link: 'https://kprofiles.com/lightsum-members-profile/' },
+                { name: 'YOUNG POSSE', link: 'https://kprofiles.com/young-posse-members-profile/' },
+                { name: 'KATSEYE', link: 'https://kprofiles.com/katseye-members-profile/' },
+                { name: 'ARRC', link: 'https://kprofiles.com/arrc-members-profile/' },
+            ];
+
+            const eventCards = Object.entries(data).map(([key, event]) => `
+                <a href="${event.link}" target="_blank" class="glass-panel p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105">
+                    <h3 class="text-xl font-bold text-gray-200 mb-2">${getEventName(key)}</h3>
+                    <p class="text-sm text-cyan-300">${event.date}</p><br>
+                    <div class="text-center">
+                        <span class="text-3xl font-extrabold text-green-custom">${event.totalArtists}</span>
+                        <p class="text-sm text-gray-300">Total Artists</p>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span class="text-3xl font-extrabold text-green-custom">${event.firstTimers}</span>
+                        <p class="text-sm text-gray-300">Event First-Timers</p>
+                    </div>
+                </a>
+            `).join('');
+
+            const topParticipantsHtml = topParticipants.map(([artistName, count]) => {
+                const artistData = firstTimersData.find(a => a.name === artistName); // Use firstTimersData to find link
+                const artistLink = artistData && artistData.link ? artistData.link : '#';
+                return `
+                    <li class="flex items-center space-x-2">
+                        <a href="${artistLink}" target="_blank" class="font-semibold text-lg text-white hover:text-[#ffffb0] transition-colors duration-200">${artistName}</a>
+                        <span class="text-sm text-gray-300">(${count} events)</span>
+                    </li>
+                `;
+            }).join('');
+            
+            const firstTimersHtml = firstTimersData.map(artist => `
+                <a href="${artist.link}" target="_blank" class="bg-gray-600 text-white text-sm px-3 py-1 rounded-full transition-all duration-200 transform hover:scale-110">
+                    ${artist.name}
+                </a>
+            `).join('');
+
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        Events
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        ${eventCards}
+                    </div>
+                    <!-- Two-panel layout for participants and first-timers -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="p-6 glass-panel rounded-2xl shadow-xl text-left">
+                            <h3 class="text-xl font-bold text-yellow-custom mb-4">Top Event Participants</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                                ${topParticipantsHtml}
+                            </ul>
+                        </div>
+                        <div class="p-6 glass-panel rounded-2xl shadow-xl text-left">
+                            <h3 class="text-xl font-bold text-yellow-custom mb-4">First-Timers in Daliatime</h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${firstTimersHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        MD LIVE
+                    </button>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'eras';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'mdLive';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        const renderMDLive = () => {
+            const data = DALIATIME_DATA.mdLive;
+            const shows = data.shows;
+            let currentShowIndex = 0;
+            
+            const updateCarousel = () => {
+              const carouselElement = document.getElementById('md-live-carousel');
+              carouselElement.innerHTML = `
+                <div class="glass-panel rounded-2xl shadow-xl p-4 flex flex-col items-center">
+                  <div class="relative w-full pb-[56.25%]">
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                  </div>
+                  <h3 class="text-xl sm:text-2xl font-bold text-green-custom text-center mt-4">
+                    ${shows[currentShowIndex].name}
+                  </h3>
+                </div>
+                <div class="absolute inset-0 flex justify-between items-center px-4 z-10">
+                  <button id="prev-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
+                    &#10094;
+                  </button>
+                  <button id="next-show-btn" class="p-2 bg-[#121212] bg-opacity-50 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
+                    &#10095;
+                  </button>
+                </div>
+              `;
+
+              document.getElementById('prev-show-btn').addEventListener('click', () => {
+                currentShowIndex = (currentShowIndex - 1 + shows.length) % shows.length;
+                updateCarousel();
+              });
+              // FIX: Added 'click' event type for next-show-btn
+              document.getElementById('next-show-btn').addEventListener('click', () => {
+                currentShowIndex = (currentShowIndex + 1) % shows.length;
+                updateCarousel();
+              });
+            };
+
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        My Diaries Live
+                    </h2>
+                    <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+                        ${data.description}
+                    </p>
+
+                    <div id="md-live-carousel" class="relative w-full max-w-lg mx-auto mb-8">
+                        <!-- Carousel content will be dynamically inserted here -->
+                    </div>
+
+                    <a href="${data.link}" target="_blank" class="block w-full max-w-lg mx-auto">
+                        <button class="w-full py-3 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white">
+                            MORE ON MD LIVE
+                        </button>
+                    </a>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        ZEITGEIST
+                    </button>
+                </div>
+            `;
+            updateCarousel(); // Initial render of the carousel
+
+            // Ensure event listeners are re-attached after innerHTML update
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'events';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'zeitgeist';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        const renderZeitgeist = () => {
+            const data = DALIATIME_DATA.zeitgeist;
+            const renderZeitgeistCategory = (title, items, color, link = null) => {
+                const listItems = items.map(item => `
+                    <li class="bg-gray-600 p-3 rounded-xl transition-all duration-300 hover:bg-gray-500 flex items-start space-x-3">
+                        <span class="text-xl">${item.icon}</span>
+                        <div>
+                            <p class="font-semibold text-white">${item.title}</p>
+                            <p class="text-sm text-gray-300">${item.description}</p>
+                        </div>
+                    </li>
+                `).join('');
+
+                const categoryTitleHtml = link ?
+                    `<button onclick="openModal('${link}')" class="block p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4 hover:bg-opacity-50 transition-all duration-200">
+                        <h3 class="text-lg font-bold text-white">${title}</h3>
+                    </button>` :
+                    `<div class="p-2 rounded-xl inline-block ${color} bg-opacity-30 mb-4">
+                        <h3 class="text-lg font-bold text-white">${title}</h3>
+                    </div>`;
+
+                return `
+                    <div class="bg-gray-700 p-6 glass-panel rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
+                        ${categoryTitleHtml}
+                        <ul class="space-y-4">
+                            ${listItems}
+                        </ul>
+                    </div>
+                `;
+            };
+
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        The Daliatime Zeitgeist
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                        A look at the global shifts that defined our world.
+                    </p>
+                    <!-- Buttons moved here -->
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+                        <button id="daliatime-pop-culture-btn" class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                            Daliatime Pop Culture
+                        </button>
+                        <button id="kpop-in-daliatime-btn" class="w-full sm:w-auto py-3 px-8 bg-gradient-to-r from-[#478dcc] to-[#6ef0a1] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                            K-pop in Daliatime
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
+                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]', 'daliatimepopculture.html')}
+                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#478dcc]', 'daliatimekpop.html')}
+                    </div>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#6ef0a1] to-[#ffffb0] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        FUTURE
+                    </button>
+                </div>
+            `;
+
+            // Attach event listeners for modal buttons
+            document.getElementById('daliatime-pop-culture-btn').addEventListener('click', () => {
+                openModal('daliatimepopculture.html');
+            });
+            document.getElementById('kpop-in-daliatime-btn').addEventListener('click', () => {
+                openModal('daliatimekpop.html');
+            });
+
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'mdLive';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'future';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        const renderFuture = () => {
+            const data = DALIATIME_DATA.future;
+            const renderFutureCard = (title, items, color) => {
+                const listItems = items.map(item => `<li>${item}</li>`).join('');
+                return `
+                    <div class="glass-panel p-6 rounded-2xl shadow-xl text-left transition-all duration-300 transform hover:scale-105">
+                        <h3 class="text-2xl font-bold text-yellow-custom mb-4">${title}</h3>
+                        <ul class="list-disc list-inside text-lg text-gray-300">
+                            ${listItems}
+                        </ul>
+                    </div>
+                `;
+            };
+
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8">
+                        <span class="animated-text-gradient">The Future of Daliatime</span> <br/>
+                        <span class="text-2xl font-extrabold text-green-custom">
+                            Chapter 2
+                        </span>
+                    </h2>
+
+                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                        What's next for our world.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        ${renderFutureCard('Upcoming Events', data.upcomingEvents, 'bg-[#ffffb0]')}
+                        ${renderFutureCard('Project MD', data.upcomingPmdReleases, 'bg-[#a0bce8]')}
+                    </div>
+
+                    <div class="p-6 glass-panel rounded-2xl shadow-xl mb-12 text-left">
+                        <h3 class="text-2xl font-bold text-yellow-custom mb-4">Upcoming ZEROBASEONE Activities</h3>
+                        <ul class="list-disc list-inside text-lg text-gray-300">
+                            ${data.upcomingZerobaseone.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] rounded-3xl shadow-2xl">
+                        <h3 class="text-3xl font-extrabold text-white mb-4">
+                            THE NEXT ERA: <b>NEVER SAY NEVER</b>
+                        </h3>
+                        <p class="text-lg text-white">
+                            Our <b>5th</b> overall era is coming on <b>2025.09.01</b>
+                        </p>
+                    </div>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#2b74b6] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        CONCLUSION
+                    </button>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'zeitgeist';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'conclusion';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        const renderConclusion = () => {
+            const data = DALIATIME_DATA;
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        Mega Conclusion: The Daliatime Report
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                        The story of our first 18 months in a nutshell.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        <!-- PMD Fam card -->
+                        <div class="glass-panel p-6 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-[#6ef0a1] mb-4">PMD Fam</h3>
+                            <p class="text-lg text-gray-300 mb-2">Two new groups joined our family:</p>
+                            <ul class="list-disc list-inside text-left text-gray-200">
+                                <li>The new boy group <b>ALLIN</b></li>
+                                <li>The first girl group <b>Hi TiME</b></li>
+                            </ul><br>
+                                <p align='left'>+ Chapter 1 ended with the highly anticipated reunion of <b>STAY</b></p>
+                        </div>
+                        <!-- Leadership card -->
+                        <div class="glass-panel p-6 rounded-2xl shadow-xl">
+                            <h3 class="text-2xl font-bold text-[#a0bce8] mb-4">Leadership</h3>
+                            <p class="text-lg text-gray-300 mb-2">Our leader, Sung Hanbin, achieved:</p>
+                            <ul class="list-disc list-inside text-left text-gray-200">
+                                <li>Fastest-ever transannual leader upon Year 1 reach at only <b>21 days</b></li>
+                                <li><b>Second debut</b> under PMD with ALLIN</li>
+                                <li>First 5th generation idol to become Studio Choom's <b>Artist of the Month</b></li>
+                                <li>Multiple MC roles, magazine features and other <b>solo activities</b></li>
+                                <li><b>Third double transannual leader</b> status upon Year 2 reach</li>
+                                <li>A new milestone with his <b>solo debut</b>, the SWF 3 theme song "Champion"</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 glass-panel rounded-2xl shadow-xl mb-12">
+                        <h3 class="text-2xl font-bold text-[#ffffb0] mb-4">The Big Question</h3>
+                        <p class="text-lg text-gray-300">
+                            Our time with ZEROBASEONE is drawing to a close in 2026. The future is unwritten, but whatever comes, we will face it with the spirit of our next era: <span class="font-bold text-2xl text-[#a0bce8]">NEVER SAY NEVER</span>
+                        </p>
+                    </div>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="next-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        FINALE
+                    </button>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'future';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentSection = 'finale'; // Navigate to the new finale section
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        // New function for the FINALE section
+        const renderFinale = () => {
+            app.innerHTML = `
+                <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up"> <!-- Added min-h for consistency -->
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                        FINALE
+                    </h2>
+                    <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                        A final look back at Daliatime's journey.
+                    </p>
+                    <div class="relative w-full max-w-2xl mx-auto pb-[56.25%] mb-8">
+                        <!-- Responsive iframe for Google Drive video -->
+                        <iframe class="absolute top-0 left-0 w-full h-full rounded-2xl shadow-lg"
+                                src="https://drive.google.com/file/d/1x8e3xhNUC6AfdzNzKvIgluYsBXKKEhR-/preview"
+                                frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <a href="https://studiomd2025.github.io/newparadise/photo%20booth" target="_blank" class="block w-full max-w-xs mx-auto mb-8">
+                        <button class="w-full py-3 bg-gradient-to-r from-[#a0bce8] to-[#6ef0a1] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white">
+                            SELF PHOTO STUDIO
+                        </button>
+                    </a>
+                </div>
+                <!-- Fixed navigation for this section -->
+                <div class="fixed-nav-bottom">
+                    <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-2 focus:ring-gray-500">
+                        PREVIOUS
+                    </button>
+                    <button id="restart-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                        RESTART WRAPPED
+                    </button>
+                </div>
+            `;
+            document.getElementById('previous-btn').addEventListener('click', () => {
+                currentSection = 'conclusion';
+                render();
+                window.scrollTo(0, 0);
+            });
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                currentSection = 'intro';
+                render();
+                window.scrollTo(0, 0);
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            render();
         });
     </script>
 </body>
