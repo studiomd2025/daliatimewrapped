@@ -51,7 +51,7 @@
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            /* Removed max-width: 600px; */
             margin-left: auto;
             margin-right: auto;
             height: 350px;
@@ -251,7 +251,7 @@
                         </div>
                         <div class="text-center">
                             <p class="text-2xl font-bold">Alamat</p>
-                            <p class="text-gray-400">💃 Fusing native sounds & dances</p>
+                            <p class="text-gray-400">� Fusing native sounds & dances</p>
                         </div>
                     </div>
                      <p class="text-center text-gray-400 mt-4">P-Pop groups gained significant international recognition, blending global pop aesthetics with distinct Filipino cultural pride.</p>
@@ -366,6 +366,26 @@
             }
             return label;
         };
+
+        const processLabels = (labels) => {
+            return labels.map(label => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const newLabel = [];
+                    let line = '';
+                    words.forEach(word => {
+                        if ((line + word).length > 16 && line.length > 0) { // Ensure line isn't empty before pushing
+                            newLabel.push(line.trim());
+                            line = '';
+                        }
+                        line += word + ' ';
+                    });
+                    newLabel.push(line.trim());
+                    return newLabel;
+                }
+                return label;
+            });
+        };
         
         const globalPlugins = {
             legend: {
@@ -409,7 +429,7 @@
             charts.engagementRateChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Micro-Influencers (<15k followers)', 'Macro-Influencers (>1M followers)'],
+                    labels: processLabels(['Micro-Influencers (<15k followers)', 'Macro-Influencers (>1M followers)']),
                     datasets: [{
                         label: 'Engagement Rate (%)',
                         data: [3.86, 1.21],
@@ -462,7 +482,7 @@
             charts.virtualConcertsChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Marshmello (2019)', 'Travis Scott (2020)', 'The Big Bang (2023)'],
+                    labels: processLabels(['Marshmello (2019)', 'Travis Scott (2020)', 'The Big Bang (2023)']),
                     datasets: [{
                         label: 'Concurrent Viewers (Millions)',
                         data: [10, 12, 3],
@@ -512,7 +532,7 @@
             charts.hallyuWaveChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['India', 'USA', 'Thailand', 'Turkey', 'Nigeria', 'UK'],
+                    labels: processLabels(['India', 'USA', 'Thailand', 'Turkey', 'Nigeria', 'UK']),
                     datasets: [
                         {
                             label: 'K-Food', /* Changed order */
@@ -592,7 +612,7 @@
             charts.phStreamingChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Netflix', 'Other Platforms'],
+                    labels: processLabels(['Netflix', 'Other Platforms']),
                     datasets: [{
                         data: [34, 66],
                         backgroundColor: ['#E50914', '#2B78BF'],
@@ -626,7 +646,7 @@
             charts.metaverseMarketChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['2021', '2030 (Projected)'],
+                    labels: processLabels(['2021', '2030 (Projected)']),
                     datasets: [{
                         label: 'Global Market Value (Trillions USD)',
                         data: [0.04, 1.6],
@@ -664,7 +684,7 @@
             charts.consumerValuesChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Prefer Experiences', 'Prefer Material Goods'],
+                    labels: processLabels(['Prefer Experiences', 'Prefer Material Goods']),
                     datasets: [{
                         data: [73, 27],
                         backgroundColor: ['#F7E598', '#2B78BF'],
