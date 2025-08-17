@@ -210,81 +210,9 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* Audio sidebar styles */
-        .audio-sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 300px; /* Adjust width as needed */
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1500; /* Above content, below modal */
-            transform: translateX(100%); /* Initially hidden off-screen */
-            transition: transform 0.3s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            padding: 1rem;
-            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
-        }
-        .audio-sidebar.open {
-            transform: translateX(0);
-        }
-        .audio-sidebar-header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 1rem;
-        }
-        .audio-sidebar-close-btn {
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .audio-sidebar-close-btn:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-        .audio-sidebar iframe {
-            flex-grow: 1;
-            width: 100%;
-            border-radius: 8px;
-        }
     </style>
 </head>
 <body class="frutiger-aero-bg text-white p-4 sm:p-8 flex flex-col items-center justify-center min-h-screen">
-
-    <!-- Background Music Player (hidden, controlled by OpenDrive iframe) -->
-    <audio id="background-music" loop preload="auto" style="display:none;">
-        <!-- The source will be set by JS, but this is a fallback -->
-        <source src="" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!-- Music Controls (toggle sidebar) -->
-    <div class="fixed top-4 left-4 z-50 flex items-center space-x-2 bg-gray-800 bg-opacity-50 p-2 rounded-full shadow-lg">
-        <button id="music-toggle" class="p-1 text-white rounded-full hover:bg-opacity-75 transition-all duration-300">
-            <span id="music-icon">🔊</span>
-        </button>
-    </div>
-
-    <!-- Audio Sidebar -->
-    <div id="audio-sidebar" class="audio-sidebar">
-        <div class="audio-sidebar-header">
-            <button id="audio-sidebar-close-btn" class="audio-sidebar-close-btn">&times;</button>
-        </div>
-        <!-- OpenDrive Embed Player -->
-        <iframe src="https://www.opendrive.com/player/NThfNTg5NDA0NTVfTHBHZDU?autoplay=true&loop=true" height="25" width="297" style="border:0" scrolling="no" frameborder="0" allowtransparency="true"></iframe>
-        <p class="text-xs text-gray-400 mt-2 text-center">Music provided by OpenDrive. Controls are within the player.</p>
-    </div>
 
     <div id="app" class="w-full max-w-4xl">
         <!-- Content will be rendered here by JavaScript -->
@@ -298,6 +226,10 @@
             <iframe id="modal-iframe" src="" frameborder="0" allowfullscreen style="display:none;"></iframe> <!-- Hidden until loaded -->
         </div>
     </div>
+
+    <!-- Elfsight Audio Player | Untitled Audio Player (Moved to the very end of body) -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-ebf1fad7-6c7f-4556-97fe-4b573d22ca07" data-elfsight-app-lazy style="position: fixed; top: 1rem; left: 1rem; z-index: 2001;"></div>
 
 
     <script>
@@ -375,7 +307,7 @@
                         'Daliatime 1st Anniversary & 3rd double transannual leader',
                     ],
                     notableSongs: [
-                        { name: 'CRAZY', link: 'https://open.spotify.com/track/3AoEQRuFf8zVXWqSLo2UOi?si=1cb29508e0344674' },
+                        { name: 'CRAZY', link: 'https://open.spotify.com/track/3AoEQRuFf8zVXWq4SLo2UOi?si=1cb29508e0344674' },
                         { name: 'DRIP', link: 'https://open.spotify.com/track/198zDKzyktXRG1PGpidY9h?si=1009a0ac97e94e48' },
                         { name: 'PSYCHO AND BEAUTIFUL', link: 'https://open.spotify.com/track/66hTmSvvdanE90lCEp7ogV?si=8511f35bcc624abc' },
                         { name: 'GOOD SO BAD', link: 'https://open.spotify.com/track/28HVi8XtrlKauIVUxSlc6q?si=929ac8abcc7a46e4' },
@@ -403,13 +335,13 @@
                         'Launched the "Rising Stars Channel" on Channel 3',
                     ],
                     notableSongs: [
-                        { name: 'BEBE', link: 'https://open.spotify.com/track/5iXD5rOKV99XGtkaiucHpM?si=5fe87fb666ab4d76' },
+                        { name: 'BEBE', link: 'https://open.spotify.com/track/5iXD5rOKV99XGtkaiucM?si=5fe87fb666ab4d76' },
                         { name: 'LOOSE', link: 'https://open.spotify.com/track/3YNjvUXgfQznx5IZHAXk6i?si=a9f99ffe553644e1' },
                         { name: 'SIGN', link: 'https://open.spotify.com/track/6vBVBzf0VeRO4aPwABnohX?si=ecd0d802edf64893' },
                         { name: 'I FEEL GOOD', link: 'https://open.spotify.com/track/1klePVubVctBqhlKJvibil?si=252286bab336413e' },
                         { name: 'BLUE', link: 'https://open.spotify.com/track/5YR199TRrcmxY39l43ovI1?si=a1cfabfd7c2546cd' },
                     ],
-                    embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/75jczcoMc2R7B3XIY3Qxc5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-in-picture" loading="lazy"></iframe>',
+                    embedCode: '<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/75jczcoMc2R7B3XIY3Qxc5?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
                     debuts: [
                         { name: 'HEARTS2HEARTS', link: 'https://kprofiles.com/hearts2hearts-members-profile/' },
                         { name: 'KIIIKIII', link: 'https://kprofiles.com/kiiikiii-members-profile/' },
@@ -464,7 +396,7 @@
                         { name: 'ONF', link: 'https://kprofiles.com/onf-members-profile/' },
                         { name: 'DREAMCATCHER', link: 'https://kprofiles.com/dreamcatcher-members-profile/' },
                         { name: 'SOMI', link: 'https://kprofiles.com/somi-kprofiles/' },
-                        { name: 'BABYMONSTER', link: 'https://kprofiles.com/babymonster-members-profile/' },
+                        { name: 'BABYMONSTER', link: 'https://kprofiles.com/babymonster-members/' },
                         { name: 'ENHYPEN', link: 'https://kprofiles.com/enhypen-members-profile/' },
                         { name: 'XG', link: 'https://kprofiles.com/xg-members-profile/' },
                         { name: 'XDINARY HEROES', link: 'https://kprofiles.com/xdinary-heroes-members-profile/' },
@@ -632,43 +564,6 @@
         const app = document.getElementById('app');
         let currentSection = 'intro';
 
-        // Get audio elements
-        const backgroundMusic = document.getElementById('background-music');
-        const musicToggleBtn = document.getElementById('music-toggle');
-        const musicIcon = document.getElementById('music-icon');
-
-        // Set initial volume
-        backgroundMusic.volume = 0.5; // Default volume
-        backgroundMusic.muted = false; // Start unmuted as per request
-
-        // Event listener for music toggle button
-        musicToggleBtn.addEventListener('click', () => {
-            if (backgroundMusic.muted) {
-                backgroundMusic.muted = false;
-                musicIcon.textContent = '🔊';
-                // Attempt to play if currently paused
-                if (backgroundMusic.paused) {
-                    backgroundMusic.play().catch(e => console.error("Autoplay prevented on toggle:", e));
-                }
-            } else {
-                backgroundMusic.muted = true;
-                musicIcon.textContent = '🔇';
-            }
-        });
-
-        // Function to handle playing music on section change
-        const playMusicForSection = () => {
-            // This function is no longer directly controlling the audio playback
-            // as the OpenDrive iframe handles it. We just need to manage the toggle icon.
-            if (currentSection !== 'intro' && currentSection !== 'finale') {
-                // If the OpenDrive player is supposed to be playing, show the unmuted icon
-                musicIcon.textContent = '🔊';
-            } else {
-                // If it's intro or finale, assume no music or muted, show muted icon
-                musicIcon.textContent = '🔇';
-            }
-        };
-
         // Modal elements
         const inlineModal = document.getElementById('inline-modal');
         const modalIframe = document.getElementById('modal-iframe');
@@ -754,9 +649,6 @@
                     break;
             }
             
-            // Call playMusicForSection after rendering the new section
-            playMusicForSection();
-
             // Add padding to body for fixed navigation so content isn't hidden behind it
             if (currentSection !== 'intro') {
                 document.body.style.paddingBottom = '80px'; // Adjust this value as needed
@@ -1089,7 +981,7 @@
               carouselElement.innerHTML = `
                 <div class="glass-panel rounded-2xl shadow-xl p-4 flex flex-col items-center">
                   <div class="relative w-full pb-[56.25%]">
-                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <iframe class="absolute top-0 left-0 w-full h-full" src="${shows[currentShowIndex].embed}" title="${shows[currentShowIndex].name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                   </div>
                   <h3 class="text-xl sm:text-2xl font-bold text-green-custom text-center mt-4">
                     ${shows[currentShowIndex].name}
@@ -1286,7 +1178,7 @@
 
                     <div class="p-6 bg-gradient-to-r from-[#a0bce8] to-[#2b74b6] rounded-3xl shadow-2xl">
                         <h3 class="text-3xl font-extrabold text-white mb-4">
-                            THE NEXT ERA: <b>NEVER SAY NEVER</b>
+                            THE NEXT ERA: <span class="animated-text-gradient">NEVER SAY NEVER</span>
                         </h3>
                         <p class="text-lg text-white">
                             Our <b>5th</b> overall era is coming on <b>2025.09.01</b>
