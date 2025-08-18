@@ -553,7 +553,7 @@
                         <h3 class="text-2xl font-bold mb-3 text-[#70E093]">Inaugural</h3>
                         <p class="text-[#A0AEC0] text-sm">(2023.12.12 - 2024.05.12)</p>
                         <p class="text-[#CBD5E0] mt-2"><strong>Notable Albums:</strong> 'With You-th' (<strong>TWICE</strong>), 'DREAM()SCAPE' (<strong>NCT DREAM</strong>), 'minisode 3: TOMORROW' (<strong>TXT</strong>), 'Ive Switch' (<strong>IVE</strong>)</p>
-                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Born to Be' (<strong>ITZY</strong>), 'Super Lady' (<strong>I-DLE</strong>), 'Easy' (<strong>LE SSERAFIM</strong>), 'Magnetic' (<strong>ILLIT</strong>), 'Sweat' (<strong>ZEROBASEONE</strong>)</p>
+                        <p class="text-[#CBD5E0] mt-2"><strong>Notable Songs:</strong> 'Born to Be' (<strong>ITZY</strong>), 'Super Lady' (<strong>I-DLE</strong>), 'Easy' (<strong>LE SSERAFIM</strong>), 'Magnetic` (<strong>ILLIT</strong>), 'Sweat' (<strong>ZEROBASEONE</strong>)</p>
                         <p class="text-[#CBD5E0] mt-2"><strong>Notable Debuts:</strong> <strong>Waker</strong>, <strong>All(H)Ours</strong>, <strong>DXMON</strong>, <strong>Rescene</strong>, <strong>TWS</strong>, <strong>Geenius</strong>, <strong>ILLIT</strong>, <strong>UNIS</strong></p>
                     </article>
                     <article>
@@ -929,15 +929,14 @@
                     if (!chartConfig) return;
 
                     if (entry.isIntersecting) {
-                        // Element is in view, create/re-create chart
-                        if (!chartInstances[chartConfig.id]) { // Only create if not already present (prevents redundant creation on minor scrolls)
-                            createChart(chartConfig.id, chartConfig.type, chartConfig.data, chartConfig.options);
-                        } else {
-                            // If chart already exists and was off-screen, trigger update to re-animate
-                            chartInstances[chartConfig.id].update();
+                        // Always destroy existing before creating new to ensure re-animation
+                        if (chartInstances[chartConfig.id]) {
+                            chartInstances[chartConfig.id].destroy();
+                            delete chartInstances[chartConfig.id];
                         }
+                        createChart(chartConfig.id, chartConfig.type, chartConfig.data, chartConfig.options);
                     } else {
-                        // Element is completely out of view, destroy chart to enable re-animation on scroll back
+                        // Keep destroy logic when out of view
                         if (chartInstances[chartConfig.id]) {
                             chartInstances[chartConfig.id].destroy();
                             delete chartInstances[chartConfig.id];
