@@ -26,6 +26,8 @@
             display: flex;
             flex-direction: column;
             padding-bottom: 0; /* Removed padding for fixed-nav-bottom */
+            /* !!! IMPORTANT FIX: Hide overall horizontal overflow on the body !!! */
+            overflow-x: hidden;
         }
 
         /* Apply Comfortaa to all header tags */
@@ -248,51 +250,37 @@
                     <p class="text-center md:text-left text-[#CBD5E0]">As both the leader of ZEROBASEONE and ALLIN and a prominent public figure, <strong>Sung Hanbin</strong>'s activities throughout Daliatime cemented his status as Dalia, leader of the current era. His diverse roles helped him connect with a broader audience and showcased his multifaceted talents beyond his group's releases.</p>
                 </div>
                 <article class="stat-card rounded-xl p-6 shadow-2xl">
-                    <div> <!-- Removed overflow-x-auto, as it's no longer desired to show a scrollbar -->
-                        <table class="w-full text-left table-fixed"> <!-- Added table-fixed here -->
+                    <div class="overflow-x-auto"> <!-- Re-added for horizontal scrolling for the table itself -->
+                        <table class="w-full text-left table-auto min-w-full"> <!-- Reverted to original styling for table width -->
                             <thead class="text-[#9DC3E7] border-b-2 border-gray-600">
                                 <tr>
-                                    <th class="p-2 text-sm md:p-4 md:text-base">Activity</th>
-                                    <th class="p-2 text-sm md:p-4 md:text-base">Description</th>
-                                    <th class="p-2 text-sm md:p-4 md:text-base">Duration</th>
+                                    <th class="p-4">Activity</th> <!-- Reverted padding -->
+                                    <th class="p-4">Description</th> <!-- Reverted padding -->
+                                    <th class="p-4">Duration</th> <!-- Reverted padding -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="border-b border-gray-700">
-                                    <td class="p-2 text-sm md:p-3 break-words"> <!-- Reduced padding, ensured break-words -->
-                                        <div class="flex items-center space-x-1"> <!-- Reduced space-x to 1 -->
-                                            <span class="text-xl md:text-2xl">🎤</span> <p class="whitespace-normal">M Countdown MC</p>
-                                        </div>
+                                    <td class="p-3 flex items-center space-x-2"> <!-- Reverted padding and space-x -->
+                                        <span class="text-2xl">🎤</span> <p>M Countdown MC</p> <!-- Removed whitespace-normal as it was not needed previously -->
                                     </td>
-                                    <td class="p-2 text-sm md:p-3 break-words">Became a beloved triple MC for the popular music show, increasing his public profile.</td>
-                                    <td class="p-2 text-sm md:p-3 break-words">2024.01 - present</td>
+                                    <td class="p-3">Became a beloved triple MC for the popular music show, increasing his public profile.</td> <!-- Reverted padding -->
+                                    <td class="p-3">2024.01 - present</td> <!-- Reverted padding -->
                                 </tr>
                                 <tr class="border-b border-gray-700">
-                                    <td class="p-2 text-sm md:p-3 break-words">
-                                        <div class="flex items-center space-x-1">
-                                            <span class="text-xl md:text-2xl">📸</span> <p class="whitespace-normal">Magazine Features</p>
-                                        </div>
-                                    </td>
-                                    <td class="p-2 text-sm md:p-3 break-words">Starred in numerous solo magazine covers and editorials, showcasing his visual appeal and fashion influence.</td>
-                                    <td class="p-2 text-sm md:p-3 break-words">Throughout the era</td>
+                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">📸</span> <p>Magazine Features</p></td>
+                                    <td class="p-3">Starred in numerous solo magazine covers and editorials, showcasing his visual appeal and fashion influence.</td>
+                                    <td class="p-3">Throughout the era</td>
                                 </tr>
                                 <tr class="border-b border-gray-700">
-                                    <td class="p-2 text-sm md:p-3 break-words">
-                                        <div class="flex items-center space-x-1">
-                                            <span class="text-xl md:text-2xl">🕺🏻</span> <p class="whitespace-normal">Studio Choom "Artist of the Month"</p>
-                                        </div>
-                                    </td>
-                                    <td class="p-2 text-sm md:p-3 break-words">For July 2024 with self-written original song, "Bad Boy". He also worked with top-tier choreographers in the Korean dance industry.</td>
-                                    <td class="p-2 text-sm md:p-3 break-words">2024.07</td>
+                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">🕺🏻</span> <p>Studio Choom "Artist of the Month"</p></td>
+                                    <td class="p-3">For July 2024 with self-written original song, "Bad Boy". He also worked with top-tier choreographers in the Korean dance industry.</td>
+                                    <td class="p-3">2024.07</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-2 text-sm md:p-3 break-words">
-                                        <div class="flex items-center space-x-1">
-                                            <span class="text-xl md:text-2xl">✨</span> <p class="whitespace-normal">Endorsements</p>
-                                        </div>
-                                    </td>
-                                    <td class="p-2 text-sm md:p-3 break-words">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
-                                    <td class="p-2 text-sm md:p-3 break-words">2024.07</td>
+                                    <td class="p-3 flex items-center space-x-2"><span class="text-2xl">✨</span> <p>Endorsements</p></td>
+                                    <td class="p-3">Appointed as the first brand model for the popular Korean skincare brand, Bring Green.</td>
+                                    <td class="p-3">2024.07</td>
                                 </tr>
                             </tbody>
                         </table>
