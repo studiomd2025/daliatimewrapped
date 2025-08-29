@@ -1241,8 +1241,8 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         ${renderZeitgeistCategory('Global News', data.news, 'bg-[#a0bce8]')}
-                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]', 'daliatimepopculture.html')}
-                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#478dcc]', 'daliatimekpop.html')}
+                        ${renderZeitgeistCategory('Popular Culture', data.popCulture, 'bg-[#ffffb0]')}
+                        ${renderZeitgeistCategory('K-Pop Industry', data.kpopIndustry, 'bg-[#478dcc]')}
                     </div>
                 </div>
                 <!-- Fixed navigation for this section -->
@@ -1406,11 +1406,49 @@
                 window.scrollTo(0, 0);
             });
             document.getElementById('next-btn').addEventListener('click', () => {
-                currentSection = 'finale'; // Navigate to the new finale section
+                currentSection = 'specialVideo';
                 render();
                 window.scrollTo(0, 0);
             });
         };
+
+        // New function for the special video page before Finale
+const renderSpecialVideo = () => {
+    app.innerHTML = `
+        <div class="text-center p-6 glass-panel rounded-3xl shadow-2xl mb-20 min-h-[calc(100vh-124px)] animate-fade-in-up">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-8 animated-text-gradient">
+                FINALE
+            </h2>
+            <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
+                A final look back at Daliatime's journey.
+            </p>
+            <div class="relative w-full max-w-2xl mx-auto pb-[56.25%] mb-8">
+                <iframe class="absolute top-0 left-0 w-full h-full rounded-2xl shadow-lg"
+                        src="https://drive.google.com/file/d/1ycoF5yHVAISJw4UX2_4CAxbx4-MJpikx/preview"
+                        frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        <!-- Fixed navigation for this section -->
+        <div class="fixed-nav-bottom">
+            <button id="previous-btn" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                PREVIOUS
+            </button>
+            <button id="close-btn" class="px-6 py-3 bg-gradient-to-r from-[#ffffb0] to-[#a0bce8] text-[#121212] font-bold rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-white">
+                CLOSE
+            </button>
+        </div>
+    `;
+    document.getElementById('previous-btn').addEventListener('click', () => {
+        currentSection = 'conclusion';
+        render();
+        window.scrollTo(0, 0);
+    });
+    document.getElementById('close-btn').addEventListener('click', () => {
+        currentSection = 'finale';
+        render();
+        window.scrollTo(0, 0);
+    });
+};
 
         // New function for the FINALE section
         const renderFinale = () => {
@@ -1420,7 +1458,7 @@
                         FINALE
                     </h2>
                     <p class="text-xl sm:text-2xl font-semibold mb-10 text-gray-200">
-                        A final look back at Daliatime's journey.
+                        This is really the last, Allindan. TYSM! TTYL ♡
                     </p>
                     <div class="relative w-full max-w-2xl mx-auto pb-[56.25%] mb-8">
                         <!-- Responsive iframe for Google Drive video -->
@@ -1445,7 +1483,7 @@
                 </div>
             `;
             document.getElementById('previous-btn').addEventListener('click', () => {
-                currentSection = 'conclusion';
+                currentSection = 'specialVideo';
                 render();
                 window.scrollTo(0, 0);
             });
@@ -1485,6 +1523,9 @@
                     break;
                 case 'conclusion':
                     renderConclusion();
+                    break;
+                case 'specialVideo':
+                    renderSpecialVideo();
                     break;
                 case 'finale':
                     renderFinale();
